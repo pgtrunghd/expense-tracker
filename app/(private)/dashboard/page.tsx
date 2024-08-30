@@ -1,12 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { DataTable } from "./data-table";
+import { ExpenseTable } from "./expense-table";
 
 export default function DashboardPage() {
   return (
     <div>
       <Card>
         <CardContent>
-          <DataTable />
+          <ExpenseTable />
         </CardContent>
       </Card>
     </div>

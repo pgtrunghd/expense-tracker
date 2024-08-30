@@ -12,44 +12,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import CreateExpense from "./_components/create-expense";
 import { Dialog } from "@/components/ui/dialog";
+import CreateCategory from "./_components/create-category";
 
 export const getColumns = (): ColumnDef<any>[] => {
   return [
     {
-      accessorKey: "createDate",
-      header: "Date",
-      cell: ({ row }) => {
-        const date = row?.original?.createDate;
-        return <p>{new Date(date).toLocaleDateString()}</p>;
-      },
-    },
-    {
-      accessorKey: "category",
+      accessorKey: "name",
       header: "Category",
-      cell: ({ row }) => {
-        const category = row?.original?.category;
-
-        return <Badge>{category?.name}</Badge>;
-      },
-    },
-    {
-      accessorKey: "description",
-      header: "Description",
-      cell: ({ row }) => {
-        const description = row?.original?.description;
-        return <p className="line-clamp-1">{description}</p>;
-      },
-    },
-    {
-      accessorKey: "amount",
-      header: "Amount",
-
-      cell: ({ row }) => {
-        const amount = row?.original?.amount;
-        return <p>{formatter.format(amount)}</p>;
-      },
     },
     {
       id: "actions",
@@ -58,7 +28,7 @@ export const getColumns = (): ColumnDef<any>[] => {
         const [open, setOpen] = useState(false);
 
         return (
-          <>
+          <div className="text-right">
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -74,13 +44,13 @@ export const getColumns = (): ColumnDef<any>[] => {
             </DropdownMenu>
 
             <Dialog open={open} onOpenChange={setOpen}>
-              <CreateExpense
+              <CreateCategory
                 onClose={() => setOpen(false)}
                 open={open}
-                expense={row.original}
+                category={row.original}
               />
             </Dialog>
-          </>
+          </div>
         );
       },
     },

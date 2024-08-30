@@ -1,7 +1,14 @@
-import React from 'react'
+import { Card, CardContent } from "@/components/ui/card";
+import { CategoryTable } from "./category-table";
 
 export default function CategoryPage() {
   return (
-    <div>CategoryPage</div>
-  )
+    <>
+      <Card>
+        <CardContent>
+          <CategoryTable />
+        </CardContent>
+      </Card>
+    </>
+  );
 }
