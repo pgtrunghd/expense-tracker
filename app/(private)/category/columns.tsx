@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Badge } from "@/components/ui/badge";
 import { formatter } from "@/lib/utils";
-import { Ellipsis } from "lucide-react";
+import { Ellipsis, FilePenLine } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,7 +38,8 @@ export const getColumns = (): ColumnDef<any>[] => {
 
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onSelect={() => setOpen(true)}>
-                  Edit
+                  <FilePenLine className="size-4 mr-2" />
+                  <span>Edit</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

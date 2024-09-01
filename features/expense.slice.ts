@@ -31,6 +31,13 @@ export const expenseSlice = createApi({
       }),
       invalidatesTags: ["Expense"],
     }),
+    deleteExpense: builder.mutation({
+      query: (id) => ({
+        url: `${apiRoutes.EXPENSE}/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Expense"],
+    }),
   }),
 });
 
@@ -38,4 +45,5 @@ export const {
   useGetExpensesQuery,
   useCreateExpenseMutation,
   useUpdateExpenseMutation,
+  useDeleteExpenseMutation,
 } = expenseSlice;

@@ -43,7 +43,6 @@ const LoginPage = () => {
     startTransition(async () => {
       try {
         const response = await signIn(data).unwrap();
-        toast.success("Login successful");
         await login(response);
       } catch (error: any) {
         toast.error(error.data.message);
