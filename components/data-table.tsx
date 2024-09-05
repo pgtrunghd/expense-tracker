@@ -6,6 +6,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+import { DatabaseZap } from "lucide-react";
 import React, { useMemo } from "react";
 import { Skeleton } from "./ui/skeleton";
 import {
@@ -16,7 +17,6 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
-import { DatabaseZap } from "lucide-react";
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   data: any;
@@ -82,7 +82,7 @@ function DataTable<TData>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
+                  <TableCell key={cell.id} className="relative">
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

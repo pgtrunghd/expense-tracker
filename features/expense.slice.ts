@@ -38,6 +38,11 @@ export const expenseSlice = createApi({
       }),
       invalidatesTags: ["Expense"],
     }),
+    getDailyExpense: builder.query<any, string | void>({
+      query: (date) => `${apiRoutes.EXPENSE}/by-day?date=${date}`,
+      onQueryStarted: onQueryStartedErrorToast,
+      providesTags: ["Expense"],
+    }),
   }),
 });
 
@@ -46,4 +51,5 @@ export const {
   useCreateExpenseMutation,
   useUpdateExpenseMutation,
   useDeleteExpenseMutation,
+  useGetDailyExpenseQuery,
 } = expenseSlice;

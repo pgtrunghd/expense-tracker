@@ -10,16 +10,20 @@ import ToolbarActions from "./toolbar-actions";
 export const ExpenseTable = () => {
   const [page, setPage] = useState(1);
 
-  const { data: expenseData, isLoading, error } = useGetExpensesQuery(page);
+  const {
+    data: expenseData,
+    isLoading,
+    error,
+    isFetching,
+  } = useGetExpensesQuery(page);
   const columns = useMemo(() => getColumns(), []);
-  
 
   return (
     <div>
       <ToolbarActions />
       <DataTable
         data={expenseData?.data}
-        loading={isLoading}
+        loading={isLoading || isFetching}
         columns={columns}
       />
 

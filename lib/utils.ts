@@ -21,7 +21,7 @@ export async function authWithToken(headers: Headers) {
 
 export const onQueryStartedErrorToast = async (
   args: any,
-  { queryFulfilled }: any
+  { queryFulfilled }: any,
 ) => {
   try {
     await queryFulfilled;

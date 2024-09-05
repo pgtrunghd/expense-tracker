@@ -3,6 +3,16 @@
 import React, { useTransition } from "react";
 import { Button } from "../ui/button";
 import { logout } from "@/app/(private)/actions";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { LogOut } from "lucide-react";
 
 export default function Header() {
   const [isPending, startTransition] = useTransition();
@@ -14,10 +24,27 @@ export default function Header() {
   };
 
   return (
-    <header className="px-6 text-end">
-      <Button disabled={isPending} onClick={signOut}>
+    <header className="flex items-center justify-end px-6">
+      {/* <Button disabled={isPending} onClick={signOut}>
         Logout
-      </Button>
+      </Button> */}
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Avatar className="cursor-pointer hover:opacity-75 duration-200">
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent align="end">
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem onClick={signOut}>
+            <LogOut className="mr-2 size-4" />
+            Logout
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </header>
   );
 }

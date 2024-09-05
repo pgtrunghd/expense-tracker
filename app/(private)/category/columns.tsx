@@ -1,19 +1,18 @@
 "use client";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { Badge } from "@/components/ui/badge";
-import { formatter } from "@/lib/utils";
-import { Ellipsis, FilePenLine } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Dialog } from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { ColumnDef } from "@tanstack/react-table";
+import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
 import { useState } from "react";
-import { Dialog } from "@/components/ui/dialog";
 import CreateCategory from "./_components/create-category";
+import DeleteCategory from "./_components/delete-category";
 
 export const getColumns = (): ColumnDef<any>[] => {
   return [
@@ -25,7 +24,8 @@ export const getColumns = (): ColumnDef<any>[] => {
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const [open, setOpen] = useState(false);
+        const [modalEdit, setModalEdit] = useState(false);
+        const [modalDelete, setModalDelete] = useState(false);
 
         return (
           <div className="text-right">
@@ -37,17 +37,27 @@ export const getColumns = (): ColumnDef<any>[] => {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onSelect={() => setOpen(true)}>
-                  <FilePenLine className="size-4 mr-2" />
+                <DropdownMenuItem onSelect={() => setModalEdit(true)}>
+                  <FilePenLine className="mr-2 size-4" />
                   <span>Edit</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setModalDelete(true)}>
+                  <Eraser className="mr-2 size-4" />
+                  <span>Delete</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Dialog open={open} onOpenChange={setOpen}>
+            <Dialog open={modalEdit} onOpenChange={setModalEdit}>
               <CreateCategory
-                onClose={() => setOpen(false)}
-                open={open}
+                onClose={() => setModalEdit(false)}
+                open={modalEdit}
+                category={row.original}
+              />
+            </Dialog>
+            <Dialog open={modalDelete} onOpenChange={setModalDelete}>
+              <DeleteCategory
+                onClose={() => setModalDelete(false)}
                 category={row.original}
               />
             </Dialog>

@@ -1,0 +1,49 @@
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger,
+} from "@/components/ui/context-menu";
+import { Eraser, FilePenLine } from "lucide-react";
+import React, { useState } from "react";
+import CreateExpense from "./create-expense";
+import { Dialog } from "@/components/ui/dialog";
+import DeleteExpense from "./delete-expense";
+
+interface IProps {
+  data: Expense;
+}
+
+export function ContextMenuExpense({ data }: IProps) {
+  const [modalEdit, setModalEdit] = useState(false);
+  const [modalDelete, setModalDelete] = useState(false);
+
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger asChild>
+        <div className="absolute inset-0"></div>
+      </ContextMenuTrigger>
+      <ContextMenuContent>
+        <ContextMenuItem onSelect={() => setModalEdit(true)}>
+          <FilePenLine className="mr-2 size-4" />
+          <span>Edit</span>
+        </ContextMenuItem>
+        <ContextMenuItem onSelect={() => setModalDelete(true)}>
+          <Eraser className="mr-2 size-4" />
+          <span>Delete</span>
+        </ContextMenuItem>
+      </ContextMenuContent>
+
+      <Dialog open={modalEdit} onOpenChange={setModalEdit}>
+        <CreateExpense
+          onClose={() => setModalEdit(false)}
+          open={modalEdit}
+          expense={data}
+        />
+      </Dialog>
+      <Dialog open={modalDelete} onOpenChange={setModalDelete}>
+        <DeleteExpense onClose={() => setModalDelete(false)} expense={data} />
+      </Dialog>
+    </ContextMenu>
+  );
+}

@@ -15,6 +15,11 @@ export const categorySlice = createApi({
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Category"],
     }),
+    getDailyCategory: builder.query<any, string | void>({
+      query: (date) => `${apiRoutes.CATEGORY}/by-day?date=${date}`,
+      onQueryStarted: onQueryStartedErrorToast,
+      providesTags: ["Category"],
+    }),
     createCategory: builder.mutation<any, any>({
       query: (data) => ({
         url: apiRoutes.CATEGORY,
@@ -25,10 +30,18 @@ export const categorySlice = createApi({
       invalidatesTags: ["Category"],
     }),
     updateCategory: builder.mutation<any, any>({
-      query: ({id, ...data}) => ({
+      query: ({ id, ...data }) => ({
         url: `${apiRoutes.CATEGORY}/${id}`,
         method: "PATCH",
         body: data,
+      }),
+      onQueryStarted: onQueryStartedErrorToast,
+      invalidatesTags: ["Category"],
+    }),
+    deleteCategory: builder.mutation<any, any>({
+      query: (id) => ({
+        url: `${apiRoutes.CATEGORY}/${id}`,
+        method: "DELETE",
       }),
       onQueryStarted: onQueryStartedErrorToast,
       invalidatesTags: ["Category"],
@@ -40,4 +53,6 @@ export const {
   useGetCategoriesQuery,
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
+  useDeleteCategoryMutation,
+  useGetDailyCategoryQuery,
 } = categorySlice;

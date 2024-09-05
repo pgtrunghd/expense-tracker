@@ -74,8 +74,8 @@ const CreateExpense = ({ onClose, open, expense }: IProps) => {
   useEffect(() => {
     if (expense) {
       form.reset({
-        description: expense.description,
-        amount: expense.amount.toString(),
+        description: expense?.description,
+        amount: expense?.amount?.toString(),
         categoryId: expense?.category?.id,
       });
     }
