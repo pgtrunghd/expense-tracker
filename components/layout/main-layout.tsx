@@ -12,12 +12,12 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main
       className={cn(
-        "min-h-screen py-4 flex flex-col gap-4 bg-muted/40 duration-200",
-        expand ? "pl-48" : "pl-16"
+        "flex min-h-screen flex-col gap-4 bg-muted/40 py-4 pl-16 duration-200 lg:pl-48",
+        // expand ? "pl-48" : "pl-16",
       )}
     >
       <Header />
-      <section className="px-6 flex-1">{children}</section>
+      <section className="flex-1 px-6">{children}</section>
     </main>
   );
 };

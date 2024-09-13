@@ -26,17 +26,12 @@ import {
 } from "@/components/ui/select";
 import {
   useCreateCategoryMutation,
-  useGetCategoriesQuery,
   useUpdateCategoryMutation,
 } from "@/features/category.slice";
-import {
-  useCreateExpenseMutation,
-  useUpdateExpenseMutation,
-} from "@/features/expense.slice";
-import {
-  formCreateCatogorySchema,
-  formCreateExpenseSchema,
-} from "@/lib/validate";
+import { colorList } from "@/lib/color-list";
+import { notification } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { formCreateCatogorySchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { memo, useEffect } from "react";
@@ -62,15 +57,18 @@ const CreateCategory = ({ onClose, open, category }: IProps) => {
 
   const onSubmit = async (data: z.infer<typeof formCreateCatogorySchema>) => {
     try {
-      category
-        ? await updateCategory({
-            ...data,
-            id: category.id,
-          }).unwrap()
-        : await createCategory({
-            ...data,
-          }).unwrap();
-      toast.success("Category created successfully");
+      if (category) {
+        await updateCategory({
+          ...data,
+          id: category.id,
+        }).unwrap();
+        toast.success(notification.UPDATE_SUCCESS);
+      } else {
+        await createCategory({
+          ...data,
+        }).unwrap();
+        toast.success(notification.CREATE_SUCCESS);
+      }
       onClose();
       form.reset();
     } catch (error: any) {
@@ -82,6 +80,7 @@ const CreateCategory = ({ onClose, open, category }: IProps) => {
     if (category) {
       form.reset({
         name: category.name,
+        color: category.color,
       });
     }
   }, [category]);
@@ -91,7 +90,7 @@ const CreateCategory = ({ onClose, open, category }: IProps) => {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            {category ? "Edit category" : "Create category"}
+            {category ? "Sửa category" : "Tạo category"}
           </DialogTitle>
         </DialogHeader>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
@@ -100,9 +99,44 @@ const CreateCategory = ({ onClose, open, category }: IProps) => {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Name</FormLabel>
+                <FormLabel>Tên category</FormLabel>
                 <FormControl>
                   <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="color"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Chọn màu sắc</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Chọn màu sắc" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {colorList?.map((item) => (
+                          <SelectItem key={item.color} value={item.color}>
+                            <div className="flex items-center gap-2">
+                              <span
+                                style={{ backgroundColor: item.color }}
+                                className={cn(`block size-4 rounded-sm`)}
+                              ></span>
+                              <p>{item.name}</p>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -111,13 +145,13 @@ const CreateCategory = ({ onClose, open, category }: IProps) => {
 
           <DialogFooter>
             <Button variant="outline" size="sm" onClick={onClose} type="button">
-              Cancel
+              Hủy
             </Button>
             <Button size="sm" type="submit" disabled={isCreating || isUpdating}>
               {isCreating || isUpdating ? (
                 <Loader2 className="mr-2 size-4 animate-spin" />
               ) : null}
-              {category ? "Update" : "Create"}
+              {category ? "Cập nhật" : "Tạo"}
             </Button>
           </DialogFooter>
         </form>

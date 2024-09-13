@@ -1,4 +1,4 @@
-const apiRoutes = {
+export const apiRoutes = {
   AUTH: {
     LOGIN: "/auth/login",
   },
@@ -9,4 +9,7 @@ const apiRoutes = {
   CATEGORY: "/category",
 };
 
-export default apiRoutes;
+export const notification = {
+  CREATE_SUCCESS: "Tạo mới thành công",
+  UPDATE_SUCCESS: "Cập nhật thành công",
+};

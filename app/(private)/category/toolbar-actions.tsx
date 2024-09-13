@@ -14,7 +14,7 @@ const ToolbarActions = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button size="xs">
-            <Plus className="mr-2 size-4" /> New category
+            <Plus className="mr-2 size-4" /> Tạo mới category
           </Button>
         </DialogTrigger>
 

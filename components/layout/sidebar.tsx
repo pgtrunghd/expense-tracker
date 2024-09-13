@@ -41,8 +41,8 @@ const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "fixed border min-h-screen py-16 px-3 bg-background space-y-1 shadow-md z-10 duration-200",
-        expand ? "w-48" : "w-16"
+        "fixed z-10 min-h-screen w-16 space-y-1 border bg-background px-3 py-16 shadow-md duration-200 lg:w-48",
+        // expand ? "w-48" : "w-16",
       )}
     >
       <div className="flex flex-col items-center gap-1">
@@ -53,46 +53,41 @@ const Sidebar = () => {
                 href={item.path}
                 key={item.name}
                 className={cn(
-                  "rounded-md duration-200 hover:bg-secondary w-full h-10 relative",
-                  pathname === item.path ? "bg-secondary" : ""
+                  "relative h-10 w-full rounded-md duration-200 hover:bg-secondary",
+                  pathname === item.path ? "bg-secondary" : "",
                 )}
               >
-                <item.icon
-                  className={cn(
-                    "size-5 absolute inset-1/2 -translate-y-1/2",
-                    expand ? "left-2" : "left-2"
-                  )}
-                />
+                <item.icon className="absolute inset-1/2 left-2 size-5 -translate-y-1/2" />
                 <p
                   className={cn(
-                    "absolute top-1/2 -translate-y-1/2 left-10 text-sm duration-200",
-                    expand ? "block" : "hidden"
+                    "absolute left-10 top-1/2 hidden -translate-y-1/2 text-sm duration-200 lg:block",
+                    // expand ? "block" : "hidden",
                   )}
                 >
                   {item.name}
                 </p>
               </Link>
             </TooltipTrigger>
-
-            {expand ? (
+            <TooltipContent side="right">{item.name}</TooltipContent>
+            {/* {expand ? (
               ""
             ) : (
               <TooltipContent side="right">{item.name}</TooltipContent>
-            )}
+            )} */}
           </Tooltip>
         ))}
       </div>
 
-      <Button
+      {/* <Button
         size="icon"
         variant="outline"
-        className="size-7 absolute top-3 right-0 translate-x-1/2"
+        className="absolute right-0 top-3 size-7 translate-x-1/2"
         onClick={() => dispatch(setExpand(!expand))}
       >
         <ChevronRight
           className={cn("size-4 duration-500", expand ? "rotate-180" : "")}
         />
-      </Button>
+      </Button> */}
     </aside>
   );
 };

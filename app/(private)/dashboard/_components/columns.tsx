@@ -1,54 +1,81 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Dialog } from "@/components/ui/dialog";
+import { Badge } from "@/components/ui/badge";
+import { formatter } from "@/lib/utils";
+import { ColumnDef } from "@tanstack/react-table";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
+import { Dialog } from "@radix-ui/react-dialog";
 import { useState } from "react";
-import CreateCategory from "./_components/create-category";
-import DeleteCategory from "./_components/delete-category";
-import { ContextMenuCategory } from "./_components/context-menu-category";
+import { ContextMenuExpense } from "./context-menu-expense";
+import CreateExpense from "./create-expense";
+import DeleteExpense from "./delete-expense";
 
 export const getColumns = (): ColumnDef<any>[] => {
   return [
     {
-      accessorKey: "name",
-      header: "Category",
+      accessorKey: "createDate",
+      header: "Date",
       cell: ({ row }) => {
-        const name = row?.original?.name;
+        const date = row?.original?.createDate;
         return (
           <>
-            <p>{name}</p>
-            <ContextMenuCategory data={row.original} />
+            <p>{new Date(date).toLocaleDateString()}</p>
+            <ContextMenuExpense data={row.original} />
           </>
         );
       },
     },
     {
-      accessorKey: "color",
-      header: "Color",
+      accessorKey: "category",
+      header: "Category",
       cell: ({ row }) => {
-        const color = row?.original?.color;
+        const category = row?.original?.category;
+
         return (
           <>
-            <div className="flex items-center gap-2">
-              <span
-                style={{ backgroundColor: color }}
-                className="block size-4 rounded-sm"
-              ></span>
-              <p>{color}</p>
-            </div>
-            <ContextMenuCategory data={row.original} />
+            <Badge style={{ backgroundColor: category?.color }}>
+              {category?.name}
+            </Badge>
+            <ContextMenuExpense data={row.original} />
           </>
         );
       },
     },
+    {
+      accessorKey: "description",
+      header: "Description",
+      cell: ({ row }) => {
+        const description = row?.original?.description;
+        return (
+          <>
+            <p className="line-clamp-1">{description}</p>
+            <ContextMenuExpense data={row.original} />
+          </>
+        );
+      },
+    },
+    {
+      accessorKey: "amount",
+      header: "Amount",
+
+      cell: ({ row }) => {
+        const amount = row?.original?.amount;
+        return (
+          <>
+            <p>{formatter.format(amount)}</p>
+            <ContextMenuExpense data={row.original} />
+          </>
+        );
+      },
+    },
+
     {
       id: "actions",
       enableHiding: false,
@@ -57,7 +84,7 @@ export const getColumns = (): ColumnDef<any>[] => {
         const [modalDelete, setModalDelete] = useState(false);
 
         return (
-          <div className="text-right">
+          <>
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -68,29 +95,29 @@ export const getColumns = (): ColumnDef<any>[] => {
               <DropdownMenuContent align="end">
                 <DropdownMenuItem onSelect={() => setModalEdit(true)}>
                   <FilePenLine className="mr-2 size-4" />
-                  <span>Sửa</span>
+                  <span>Edit</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem onSelect={() => setModalDelete(true)}>
                   <Eraser className="mr-2 size-4" />
-                  <span>Xóa</span>
+                  <span>Delete</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
 
             <Dialog open={modalEdit} onOpenChange={setModalEdit}>
-              <CreateCategory
+              <CreateExpense
                 onClose={() => setModalEdit(false)}
                 open={modalEdit}
-                category={row.original}
+                expense={row.original}
               />
             </Dialog>
             <Dialog open={modalDelete} onOpenChange={setModalDelete}>
-              <DeleteCategory
+              <DeleteExpense
                 onClose={() => setModalDelete(false)}
-                category={row.original}
+                expense={row.original}
               />
             </Dialog>
-          </div>
+          </>
         );
       },
     },

@@ -1,4 +1,4 @@
-import apiRoutes from "@/lib/constants";
+import { apiRoutes } from "@/lib/constants";
 import { authWithToken, onQueryStartedErrorToast } from "@/lib/utils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -8,7 +8,7 @@ export const expenseSlice = createApi({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
     prepareHeaders: authWithToken,
   }),
-  tagTypes: ["Expense"],
+  tagTypes: ["Expense", "Category"],
   endpoints: (builder) => ({
     getExpenses: builder.query<any, number | void>({
       query: (page = 1) => `${apiRoutes.EXPENSE}?page=${page}`,
@@ -21,7 +21,7 @@ export const expenseSlice = createApi({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Expense"],
+      invalidatesTags: ["Expense", "Category"],
     }),
     updateExpense: builder.mutation({
       query: ({ id, ...data }) => ({
@@ -38,8 +38,8 @@ export const expenseSlice = createApi({
       }),
       invalidatesTags: ["Expense"],
     }),
-    getDailyExpense: builder.query<any, string | void>({
-      query: (date) => `${apiRoutes.EXPENSE}/by-day?date=${date}`,
+    getWeeklyExpense: builder.query<any, string | void>({
+      query: (date) => `${apiRoutes.EXPENSE}/by-week?date=${date}`,
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Expense"],
     }),
@@ -51,5 +51,5 @@ export const {
   useCreateExpenseMutation,
   useUpdateExpenseMutation,
   useDeleteExpenseMutation,
-  useGetDailyExpenseQuery,
+  useGetWeeklyExpenseQuery,
 } = expenseSlice;

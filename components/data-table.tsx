@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import { NoDataFound } from "./no-data-found";
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   data: any;
@@ -91,10 +92,7 @@ function DataTable<TData>({
           ) : (
             <TableRow>
               <TableCell colSpan={table.getAllColumns().length}>
-                <div className="flex flex-col items-center justify-center text-muted-foreground">
-                  <DatabaseZap className="size-16" />
-                  <p className="mt-4 text-base">No data found</p>
-                </div>
+                <NoDataFound />
               </TableCell>
             </TableRow>
           )}

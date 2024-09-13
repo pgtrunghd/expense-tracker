@@ -3,8 +3,8 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
-import CreateExpense from "./_components/create-expense";
 import { memo, useState } from "react";
+import CreateExpense from "./create-expense";
 
 const ToolbarActions = () => {
   const [open, setOpen] = useState(false);

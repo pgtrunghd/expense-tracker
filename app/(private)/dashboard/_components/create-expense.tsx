@@ -128,7 +128,7 @@ const CreateExpense = ({ onClose, open, expense }: IProps) => {
                     defaultValue={field.value}
                   >
                     <SelectTrigger>
-                      <SelectValue placeholder="Select a fruit" />
+                      <SelectValue placeholder="Select a category" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>

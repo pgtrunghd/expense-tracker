@@ -1,4 +1,4 @@
-import apiRoutes from "@/lib/constants";
+import { apiRoutes } from "@/lib/constants";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const userSlice = createApi({

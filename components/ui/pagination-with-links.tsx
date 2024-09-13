@@ -72,7 +72,7 @@ export const PaginationWithLinks = ({
         items.push(
           <PaginationItem key={i}>
             <PaginationLink
-              href={buildLink(i)}
+              href={""}
               onClick={() => handleChangePage(i)}
               isActive={i === page}
             >
@@ -85,7 +85,7 @@ export const PaginationWithLinks = ({
       items.push(
         <PaginationItem key={1}>
           <PaginationLink
-            href={buildLink(1)}
+            href={""}
             onClick={() => handleChangePage(1)}
             isActive={1 === page}
           >
@@ -109,7 +109,7 @@ export const PaginationWithLinks = ({
         items.push(
           <PaginationItem key={i}>
             <PaginationLink
-              href={buildLink(i)}
+              href={""}
               onClick={() => handleChangePage(i)}
               isActive={i === page}
             >
@@ -130,7 +130,7 @@ export const PaginationWithLinks = ({
       items.push(
         <PaginationItem key={totalPageCount}>
           <PaginationLink
-            href={buildLink(totalPageCount)}
+            href={""}
             onClick={() => handleChangePage(totalPageCount)}
             isActive={totalPageCount === page}
           >

@@ -7,7 +7,7 @@ import { getColumns } from "./columns";
 import ToolbarActions from "./toolbar-actions";
 
 export const CategoryTable = () => {
-  const { data: categoryData, isLoading, error } = useGetCategoriesQuery({});
+  const { data: categoryData, isLoading, error } = useGetCategoriesQuery();
   const columns = useMemo(() => getColumns(), []);
 
   return (

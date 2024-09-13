@@ -1,4 +1,4 @@
-import apiRoutes from "@/lib/constants";
+import { apiRoutes } from "@/lib/constants";
 import { authWithToken, onQueryStartedErrorToast } from "@/lib/utils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
@@ -10,13 +10,15 @@ export const categorySlice = createApi({
   }),
   tagTypes: ["Category"],
   endpoints: (builder) => ({
-    getCategories: builder.query<any, any>({
+    getCategories: builder.query<any, boolean | void>({
       query: () => apiRoutes.CATEGORY,
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Category"],
     }),
     getDailyCategory: builder.query<any, string | void>({
-      query: (date) => `${apiRoutes.CATEGORY}/by-day?date=${date}`,
+      query: (date: string) => ({
+        url: `${apiRoutes.CATEGORY}/by-day?date=${date.toString()}`,
+      }),
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Category"],
     }),
