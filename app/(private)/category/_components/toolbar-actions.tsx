@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
 import React, { memo, useState } from "react";
-import CreateCategory from "./_components/create-category";
+import CreateCategory from "./create-category";
 
 const ToolbarActions = () => {
   const [open, setOpen] = useState(false);
@@ -14,11 +14,11 @@ const ToolbarActions = () => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button size="xs">
-            <Plus className="mr-2 size-4" /> Tạo mới category
+            <Plus className="mr-2 size-4" /> Tạo category
           </Button>
         </DialogTrigger>
 
-        <CreateCategory onClose={() => setOpen(false)} open={open} />
+        <CreateCategory open={open} setOpen={setOpen} />
       </Dialog>
     </section>
   );

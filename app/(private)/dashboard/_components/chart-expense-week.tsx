@@ -77,8 +77,6 @@ export const ChartExpenseWeek = () => {
     return config;
   }, [chartData]) satisfies ChartConfig;
 
-  console.log(chartData);
-
   return (
     <>
       <CardHeader>
@@ -102,7 +100,7 @@ export const ChartExpenseWeek = () => {
                 });
               }}
             />
-            <YAxis  />
+            {/* <YAxis  /> */}
             <ChartTooltip
               content={
                 <ChartTooltipContent
@@ -116,7 +114,7 @@ export const ChartExpenseWeek = () => {
                 />
               }
             />
-            <ChartLegend content={<ChartLegendContent />} />
+            {/* <ChartLegend content={<ChartLegendContent />} /> */}
             {categories.map((category, index) => (
               <Bar
                 dataKey={category.name}
@@ -132,7 +130,7 @@ export const ChartExpenseWeek = () => {
                     : 8
                 }
               >
-                <LabelList dataKey={category.name} />
+                {/* <LabelList dataKey={category.name} /> */}
               </Bar>
             ))}
             {/* <Bar dataKey="Ăn uống" stackId="a" fill="red">

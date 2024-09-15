@@ -26,21 +26,15 @@ export function ContextMenuExpense({ data }: IProps) {
       <ContextMenuContent>
         <ContextMenuItem onSelect={() => setModalEdit(true)}>
           <FilePenLine className="mr-2 size-4" />
-          <span>Edit</span>
+          <span>Sửa</span>
         </ContextMenuItem>
         <ContextMenuItem onSelect={() => setModalDelete(true)}>
           <Eraser className="mr-2 size-4" />
-          <span>Delete</span>
+          <span>Xóa</span>
         </ContextMenuItem>
       </ContextMenuContent>
 
-      <Dialog open={modalEdit} onOpenChange={setModalEdit}>
-        <CreateExpense
-          onClose={() => setModalEdit(false)}
-          open={modalEdit}
-          expense={data}
-        />
-      </Dialog>
+      <CreateExpense open={modalEdit} expense={data} setOpen={setModalEdit} />
       <Dialog open={modalDelete} onOpenChange={setModalDelete}>
         <DeleteExpense onClose={() => setModalDelete(false)} expense={data} />
       </Dialog>

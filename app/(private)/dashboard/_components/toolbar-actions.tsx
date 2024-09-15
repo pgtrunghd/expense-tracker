@@ -11,15 +11,11 @@ const ToolbarActions = () => {
 
   return (
     <section className="pb-3 pt-6 text-right">
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
-          <Button size="xs">
-            <Plus className="mr-2 size-4" /> New expense
-          </Button>
-        </DialogTrigger>
+      <Button size="xs" onClick={() => setOpen(true)}>
+        <Plus className="mr-2 size-4" /> Tạo chi tiêu
+      </Button>
 
-        <CreateExpense onClose={() => setOpen(false)} open={open} />
-      </Dialog>
+      <CreateExpense open={open} setOpen={setOpen} />
     </section>
   );
 };

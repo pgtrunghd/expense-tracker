@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { CategoryTable } from "./category-table";
+import { CategoryTable } from "./_components/category-table";
 
 export default function CategoryPage() {
   return (

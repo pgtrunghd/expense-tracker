@@ -17,7 +17,112 @@ import { ContextMenuExpense } from "./context-menu-expense";
 import CreateExpense from "./create-expense";
 import DeleteExpense from "./delete-expense";
 
-export const getColumns = (): ColumnDef<any>[] => {
+export const desktopColumns = (): ColumnDef<any>[] => {
+  return [
+    {
+      accessorKey: "createDate",
+      header: "Ngày",
+      cell: ({ row }) => {
+        const date = row?.original?.createDate;
+        return (
+          <>
+            <p>{new Date(date).toLocaleDateString()}</p>
+            <ContextMenuExpense data={row.original} />
+          </>
+        );
+      },
+    },
+    {
+      accessorKey: "category",
+      header: "Category",
+      cell: ({ row }) => {
+        const category = row?.original?.category;
+
+        return (
+          <>
+            <Badge style={{ backgroundColor: category?.color }}>
+              {category?.name}
+            </Badge>
+            <ContextMenuExpense data={row.original} />
+          </>
+        );
+      },
+    },
+    {
+      accessorKey: "description",
+      header: "Mô tả",
+      cell: ({ row }) => {
+        const description = row?.original?.description;
+        return (
+          <>
+            <p className="line-clamp-1">{description}</p>
+            <ContextMenuExpense data={row.original} />
+          </>
+        );
+      },
+    },
+    {
+      accessorKey: "amount",
+      header: "Số tiền",
+
+      cell: ({ row }) => {
+        const amount = row?.original?.amount;
+        return (
+          <>
+            <p>{formatter.format(amount)}</p>
+            <ContextMenuExpense data={row.original} />
+          </>
+        );
+      },
+    },
+
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        const [modalEdit, setModalEdit] = useState(false);
+        const [modalDelete, setModalDelete] = useState(false);
+
+        return (
+          <>
+            <DropdownMenu modal={false}>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" size="icon">
+                  <Ellipsis className="size-4" />
+                </Button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem onSelect={() => setModalEdit(true)}>
+                  <FilePenLine className="mr-2 size-4" />
+                  <span>Sửa</span>
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => setModalDelete(true)}>
+                  <Eraser className="mr-2 size-4" />
+                  <span>Xóa</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            <CreateExpense
+              open={modalEdit}
+              setOpen={setModalEdit}
+              expense={row.original}
+            />
+
+            <DeleteExpense
+              expense={row.original}
+              open={modalDelete}
+              setOpen={setModalDelete}
+            />
+          </>
+        );
+      },
+    },
+  ];
+};
+
+export const mobileColumns = (): ColumnDef<any>[] => {
   return [
     {
       accessorKey: "createDate",
@@ -71,52 +176,6 @@ export const getColumns = (): ColumnDef<any>[] => {
           <>
             <p>{formatter.format(amount)}</p>
             <ContextMenuExpense data={row.original} />
-          </>
-        );
-      },
-    },
-
-    {
-      id: "actions",
-      enableHiding: false,
-      cell: ({ row }) => {
-        const [modalEdit, setModalEdit] = useState(false);
-        const [modalDelete, setModalDelete] = useState(false);
-
-        return (
-          <>
-            <DropdownMenu modal={false}>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
-                  <Ellipsis className="size-4" />
-                </Button>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onSelect={() => setModalEdit(true)}>
-                  <FilePenLine className="mr-2 size-4" />
-                  <span>Edit</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setModalDelete(true)}>
-                  <Eraser className="mr-2 size-4" />
-                  <span>Delete</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
-            <Dialog open={modalEdit} onOpenChange={setModalEdit}>
-              <CreateExpense
-                onClose={() => setModalEdit(false)}
-                open={modalEdit}
-                expense={row.original}
-              />
-            </Dialog>
-            <Dialog open={modalDelete} onOpenChange={setModalDelete}>
-              <DeleteExpense
-                onClose={() => setModalDelete(false)}
-                expense={row.original}
-              />
-            </Dialog>
           </>
         );
       },

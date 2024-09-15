@@ -11,9 +11,9 @@ import {
 import { ColumnDef } from "@tanstack/react-table";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
 import { useState } from "react";
-import CreateCategory from "./_components/create-category";
-import DeleteCategory from "./_components/delete-category";
-import { ContextMenuCategory } from "./_components/context-menu-category";
+import CreateCategory from "./create-category";
+import DeleteCategory from "./delete-category";
+import { ContextMenuCategory } from "./context-menu-category";
 
 export const getColumns = (): ColumnDef<any>[] => {
   return [
@@ -77,19 +77,17 @@ export const getColumns = (): ColumnDef<any>[] => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <Dialog open={modalEdit} onOpenChange={setModalEdit}>
-              <CreateCategory
-                onClose={() => setModalEdit(false)}
-                open={modalEdit}
-                category={row.original}
-              />
-            </Dialog>
-            <Dialog open={modalDelete} onOpenChange={setModalDelete}>
-              <DeleteCategory
-                onClose={() => setModalDelete(false)}
-                category={row.original}
-              />
-            </Dialog>
+            <CreateCategory
+              open={modalEdit}
+              setOpen={setModalEdit}
+              category={row.original}
+            />
+
+            <DeleteCategory
+              open={modalDelete}
+              setOpen={setModalDelete}
+              category={row.original}
+            />
           </div>
         );
       },

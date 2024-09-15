@@ -1,4 +1,5 @@
 import MainLayout from "@/components/layout/main-layout";
+import { Navigation } from "@/components/layout/navigation";
 import Sidebar from "@/components/layout/sidebar";
 
 export default function DashboardLayout({
@@ -10,6 +11,7 @@ export default function DashboardLayout({
     <>
       <Sidebar />
       <MainLayout>{children}</MainLayout>
+      <Navigation />
     </>
   );
 }

@@ -53,7 +53,7 @@ const LoginPage = () => {
 
   return (
     <>
-      <Card className="max-w-[400px] w-full">
+      <Card className="w-full max-w-[400px]">
         <CardHeader>
           <CardTitle>Login</CardTitle>
           <CardDescription>Login to track your budget</CardDescription>
