@@ -95,7 +95,7 @@ const CreateCategory = ({ open, setOpen, category }: IProps) => {
     }
   }, [category]);
 
-  if (width < 768) {
+  if (width && width < 768) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <Form {...form}>

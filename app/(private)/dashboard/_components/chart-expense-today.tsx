@@ -1,13 +1,14 @@
 "use client";
 
 import { NoDataFound } from "@/components/no-data-found";
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGetDailyCategoryQuery } from "@/features/category.slice";
 import { formatDate } from "@/lib/utils";
 import { DatabaseZap } from "lucide-react";
@@ -15,7 +16,7 @@ import { useMemo } from "react";
 import { Pie, PieChart } from "recharts";
 
 export const ChartExpenseToday = () => {
-  const { data } = useGetDailyCategoryQuery(formatDate(new Date()));
+  const { data, isLoading } = useGetDailyCategoryQuery(formatDate(new Date()));
 
   const chartData = useMemo(
     () =>
@@ -38,8 +39,10 @@ export const ChartExpenseToday = () => {
     return config;
   }, [data]) satisfies ChartConfig;
 
+  if (isLoading) return <Skeleton className="h-60 w-full md:col-span-1" />;
+
   return (
-    <>
+    <Card className="md:col-span-1">
       <CardHeader>
         <CardTitle>Chi tiêu hôm nay</CardTitle>
       </CardHeader>
@@ -66,6 +69,6 @@ export const ChartExpenseToday = () => {
           <NoDataFound />
         )}
       </CardContent>
-    </>
+    </Card>
   );
 };

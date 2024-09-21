@@ -36,13 +36,17 @@ export function ContextMenuCategory({ data }: IProps) {
 
       <Dialog open={modalEdit} onOpenChange={setModalEdit}>
         <CreateCategory
-          onClose={() => setModalEdit(false)}
+          setOpen={setModalEdit}
           open={modalEdit}
           category={data}
         />
       </Dialog>
       <Dialog open={modalDelete} onOpenChange={setModalDelete}>
-        <DeleteCategory onClose={() => setModalDelete(false)} category={data} />
+        <DeleteCategory
+          setOpen={setModalDelete}
+          open={modalDelete}
+          category={data}
+        />
       </Dialog>
     </ContextMenu>
   );

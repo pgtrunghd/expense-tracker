@@ -66,7 +66,7 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
       expense
         ? await updateExpense({
             ...data,
-            amount: Number(data),
+            amount: Number(data.amount),
             id: expense.id,
           }).unwrap()
         : await createExpense({
@@ -91,7 +91,7 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
     }
   }, [expense]);
 
-  if (width < 768) {
+  if (width && width < 768) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <Form {...form}>

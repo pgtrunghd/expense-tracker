@@ -3,7 +3,13 @@
 import { setExpand } from "@/features/global.slice";
 import { cn } from "@/lib/utils";
 import { RootState } from "@/store";
-import { ChevronRight, LayoutDashboard, Tags } from "lucide-react";
+import {
+  ChevronRight,
+  CreditCard,
+  HandCoins,
+  LayoutDashboard,
+  Tags,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,24 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-
-const navList = [
-  {
-    name: "Dashboard",
-    path: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Category",
-    path: "/category",
-    icon: Tags,
-  },
-  // {
-  //   name: "Dashboard",
-  //   path: "/dashboard",
-  //   icon: <WalletCards />,
-  // },
-];
+import { navList } from "@/lib/nav-list";
 
 const Sidebar = () => {
   const pathname = usePathname();

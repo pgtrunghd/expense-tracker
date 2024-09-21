@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "./ui/table";
 import { NoDataFound } from "./no-data-found";
+import { getCommonPinningStyles } from "@/lib/data-table";
 
 interface DataTableProps<TData> extends React.HTMLAttributes<HTMLDivElement> {
   data: any;
@@ -51,6 +52,9 @@ function DataTable<TData>({
     data: tableData,
     columns: tableColumns,
     getCoreRowModel: getCoreRowModel(),
+    initialState: {
+      columnPinning: { right: ["actions"] },
+    },
   });
 
   return (
@@ -61,7 +65,12 @@ function DataTable<TData>({
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id}>
+                  <TableHead
+                    key={header.id}
+                    style={{
+                      ...getCommonPinningStyles({ column: header.column }),
+                    }}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -83,7 +92,12 @@ function DataTable<TData>({
                 data-state={row.getIsSelected() && "selected"}
               >
                 {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id} className="relative">
+                  <TableCell
+                    key={cell.id}
+                    style={{
+                      ...getCommonPinningStyles({ column: cell.column }),
+                    }}
+                  >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}

@@ -13,9 +13,10 @@ import { Button } from "@/components/ui/button";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
 import { Dialog } from "@radix-ui/react-dialog";
 import { useState } from "react";
-import { ContextMenuExpense } from "./context-menu-expense";
+
 import CreateExpense from "./create-expense";
 import DeleteExpense from "./delete-expense";
+import { ContextMenuExpense } from "./context-menu-expense";
 
 export const desktopColumns = (): ColumnDef<any>[] => {
   return [
@@ -39,12 +40,12 @@ export const desktopColumns = (): ColumnDef<any>[] => {
         const category = row?.original?.category;
 
         return (
-          <>
+          <div className="w-20">
             <Badge style={{ backgroundColor: category?.color }}>
               {category?.name}
             </Badge>
             <ContextMenuExpense data={row.original} />
-          </>
+          </div>
         );
       },
     },
@@ -55,7 +56,7 @@ export const desktopColumns = (): ColumnDef<any>[] => {
         const description = row?.original?.description;
         return (
           <>
-            <p className="line-clamp-1">{description}</p>
+            <p className="max-w-[200px] truncate">{description}</p>
             <ContextMenuExpense data={row.original} />
           </>
         );
@@ -78,13 +79,12 @@ export const desktopColumns = (): ColumnDef<any>[] => {
 
     {
       id: "actions",
-      enableHiding: false,
       cell: ({ row }) => {
         const [modalEdit, setModalEdit] = useState(false);
         const [modalDelete, setModalDelete] = useState(false);
 
         return (
-          <>
+          <div className="text-right">
             <DropdownMenu modal={false}>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon">
@@ -115,7 +115,7 @@ export const desktopColumns = (): ColumnDef<any>[] => {
               open={modalDelete}
               setOpen={setModalDelete}
             />
-          </>
+          </div>
         );
       },
     },

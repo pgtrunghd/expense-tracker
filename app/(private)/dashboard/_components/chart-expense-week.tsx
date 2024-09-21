@@ -1,7 +1,7 @@
 "use client";
 
 import { NoDataFound } from "@/components/no-data-found";
-import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -10,7 +10,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { Skeleton } from "@/components/ui/skeleton";
 import { useGetWeeklyExpenseQuery } from "@/features/expense.slice";
+import { useWindowSize } from "@/hooks/use-window-size";
 import { formatDate, formatter } from "@/lib/utils";
 import React, { useCallback, useMemo } from "react";
 import {
@@ -20,16 +22,16 @@ import {
   BarChart,
   CartesianGrid,
   LabelList,
+  Line,
+  LineChart,
   XAxis,
   YAxis,
 } from "recharts";
 
 export const ChartExpenseWeek = () => {
-  const { data } = useGetWeeklyExpenseQuery(formatDate(new Date()));
-  // const categories = useMemo(
-  //   () => [...new Set(data?.map((item: Expense) => item.category.name))],
-  //   [data],
-  // );
+  const { data, isLoading } = useGetWeeklyExpenseQuery(formatDate(new Date()));
+  // const { width } = useWindowSize();
+
   const getCategories = useCallback(() => {
     const checkDuplicate: { [key: string]: boolean } = {};
     const result: { name: string; color: string }[] = [];
@@ -66,7 +68,6 @@ export const ChartExpenseWeek = () => {
 
   const chartConfig = useMemo(() => {
     const config: ChartConfig = {};
-    // const categories = getCategories();
     for (let item of categories) {
       config[item.name] = {
         label: item.name,
@@ -77,71 +78,84 @@ export const ChartExpenseWeek = () => {
     return config;
   }, [chartData]) satisfies ChartConfig;
 
+  if (isLoading) return <Skeleton className="h-60 w-full md:col-span-2" />;
+
   return (
-    <>
+    <Card className="md:col-span-2">
       <CardHeader>
         <CardTitle>Chi tiêu tuần này</CardTitle>
       </CardHeader>
 
       <CardContent>
-        <ChartContainer config={chartConfig} className="max-h-[300px] w-full">
-          <BarChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-              dataKey="date"
-              tickLine={false}
-              tickMargin={8}
-              axisLine={false}
-              tickFormatter={(value) => {
-                const date = new Date(value);
-                return date.toLocaleDateString("vi-VN", {
-                  month: "numeric",
-                  day: "numeric",
-                });
-              }}
-            />
-            {/* <YAxis  /> */}
-            <ChartTooltip
-              content={
-                <ChartTooltipContent
-                  labelFormatter={(value) => {
-                    const date = new Date(value);
-                    return date.toLocaleDateString("vi-VN", {
-                      month: "numeric",
-                      day: "numeric",
-                    });
-                  }}
-                />
-              }
-            />
-            {/* <ChartLegend content={<ChartLegendContent />} /> */}
-            {categories.map((category, index) => (
-              <Bar
-                dataKey={category.name}
-                stackId="a"
-                fill={category.color}
-                radius={
-                  categories.length > 1
-                    ? index === 0
-                      ? [0, 0, 8, 8]
-                      : index === categories.length - 1
-                        ? [8, 8, 0, 0]
-                        : [0, 0, 0, 0]
-                    : 8
+        {chartData?.length > 0 ? (
+          <ChartContainer
+            config={chartConfig}
+            className="w-full md:max-h-[300px]"
+          >
+            <BarChart accessibilityLayer data={chartData}>
+              <CartesianGrid vertical={false} />
+              <XAxis
+                dataKey="date"
+                tickLine={false}
+                tickMargin={8}
+                axisLine={false}
+                tickFormatter={(value) => {
+                  const date = new Date(value);
+                  return date.toLocaleDateString("vi-VN", {
+                    month: "numeric",
+                    day: "numeric",
+                  });
+                }}
+              />
+              {/* <YAxis axisLine={false} tickLine={false} tickCount={3} /> */}
+              <ChartTooltip
+                content={
+                  <ChartTooltipContent
+                    labelFormatter={(value) => {
+                      const date = new Date(value);
+                      return date.toLocaleDateString("vi-VN", {
+                        month: "numeric",
+                        day: "numeric",
+                      });
+                    }}
+                  />
                 }
-              >
-                {/* <LabelList dataKey={category.name} /> */}
-              </Bar>
-            ))}
-            {/* <Bar dataKey="Ăn uống" stackId="a" fill="red">
-              <LabelList dataKey="Ăn uống" position="top" />
-            </Bar>
-            <Bar dataKey="Mua sắm" stackId="a" fill="black">
-              <LabelList dataKey="Mua sắm" position="top" />
-            </Bar> */}
-          </BarChart>
-        </ChartContainer>
+              />
+              {/* <ChartLegend content={<ChartLegendContent />} /> */}
+              {categories.map((category, index) => (
+                <Bar
+                  key={category.name}
+                  dataKey={category.name}
+                  type="natural"
+                  // stackId="a"
+                  fill={category.color}
+                  // stroke={category.color}
+                  // strokeWidth={2}
+                  fillOpacity={0.8}
+                  radius={4}
+                  // dot={{
+                  //   fill: category.color,
+                  // }}
+                  // radius={8}
+                  // radius={
+                  //   categories.length > 1
+                  //     ? index === 0
+                  //       ? [0, 0, 8, 8]
+                  //       : index === categories.length - 1
+                  //         ? [8, 8, 0, 0]
+                  //         : [0, 0, 0, 0]
+                  //     : 8
+                  // }
+                >
+                  {/* <LabelList dataKey={category.name} /> */}
+                </Bar>
+              ))}
+            </BarChart>
+          </ChartContainer>
+        ) : (
+          <NoDataFound />
+        )}
       </CardContent>
-    </>
+    </Card>
   );
 };

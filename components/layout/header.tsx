@@ -28,9 +28,9 @@ export default function Header() {
       {/* <Button disabled={isPending} onClick={signOut}>
         Logout
       </Button> */}
-      <DropdownMenu>
+      <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Avatar className="cursor-pointer hover:opacity-75 duration-200">
+          <Avatar className="cursor-pointer duration-200 hover:opacity-75">
             <AvatarImage src="https://github.com/shadcn.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>

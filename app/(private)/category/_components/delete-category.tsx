@@ -45,7 +45,7 @@ const DeleteCategory = ({ category, open, setOpen }: IProps) => {
     }
   };
 
-  if (width < 768) {
+  if (width && width < 768) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerContent>
