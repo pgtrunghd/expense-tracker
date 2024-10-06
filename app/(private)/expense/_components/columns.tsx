@@ -1,22 +1,21 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { formatter } from "@/lib/utils";
-import { ColumnDef } from "@tanstack/react-table";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
+import { formatter } from "@/lib/utils";
+import { ColumnDef } from "@tanstack/react-table";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
-import { Dialog } from "@radix-ui/react-dialog";
 import { useState } from "react";
 
+import { ContextMenuExpense } from "./context-menu-expense";
 import CreateExpense from "./create-expense";
 import DeleteExpense from "./delete-expense";
-import { ContextMenuExpense } from "./context-menu-expense";
 
 export const desktopColumns = (): ColumnDef<any>[] => {
   return [
@@ -70,7 +69,7 @@ export const desktopColumns = (): ColumnDef<any>[] => {
         const amount = row?.original?.amount;
         return (
           <>
-            <p>{formatter.format(amount)}</p>
+            <p className="text-destructive">-{formatter.format(amount)}</p>
             <ContextMenuExpense data={row.original} />
           </>
         );

@@ -10,7 +10,7 @@ const ToolbarActions = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="pb-3 pt-6 text-right">
+    <section className="pb-3 text-right">
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
           <Button size="xs">

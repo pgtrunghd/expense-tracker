@@ -3,10 +3,14 @@ import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Inter as FontSans } from "next/font/google";
+import { Be_Vietnam_Pro as FontSans } from "next/font/google";
 import "./globals.css";
 
-const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
+const fontSans = FontSans({
+  subsets: ["latin"],
+  variable: "--font-be-vietnam-pro",
+  weight: ["300", "400", "500", "600", "700"],
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",

@@ -5,6 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
@@ -41,34 +43,62 @@ export const ChartExpenseToday = () => {
 
   if (isLoading) return <Skeleton className="h-60 w-full md:col-span-1" />;
 
-  return (
-    <Card className="md:col-span-1">
-      <CardHeader>
-        <CardTitle>Chi tiêu hôm nay</CardTitle>
-      </CardHeader>
-      <CardContent>
-        {data?.length > 0 ? (
-          <ChartContainer
-            config={chartConfig}
-            className="mx-auto aspect-square max-h-[250px] sm:max-h-[300px]"
-          >
-            <PieChart>
-              <ChartTooltip
-                cursor={false}
-                content={
-                  <ChartTooltipContent
-                    className="flex items-center gap-4"
-                    hideLabel
-                  />
-                }
-              />
-              <Pie data={chartData} dataKey="amount" nameKey="category" />
-            </PieChart>
-          </ChartContainer>
-        ) : (
-          <NoDataFound />
-        )}
-      </CardContent>
-    </Card>
+  return data?.length > 0 ? (
+    <ChartContainer
+      config={chartConfig}
+      className="mx-auto aspect-square max-h-[250px] sm:max-h-[300px]"
+    >
+      <PieChart>
+        <ChartTooltip
+          cursor={false}
+          content={
+            <ChartTooltipContent
+              className="flex items-center gap-4"
+              hideLabel
+            />
+          }
+        />
+        <Pie
+          data={chartData}
+          dataKey="amount"
+          nameKey="category"
+          className="flex"
+          innerRadius={60}
+        />
+        <ChartLegend content={<ChartLegendContent nameKey="category" />} />
+      </PieChart>
+    </ChartContainer>
+  ) : (
+    <div className="flex h-full items-center justify-center">
+      <NoDataFound />
+    </div>
   );
+  // <Card className="md:col-span-1">
+  //   <CardHeader>
+  //     <CardTitle>Chi tiêu hôm nay</CardTitle>
+  //   </CardHeader>
+  //   <CardContent>
+  //     {data?.length > 0 ? (
+  //       <ChartContainer
+  //         config={chartConfig}
+  //         className="mx-auto aspect-square max-h-[250px] sm:max-h-[300px]"
+  //       >
+  //         <PieChart>
+  //           <ChartTooltip
+  //             cursor={false}
+  //             content={
+  //               <ChartTooltipContent
+  //                 className="flex items-center gap-4"
+  //                 hideLabel
+  //               />
+  //             }
+  //           />
+  //           <Pie data={chartData} dataKey="amount" nameKey="category" />
+  //         </PieChart>
+  //       </ChartContainer>
+  //     ) : (
+  //       <NoDataFound />
+  //     )}
+  //   </CardContent>
+  // </Card>
 };

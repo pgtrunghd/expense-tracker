@@ -7,6 +7,7 @@ export const apiRoutes = {
   },
   EXPENSE: "/expense",
   CATEGORY: "/category",
+  INCOME: "/income",
 };
 
 export const notification = {

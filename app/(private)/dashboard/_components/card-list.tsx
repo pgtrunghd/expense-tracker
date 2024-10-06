@@ -10,6 +10,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetCategoriesQuery } from "@/features/category.slice";
 import { formatter } from "@/lib/utils";
+import { CreditCard } from "lucide-react";
 import React from "react";
 
 export const CardList = () => {
@@ -17,7 +18,7 @@ export const CardList = () => {
 
   if (isLoading)
     return (
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 duration-200 sm:grid-cols-2 lg:grid-cols-4">
         {Array(4)
           .fill(0)
           .map((_, index) => (
@@ -30,11 +31,13 @@ export const CardList = () => {
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {data?.map((category: Category) => (
         <Card key={category.id}>
-          <CardHeader>
-            <CardTitle>{category.name}</CardTitle>
+          <CardHeader className="pb-4">
+            <CardTitle className="flex items-center justify-between">
+              {category.name} <CreditCard className="size-5" />
+            </CardTitle>
           </CardHeader>
           <CardContent>
-            <p>
+            <p className="text-lg font-semibold text-muted-foreground">
               {formatter.format(
                 category.expenses.reduce((acc, curr) => acc + curr.amount, 0),
               )}

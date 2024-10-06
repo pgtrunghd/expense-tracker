@@ -7,12 +7,12 @@ import { RootState } from "@/store";
 import { cn } from "@/lib/utils";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
-  const { expand } = useSelector((state: RootState) => state.global);
+  // const { expand } = useSelector((state: RootState) => state.global);
 
   return (
     <main
       className={cn(
-        "flex min-h-screen flex-col gap-4 py-4 md:pl-16 duration-200 lg:pl-48",
+        "flex min-h-screen flex-col gap-4 py-4 duration-200 md:pl-16 lg:pl-40 xl:pl-60",
         // expand ? "pl-48" : "pl-16",
       )}
     >

@@ -10,8 +10,11 @@ export const expenseSlice = createApi({
   }),
   tagTypes: ["Expense", "Category"],
   endpoints: (builder) => ({
-    getExpenses: builder.query<any, number | void>({
-      query: (page = 1) => `${apiRoutes.EXPENSE}?page=${page}`,
+    getExpenses: builder.query<any, number | void | Filter>({
+      query: (params: Filter) => ({
+        url: `${apiRoutes.EXPENSE}`,
+        params: params,
+      }),
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Expense"],
     }),

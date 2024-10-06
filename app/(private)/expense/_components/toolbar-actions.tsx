@@ -10,7 +10,7 @@ const ToolbarActions = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <section className="pb-3 pt-6 text-right">
+    <section className="pb-3 text-right">
       <Button size="xs" onClick={() => setOpen(true)}>
         <Plus className="mr-2 size-4" /> Tạo chi tiêu
       </Button>

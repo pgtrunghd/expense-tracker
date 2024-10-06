@@ -30,7 +30,7 @@ const Sidebar = () => {
   return (
     <aside
       className={cn(
-        "fixed z-10 hidden min-h-screen w-16 space-y-1 border bg-background px-3 py-16 shadow-md duration-200 md:block lg:w-48",
+        "fixed z-10 hidden min-h-screen w-16 space-y-1 border bg-background px-3 py-16 shadow-md duration-200 md:block lg:w-40 xl:w-60",
         // expand ? "w-48" : "w-16",
       )}
     >
@@ -57,7 +57,7 @@ const Sidebar = () => {
                 </p>
               </Link>
             </TooltipTrigger>
-            <TooltipContent side="right">{item.name}</TooltipContent>
+            <TooltipContent className="hidden md:block lg:hidden" side="right">{item.name}</TooltipContent>
             {/* {expand ? (
               ""
             ) : (

@@ -58,7 +58,7 @@ function DataTable<TData>({
   });
 
   return (
-    <div className="rounded-md border" {...props}>
+    <div className="" {...props}>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -70,6 +70,7 @@ function DataTable<TData>({
                     style={{
                       ...getCommonPinningStyles({ column: header.column }),
                     }}
+                    className="bg-muted"
                   >
                     {header.isPlaceholder
                       ? null
