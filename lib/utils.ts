@@ -1,5 +1,8 @@
 import { logout } from "@/app/(private)/actions";
 import { getToken } from "@/app/actions";
+import {
+  getLocalStorageItem
+} from "@/hooks/use-local-storage";
 import { type ClassValue, clsx } from "clsx";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
@@ -12,12 +15,20 @@ export function getDomain(url: string) {
   return `${process.env.NEXT_PUBLIC_API_URL}${url}`;
 }
 
-export async function authWithToken(headers: Headers) {
-  const authToken = await getToken();
-  if (authToken?.value) {
-    headers.set("Authorization", `Bearer ${authToken.value}`);
+// export async function authWithToken(headers: Headers) {
+//   const authToken = await getToken();
+//   if (authToken?.value) {
+//     headers.set("Authorization", `Bearer ${authToken.value}`);
+//   }
+// }
+
+export const requestWithToken = (headers: Headers) => {
+  const store = getLocalStorageItem("access_token");
+  if (store) {
+    const token = JSON.parse(store);
+    headers.set("Authorization", `Bearer ${token}`);
   }
-}
+};
 
 export const onQueryStartedErrorToast = async (
   args: any,

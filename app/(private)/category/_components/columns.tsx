@@ -52,6 +52,7 @@ export const getColumns = (): ColumnDef<any>[] => {
     {
       id: "actions",
       enableHiding: false,
+      size: 40,
       cell: ({ row }) => {
         const [modalEdit, setModalEdit] = useState(false);
         const [modalDelete, setModalDelete] = useState(false);

@@ -13,21 +13,24 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { LogOut } from "lucide-react";
+import { useLocalStorage } from "@/hooks/use-local-storage";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
-  const [isPending, startTransition] = useTransition();
+  // const [isPending, startTransition] = useTransition();
+  const { removeItem } = useLocalStorage("access_token", null);
+  const router = useRouter();
 
   const signOut = () => {
-    startTransition(async () => {
-      logout();
-    });
+    // startTransition(async () => {
+    //   logout();
+    // });
+    removeItem();
+    router.push("/login");
   };
 
   return (
     <header className="flex items-center justify-end px-6">
-      {/* <Button disabled={isPending} onClick={signOut}>
-        Logout
-      </Button> */}
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Avatar className="cursor-pointer duration-200 hover:opacity-75">

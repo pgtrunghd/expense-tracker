@@ -1,12 +1,12 @@
 import { apiRoutes } from "@/lib/constants";
-import { authWithToken, onQueryStartedErrorToast } from "@/lib/utils";
+import { onQueryStartedErrorToast, requestWithToken } from "@/lib/utils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const categorySlice = createApi({
   reducerPath: "category",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    prepareHeaders: authWithToken,
+    prepareHeaders: requestWithToken,
   }),
   tagTypes: ["Category"],
   endpoints: (builder) => ({

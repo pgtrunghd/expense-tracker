@@ -1,12 +1,12 @@
 import { apiRoutes } from "@/lib/constants";
-import { authWithToken } from "@/lib/utils";
+import { requestWithToken } from "@/lib/utils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const incomeSlice = createApi({
   reducerPath: "income",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    prepareHeaders: authWithToken,
+    prepareHeaders: requestWithToken,
   }),
   tagTypes: ["Income"],
   endpoints: (builder) => ({
