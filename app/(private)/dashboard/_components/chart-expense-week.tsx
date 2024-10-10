@@ -78,7 +78,7 @@ export const ChartExpenseWeek = () => {
     return config;
   }, [chartData]) satisfies ChartConfig;
 
-  if (isLoading) return <Skeleton className="h-60 w-full md:col-span-2" />;
+  if (isLoading) return <Skeleton className="h-60 w-full" />;
 
   return chartData?.length > 0 ? (
     <ChartContainer config={chartConfig} className="w-full md:max-h-[300px]">
@@ -130,69 +130,8 @@ export const ChartExpenseWeek = () => {
       </BarChart>
     </ChartContainer>
   ) : (
-    <NoDataFound />
+    <div className="flex h-full items-center justify-center">
+      <NoDataFound />
+    </div>
   );
-  // <Card className="md:col-span-2">
-  //   <CardHeader>
-  //     <CardTitle>Chi tiêu tuần này</CardTitle>
-  //   </CardHeader>
-
-  //   <CardContent>
-  //     {chartData?.length > 0 ? (
-  //       <ChartContainer
-  //         config={chartConfig}
-  //         className="w-full md:max-h-[300px]"
-  //       >
-  //         <BarChart accessibilityLayer data={chartData}>
-  //           <CartesianGrid vertical={false} />
-  //           <XAxis
-  //             dataKey="date"
-  //             tickLine={false}
-  //             tickMargin={8}
-  //             axisLine={false}
-  //             tickFormatter={(value) => {
-  //               const date = new Date(value);
-  //               return date.toLocaleDateString("vi-VN", {
-  //                 month: "numeric",
-  //                 day: "numeric",
-  //               });
-  //             }}
-  //           />
-  //           {/* <YAxis axisLine={false} tickLine={false} tickCount={3} /> */}
-  //           <ChartTooltip
-  //             content={
-  //               <ChartTooltipContent
-  //                 labelFormatter={(value) => {
-  //                   const date = new Date(value);
-  //                   return date.toLocaleDateString("vi-VN", {
-  //                     month: "numeric",
-  //                     day: "numeric",
-  //                   });
-  //                 }}
-  //               />
-  //             }
-  //           />
-  //           {/* <ChartLegend content={<ChartLegendContent />} /> */}
-  //           {categories.map((category, index) => (
-  //             <Bar
-  //               key={category.name}
-  //               dataKey={category.name}
-  //               type="natural"
-  //               // stackId="a"
-  //               fill={category.color}
-  //               // stroke={category.color}
-  //               // strokeWidth={2}
-  //               fillOpacity={0.8}
-  //               radius={4}
-  //             >
-  //               {/* <LabelList dataKey={category.name} /> */}
-  //             </Bar>
-  //           ))}
-  //         </BarChart>
-  //       </ChartContainer>
-  //     ) : (
-  //       <NoDataFound />
-  //     )}
-  //   </CardContent>
-  // </Card>
 };

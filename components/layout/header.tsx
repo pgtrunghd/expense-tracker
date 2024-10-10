@@ -13,19 +13,18 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { LogOut } from "lucide-react";
-import { useLocalStorage } from "@/hooks/use-local-storage";
+
 import { useRouter } from "next/navigation";
 
 export default function Header() {
   // const [isPending, startTransition] = useTransition();
-  const { removeItem } = useLocalStorage("access_token", null);
   const router = useRouter();
 
   const signOut = () => {
     // startTransition(async () => {
     //   logout();
     // });
-    removeItem();
+    localStorage.removeItem("access_token");
     router.push("/login");
   };
 

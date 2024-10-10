@@ -1,17 +1,16 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ChartExpenseToday } from "./_components/chart-expense-today";
 import { CardList } from "./_components/card-list";
-import { ExpenseTable } from "../expense/_components/expense-table";
+import { ChartExpenseToday } from "./_components/chart-expense-today";
 import { ChartExpenseWeek } from "./_components/chart-expense-week";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { RecentExpense } from "./_components/recent-expense";
+import { TopExpenses } from "./_components/top-expenses";
 
 export default function DashboardPage() {
   return (
     <section className="space-y-4">
       <CardList />
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 md:grid-rows-2 gap-4">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
         {/* <Card className="col-span-2">
           <CardContent className="p-6">
             <Tabs defaultValue="today">
@@ -30,7 +29,20 @@ export default function DashboardPage() {
           </CardContent>
         </Card> */}
 
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 2xl:col-span-3">
+          <CardHeader>
+            <CardTitle>Top chi tiêu</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <TopExpenses />
+          </CardContent>
+        </Card>
+
+        <Card className="">
+          <RecentExpense />
+        </Card>
+
+        <Card className="col-span-1">
           <CardHeader>
             <CardTitle>Chi tiêu hôm nay</CardTitle>
           </CardHeader>
@@ -38,16 +50,8 @@ export default function DashboardPage() {
             <ChartExpenseToday />
           </CardContent>
         </Card>
-        <Card className="row-span-2">
-          <CardHeader>
-            <CardTitle>Chi tiêu gần đây</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <RecentExpense />
-          </CardContent>
-        </Card>
 
-        <Card className="lg:col-span-2">
+        <Card className="lg:col-span-2 2xl:col-span-3">
           <CardHeader>
             <CardTitle>Chi tiêu trong tuần</CardTitle>
           </CardHeader>

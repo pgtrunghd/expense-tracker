@@ -1,8 +1,5 @@
 import { logout } from "@/app/(private)/actions";
 import { getToken } from "@/app/actions";
-import {
-  getLocalStorageItem
-} from "@/hooks/use-local-storage";
 import { type ClassValue, clsx } from "clsx";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
@@ -23,7 +20,7 @@ export function getDomain(url: string) {
 // }
 
 export const requestWithToken = (headers: Headers) => {
-  const store = getLocalStorageItem("access_token");
+  const store = localStorage.getItem("access_token");
   if (store) {
     const token = JSON.parse(store);
     headers.set("Authorization", `Bearer ${token}`);

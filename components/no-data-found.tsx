@@ -8,7 +8,7 @@ export const NoDataFound = ({ ...props }: TProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center text-muted-foreground",
+        "pointer-events-none flex flex-col items-center justify-center text-muted-foreground",
         props.className,
       )}
     >

@@ -19,7 +19,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useSignInMutation } from "@/features/user-slice";
-import { useLocalStorage } from "@/hooks/use-local-storage";
+import useLocalStorage from "@/hooks/use-local-storage";
+
 import { formLoginSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -33,7 +34,7 @@ import { z } from "zod";
 const LoginPage = () => {
   const [signIn, { isLoading }] = useSignInMutation();
   const [isPending, startTransition] = useTransition();
-  const { current, setItemValue } = useLocalStorage("access_token", null);
+  const [value, setValue] = useLocalStorage("access_token", null);
   const router = useRouter();
   const form = useForm<z.infer<typeof formLoginSchema>>({
     resolver: zodResolver(formLoginSchema),
@@ -47,7 +48,7 @@ const LoginPage = () => {
       try {
         const response = await signIn(data).unwrap();
         // await login(response);
-        setItemValue(response.access_token);
+        setValue(response.access_token);
         router.push("/dashboard");
       } catch (error: any) {
         toast.error(error.data.message);
