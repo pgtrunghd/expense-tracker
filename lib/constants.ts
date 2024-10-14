@@ -1,6 +1,7 @@
 export const apiRoutes = {
   AUTH: {
     LOGIN: "/auth/login",
+    REFRESH: "/auth/refresh",
   },
   USER: {
     REGISTER: "/user/register",
@@ -8,6 +9,7 @@ export const apiRoutes = {
   EXPENSE: "/expense",
   CATEGORY: "/category",
   INCOME: "/income",
+  BALANCE: "/balance",
 };
 
 export const notification = {

@@ -1,7 +1,6 @@
 "use client";
 
 import { NoDataFound } from "@/components/no-data-found";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -13,7 +12,6 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetDailyCategoryQuery } from "@/features/category.slice";
 import { formatDate } from "@/lib/utils";
-import { DatabaseZap } from "lucide-react";
 import { useMemo } from "react";
 import { Pie, PieChart } from "recharts";
 

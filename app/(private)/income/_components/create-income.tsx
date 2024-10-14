@@ -23,10 +23,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useCreateIncomeMutation } from "@/features/income.slice";
-import { cn, formatDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { formCreateIncomeSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import React, { memo } from "react";
 import { FormProps, useForm } from "react-hook-form";
@@ -37,7 +36,7 @@ interface IProps {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const CreateIncome = memo(({ open, setOpen }: IProps) => {
+const CreateIncome = ({ open, setOpen }: IProps) => {
   const form = useForm<z.infer<typeof formCreateIncomeSchema>>({
     resolver: zodResolver(formCreateIncomeSchema),
   });
@@ -61,7 +60,9 @@ export const CreateIncome = memo(({ open, setOpen }: IProps) => {
       </Form>
     </Dialog>
   );
-});
+};
+
+export const CreateIncomeMemo = memo(CreateIncome);
 
 const CreateForm = ({
   form,

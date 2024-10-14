@@ -36,7 +36,7 @@ import {
   useCreateCategoryMutation,
   useUpdateCategoryMutation,
 } from "@/features/category.slice";
-import { useWindowSize } from "@/hooks/use-window-size";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import { colorList } from "@/lib/color-list";
 import { notification } from "@/lib/constants";
 import { cn } from "@/lib/utils";

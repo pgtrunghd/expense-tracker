@@ -37,7 +37,7 @@ import {
   useCreateExpenseMutation,
   useUpdateExpenseMutation,
 } from "@/features/expense.slice";
-import { useWindowSize } from "@/hooks/use-window-size";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import { formCreateExpenseSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
@@ -177,7 +177,7 @@ const CreateForm = ({
   data,
 }: {
   form: FormProps<z.infer<typeof formCreateExpenseSchema>>;
-  data: Category[];
+  data: Category[] | undefined;
 }) => {
   return (
     <>

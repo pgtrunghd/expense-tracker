@@ -15,7 +15,10 @@ export const userSlice = createApi({
       }),
     }),
 
-    signIn: builder.mutation({
+    signIn: builder.mutation<
+      { access_token: string; refresh_token: string; id: string },
+      { username: string; password: string }
+    >({
       query: (data) => ({
         url: apiRoutes.AUTH.LOGIN,
         method: "POST",

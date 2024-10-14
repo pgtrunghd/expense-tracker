@@ -18,7 +18,7 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { useDeleteExpenseMutation } from "@/features/expense.slice";
-import { useWindowSize } from "@/hooks/use-window-size";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import { Loader2 } from "lucide-react";
 import React, { memo } from "react";
 import { toast } from "sonner";

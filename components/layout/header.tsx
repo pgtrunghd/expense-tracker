@@ -1,8 +1,6 @@
 "use client";
 
-import React, { useTransition } from "react";
-import { Button } from "../ui/button";
-import { logout } from "@/app/(private)/actions";
+import { LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
   DropdownMenu,
@@ -12,24 +10,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { LogOut } from "lucide-react";
 
 import { useRouter } from "next/navigation";
 
 export default function Header() {
-  // const [isPending, startTransition] = useTransition();
   const router = useRouter();
 
   const signOut = () => {
-    // startTransition(async () => {
-    //   logout();
-    // });
-    localStorage.removeItem("access_token");
+    localStorage.removeItem("user");
     router.push("/login");
   };
 
   return (
-    <header className="flex items-center justify-end px-6">
+    <header className="z-10 flex items-center justify-end px-6">
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Avatar className="cursor-pointer duration-200 hover:opacity-75">

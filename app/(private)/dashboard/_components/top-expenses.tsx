@@ -1,5 +1,6 @@
 "use client";
 
+import { NoDataFound } from "@/components/no-data-found";
 import {
   ChartConfig,
   ChartContainer,
@@ -37,26 +38,28 @@ export const TopExpenses = () => {
 
   return (
     <>
-      <ChartContainer
-        config={chartConfig}
-        className="h-full w-full xl:max-h-[400px]"
-      >
-        <BarChart accessibilityLayer data={topExpensesData}>
-          <CartesianGrid vertical={false} />
-          <XAxis
-            dataKey="category"
-            tickLine={false}
-            tickMargin={10}
-            axisLine={false}
-          />
-          <Bar
-            dataKey="expense"
-            fill="hsl(var(--chart-2))"
-            radius={4}
-          />
-          <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-        </BarChart>
-      </ChartContainer>
+      {topExpensesData.length > 0 ? (
+        <ChartContainer
+          config={chartConfig}
+          className="h-full w-full xl:max-h-[400px]"
+        >
+          <BarChart accessibilityLayer data={topExpensesData}>
+            <CartesianGrid vertical={false} />
+            <XAxis
+              dataKey="category"
+              tickLine={false}
+              tickMargin={10}
+              axisLine={false}
+            />
+            <Bar dataKey="expense" fill="hsl(var(--chart-2))" radius={4} />
+            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+          </BarChart>
+        </ChartContainer>
+      ) : (
+        <div className="flex h-full items-center justify-center">
+          <NoDataFound />
+        </div>
+      )}
     </>
   );
 };

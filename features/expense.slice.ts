@@ -1,3 +1,4 @@
+import { baseQueryWithAuth } from "@/lib/api";
 import { apiRoutes } from "@/lib/constants";
 import {
   onQueryStartedErrorToast,
@@ -7,10 +8,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const expenseSlice = createApi({
   reducerPath: "expense",
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    prepareHeaders: requestWithToken,
-  }),
+  baseQuery: baseQueryWithAuth,
   tagTypes: ["Expense", "Category"],
   endpoints: (builder) => ({
     getExpenses: builder.query<any, number | void | Filter>({
@@ -18,7 +16,7 @@ export const expenseSlice = createApi({
         url: `${apiRoutes.EXPENSE}`,
         params: params,
       }),
-      onQueryStarted: onQueryStartedErrorToast,
+      // onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Expense"],
     }),
     createExpense: builder.mutation({

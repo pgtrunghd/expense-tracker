@@ -12,13 +12,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetExpensesQuery } from "@/features/expense.slice";
-import { useFilter } from "@/hooks/use-filter";
 import { formatter } from "@/lib/utils";
 import { format } from "date-fns";
 import { Ellipsis, ListCollapse, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CreateExpense from "../../expense/_components/create-expense";
+import { useFilter } from "@/hooks/useFilter";
 
 export const RecentExpense = () => {
   const [modal, setModal] = useState(false);
@@ -67,7 +67,7 @@ export const RecentExpense = () => {
           Chi tiêu gần đây
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
-              <Button size="icon" variant="ghost">
+              <Button size="iconSm" variant="ghost">
                 <Ellipsis className="size-4" />
               </Button>
             </DropdownMenuTrigger>

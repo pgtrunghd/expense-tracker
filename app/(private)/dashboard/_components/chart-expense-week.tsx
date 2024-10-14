@@ -1,31 +1,21 @@
 "use client";
 
 import { NoDataFound } from "@/components/no-data-found";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
-  ChartTooltipContent,
+  ChartTooltipContent
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetWeeklyExpenseQuery } from "@/features/expense.slice";
-import { useWindowSize } from "@/hooks/use-window-size";
-import { formatDate, formatter } from "@/lib/utils";
-import React, { useCallback, useMemo } from "react";
+import { formatDate } from "@/lib/utils";
+import { useCallback, useMemo } from "react";
 import {
-  Area,
-  AreaChart,
   Bar,
   BarChart,
   CartesianGrid,
-  LabelList,
-  Line,
-  LineChart,
-  XAxis,
-  YAxis,
+  XAxis
 } from "recharts";
 
 export const ChartExpenseWeek = () => {
@@ -81,7 +71,10 @@ export const ChartExpenseWeek = () => {
   if (isLoading) return <Skeleton className="h-60 w-full" />;
 
   return chartData?.length > 0 ? (
-    <ChartContainer config={chartConfig} className="w-full md:max-h-[300px]">
+    <ChartContainer
+      config={chartConfig}
+      className="h-full w-full md:max-h-[300px]"
+    >
       <BarChart accessibilityLayer data={chartData}>
         <CartesianGrid vertical={false} />
         <XAxis
@@ -97,7 +90,7 @@ export const ChartExpenseWeek = () => {
             });
           }}
         />
-        <YAxis axisLine={false} tickLine={false} tickCount={3} />
+        {/* <YAxis axisLine={false} tickLine={false} tickCount={3} /> */}
         <ChartTooltip
           content={
             <ChartTooltipContent

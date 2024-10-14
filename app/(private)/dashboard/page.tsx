@@ -5,12 +5,12 @@ import { ChartExpenseWeek } from "./_components/chart-expense-week";
 import { RecentExpense } from "./_components/recent-expense";
 import { TopExpenses } from "./_components/top-expenses";
 
-export default function DashboardPage() {
+function DashboardPage() {
   return (
     <section className="space-y-4">
       <CardList />
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         {/* <Card className="col-span-2">
           <CardContent className="p-6">
             <Tabs defaultValue="today">
@@ -63,3 +63,5 @@ export default function DashboardPage() {
     </section>
   );
 }
+
+export default DashboardPage;

@@ -1,6 +1,7 @@
 import { logout } from "@/app/(private)/actions";
 import { getToken } from "@/app/actions";
 import { type ClassValue, clsx } from "clsx";
+import { redirect } from "next/navigation";
 import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
@@ -34,10 +35,14 @@ export const onQueryStartedErrorToast = async (
   try {
     await queryFulfilled;
   } catch (err: any) {
+    console.log(err);
+
     if (err.error.status === 401) {
-      toast.error(err.error.data.message);
+      // toast.error(err.error.data.message);
+      console.error(err.error.data.message);
+      localStorage.removeItem("access_token");
     }
-    await logout();
+    // await logout();
   }
 };
 

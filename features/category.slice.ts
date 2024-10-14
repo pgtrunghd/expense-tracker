@@ -1,13 +1,11 @@
+import { baseQueryWithAuth } from "@/lib/api";
 import { apiRoutes } from "@/lib/constants";
 import { onQueryStartedErrorToast, requestWithToken } from "@/lib/utils";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const categorySlice = createApi({
   reducerPath: "category",
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_API_URL,
-    prepareHeaders: requestWithToken,
-  }),
+  baseQuery: baseQueryWithAuth,
   tagTypes: ["Category"],
   endpoints: (builder) => ({
     getCategories: builder.query<Category[], boolean | void>({

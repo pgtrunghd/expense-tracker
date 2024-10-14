@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 import React, { useState } from "react";
-import { CreateIncome } from "./create-income";
+import { CreateIncomeMemo } from "./create-income";
 
 export const ToolbarActions = () => {
   const [open, setOpen] = useState(false);
@@ -14,7 +14,7 @@ export const ToolbarActions = () => {
         <Plus className="mr-2 size-4" /> Tạo income
       </Button>
 
-      <CreateIncome open={open} setOpen={setOpen} />
+      <CreateIncomeMemo open={open} setOpen={setOpen} />
     </section>
   );
 };

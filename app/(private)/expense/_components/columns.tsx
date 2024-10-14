@@ -79,7 +79,7 @@ export const desktopColumns = (): ColumnDef<any>[] => {
     {
       id: "actions",
       size: 40,
-      cell: ({ row }) => {
+      cell: function Cell({ row }) {
         const [modalEdit, setModalEdit] = useState(false);
         const [modalDelete, setModalDelete] = useState(false);
 
