@@ -4,6 +4,7 @@ import { ChartExpenseToday } from "./_components/chart-expense-today";
 import { ChartExpenseWeek } from "./_components/chart-expense-week";
 import { RecentExpense } from "./_components/recent-expense";
 import { TopExpenses } from "./_components/top-expenses";
+import { ReportOverview } from "./_components/report-overview";
 
 function DashboardPage() {
   return (
@@ -29,7 +30,7 @@ function DashboardPage() {
           </CardContent>
         </Card> */}
 
-        <Card className="lg:col-span-2 2xl:col-span-3">
+        <Card className="order-2 md:order-1 lg:col-span-2 2xl:col-span-3">
           <CardHeader>
             <CardTitle>Top chi tiêu</CardTitle>
           </CardHeader>
@@ -38,20 +39,20 @@ function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="">
+        <Card className="order-1 md:order-2">
           <RecentExpense />
         </Card>
 
-        <Card className="col-span-1">
+        <Card className="order-3 col-span-1">
           <CardHeader>
-            <CardTitle>Chi tiêu hôm nay</CardTitle>
+            <CardTitle>Báo cáo tổng quan</CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartExpenseToday />
+            <ReportOverview />
           </CardContent>
         </Card>
 
-        <Card className="lg:col-span-2 2xl:col-span-3">
+        <Card className="order-4 lg:col-span-2 2xl:col-span-3">
           <CardHeader>
             <CardTitle>Chi tiêu trong tuần</CardTitle>
           </CardHeader>

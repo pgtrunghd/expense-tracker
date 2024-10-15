@@ -30,11 +30,11 @@ export const Navigation = () => {
           </Link>
         ))}
         <Button
-          size="icon"
+          size="iconSm"
           className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/2 rounded-full"
           onClick={() => setModalCreate(true)}
         >
-          <Plus className="size-8" />
+          <Plus className="size-4" />
         </Button>
 
         <CreateExpense open={modalCreate} setOpen={setModalCreate} />

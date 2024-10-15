@@ -10,21 +10,33 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useGetBalanceQuery } from "@/features/balance.slice";
 import { useGetDailyCategoryQuery } from "@/features/category.slice";
 import { formatDate } from "@/lib/utils";
 import { useMemo } from "react";
 import { Pie, PieChart } from "recharts";
 
-export const ChartExpenseToday = () => {
-  const { data, isLoading } = useGetDailyCategoryQuery(formatDate(new Date()));
+export const ReportOverview = () => {
+  const { data, isLoading } = useGetBalanceQuery();
 
   const chartData = useMemo(
-    () =>
-      data?.map((item: Category) => ({
-        amount: item.expenses.reduce((acc, curr) => acc + curr.amount, 0),
-        category: item.name,
-        fill: item.color,
-      })),
+    () => [
+      {
+        amount: data?.totalExpense ?? 0,
+        category: "Chi tiêu",
+        fill: "hsl(var(--chart-1))",
+      },
+      {
+        amount: data?.totalIncome ?? 0,
+        category: "Thu nhập",
+        fill: "hsl(var(--chart-2))",
+      },
+      {
+        amount: data?.totalSaving ?? 0,
+        category: "Tiết kiệm",
+        fill: "hsl(var(--chart-3))",
+      },
+    ],
     [data],
   );
 
@@ -41,7 +53,7 @@ export const ChartExpenseToday = () => {
 
   if (isLoading) return <Skeleton className="h-60 w-full md:col-span-1" />;
 
-  return data?.length > 0 ? (
+  return chartData?.find((item) => item.amount > 0) ? (
     <ChartContainer
       config={chartConfig}
       className="mx-auto aspect-square max-h-[250px] sm:max-h-[300px]"
@@ -63,7 +75,7 @@ export const ChartExpenseToday = () => {
           className="flex"
           innerRadius={60}
         />
-        {/* <ChartLegend content={<ChartLegendContent nameKey="category" className="flex flex-col" />} /> */}
+        <ChartLegend content={<ChartLegendContent nameKey="category" />} />
       </PieChart>
     </ChartContainer>
   ) : (

@@ -11,6 +11,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
 import { useState } from "react";
 import { CreateIncomeMemo } from "./create-income";
+import { formatter } from "@/lib/utils";
 
 export const desktopColumns = (): ColumnDef<any>[] => {
   return [
@@ -45,13 +46,14 @@ export const desktopColumns = (): ColumnDef<any>[] => {
         const amount = row?.original?.amount;
         return (
           <>
-            <p className="text-green-500">+{amount}</p>
+            <p className="text-green-500">+{formatter.format(amount)}</p>
           </>
         );
       },
     },
     {
       id: "actions",
+      size: 40,
       cell: function Cell({ row }) {
         const [modalEdit, setModalEdit] = useState(false);
         const [modalDelete, setModalDelete] = useState(false);
@@ -77,7 +79,11 @@ export const desktopColumns = (): ColumnDef<any>[] => {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            <CreateIncomeMemo open={modalEdit} setOpen={setModalEdit} />
+            <CreateIncomeMemo
+              open={modalEdit}
+              setOpen={setModalEdit}
+              income={row?.original}
+            />
           </div>
         );
       },

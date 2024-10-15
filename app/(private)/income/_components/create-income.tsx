@@ -5,6 +5,7 @@ import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -22,39 +23,95 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useCreateIncomeMutation } from "@/features/income.slice";
+import {
+  useCreateIncomeMutation,
+  useUpdateIncomeMutation,
+} from "@/features/income.slice";
+import { notification } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { formCreateIncomeSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { CalendarIcon } from "lucide-react";
-import React, { memo } from "react";
+import { CalendarIcon, Loader2 } from "lucide-react";
+import React, { memo, useEffect } from "react";
 import { FormProps, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import { z } from "zod";
 
 interface IProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  income: Income;
 }
 
-const CreateIncome = ({ open, setOpen }: IProps) => {
+const CreateIncome = ({ open, setOpen, income }: IProps) => {
   const form = useForm<z.infer<typeof formCreateIncomeSchema>>({
     resolver: zodResolver(formCreateIncomeSchema),
   });
   const [createIncome, { isLoading: isCreating }] = useCreateIncomeMutation();
+  const [updateIncome, { isLoading: isUpdating }] = useUpdateIncomeMutation();
 
-  const onSubmit = (data: z.infer<typeof formCreateIncomeSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: z.infer<typeof formCreateIncomeSchema>) => {
+    try {
+      income
+        ? await updateIncome({
+            ...data,
+            amount: Number(data.amount),
+            id: income.id,
+          }).unwrap()
+        : await createIncome({
+            ...data,
+            amount: Number(data.amount),
+          }).unwrap();
+      toast.success(notification.CREATE_SUCCESS);
+      setOpen(false);
+      form.reset();
+    } catch (error: any) {
+      toast.error(error?.data.message);
+    }
   };
+
+  useEffect(() => {
+    if (income) {
+      form.reset({
+        description: income?.description,
+        amount: income?.amount.toString(),
+        createDate: income?.createDate,
+      });
+    }
+  }, [income]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <Form {...form}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Tạo income</DialogTitle>
+            <DialogTitle>
+              {income ? "Cập nhật income" : "Tạo income"}
+            </DialogTitle>
           </DialogHeader>
           <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <CreateForm form={form} />
+
+            <DialogFooter>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setOpen(false)}
+                type="button"
+              >
+                Hủy
+              </Button>
+              <Button
+                size="sm"
+                type="submit"
+                disabled={isCreating || isUpdating}
+              >
+                {isCreating || isUpdating ? (
+                  <Loader2 className="mr-2 size-4 animate-spin" />
+                ) : null}
+                {income ? "Cập nhật" : "Tạo"}
+              </Button>
+            </DialogFooter>
           </form>
         </DialogContent>
       </Form>

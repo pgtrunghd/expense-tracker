@@ -8,9 +8,10 @@ export const balanceSlice = createApi({
   baseQuery: baseQueryWithAuth,
   tagTypes: ["Balance"],
   endpoints: (builder) => ({
-    getBalance: builder.query<number, void>({
+    getBalance: builder.query<Balance, void>({
       query: () => apiRoutes.BALANCE,
       onQueryStarted: onQueryStartedErrorToast,
+      providesTags: ["Balance"],
     }),
   }),
 });
