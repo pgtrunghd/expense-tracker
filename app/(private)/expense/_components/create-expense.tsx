@@ -198,6 +198,7 @@ const CreateForm = ({
       <FormField
         name="createDate"
         control={form.control}
+        defaultValue={new Date()}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Ngày</FormLabel>

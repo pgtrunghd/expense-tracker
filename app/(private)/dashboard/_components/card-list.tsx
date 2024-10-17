@@ -11,7 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGetBalanceQuery } from "@/features/balance.slice";
 import { useGetCategoriesQuery } from "@/features/category.slice";
 import { formatter } from "@/lib/utils";
-import { CircleDollarSign, CreditCard, PiggyBank, Wallet } from "lucide-react";
+import { CircleDollarSign, CreditCard, HandCoins, PiggyBank, Wallet } from "lucide-react";
 import React from "react";
 
 export const CardList = () => {
@@ -45,11 +45,11 @@ export const CardList = () => {
       <Card>
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center justify-between">
-            Thu nhập <CircleDollarSign className="size-5" />
+            Thu nhập <HandCoins className="size-5" />
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base md:text-lg font-semibold text-muted-foreground">
+          <p className="text-base font-semibold text-muted-foreground md:text-lg">
             {formatter.format(overviewData?.totalIncome ?? 0)}
           </p>
         </CardContent>
@@ -61,7 +61,7 @@ export const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base md:text-lg font-semibold text-muted-foreground">
+          <p className="text-base font-semibold text-muted-foreground md:text-lg">
             {formatter.format(overviewData?.totalSaving ?? 0)}
           </p>
         </CardContent>
