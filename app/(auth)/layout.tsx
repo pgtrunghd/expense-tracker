@@ -1,5 +1,5 @@
 import AuthProvider from "@/components/auth-provider";
-import React from "react";
+import React, { Suspense } from "react";
 
 export default function AuthLayout({
   children,

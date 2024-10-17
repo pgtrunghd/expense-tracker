@@ -1,18 +1,34 @@
 "use client";
 
-import useLocalStorage from "@/hooks/useLocalStorage";
+import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useLayoutEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [value] = useLocalStorage("user", "");
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
-  useLayoutEffect(() => {
-    if (value) {
-      router.replace("/dashboard");
-    }
-  }, [value]);
+  useEffect(() => {
+    const checkToken = () => {
+      const value = localStorage.getItem("user");
+
+      if (value) {
+        router.replace("/dashboard");
+      } else {
+        setLoading(false);
+      }
+    };
+
+    checkToken();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="fixed inset-0 bg-white grid place-items-center">
+        <Loader2 className="animate-spin size-10" />
+      </div>
+    );
+  }
 
   return <>{children}</>;
 };
