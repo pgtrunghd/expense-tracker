@@ -48,7 +48,7 @@ import { z } from "zod";
 interface IProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  income: Income;
+  income?: Income;
 }
 
 const CreateIncome = ({ open, setOpen, income }: IProps) => {
