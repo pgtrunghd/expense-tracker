@@ -31,11 +31,11 @@ export const ReportOverview = () => {
         category: "Thu nhập",
         fill: "hsl(var(--chart-2))",
       },
-      {
-        amount: data?.totalSaving ?? 0,
-        category: "Tiết kiệm",
-        fill: "hsl(var(--chart-3))",
-      },
+      // {
+      //   amount: data?.totalSaving ?? 0,
+      //   category: "Tiết kiệm",
+      //   fill: "hsl(var(--chart-3))",
+      // },
     ],
     [data],
   );

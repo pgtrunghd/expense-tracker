@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/drawer";
 import { useDeleteExpenseMutation } from "@/features/expense.slice";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { notification } from "@/lib/constants";
 import { Loader2 } from "lucide-react";
 import React, { memo } from "react";
 import { toast } from "sonner";
@@ -36,7 +37,7 @@ const DeleteExpense = ({ expense, open, setOpen }: IProps) => {
   const onDelete = async () => {
     try {
       await deleteExpense(expense.id).unwrap();
-      toast.success("Expense deleted successfully");
+      toast.success(notification.DELETE_SUCCESS);
       setOpen(false);
     } catch (error: any) {
       console.log(error);
@@ -49,10 +50,10 @@ const DeleteExpense = ({ expense, open, setOpen }: IProps) => {
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>Are you absolutely sure?</DrawerTitle>
+            <DrawerTitle>Bạn có chắc chắn không?</DrawerTitle>
             <DrawerDescription>
-              This action cannot be undone. This will permanently delete your
-              expense.
+              Không thể hoàn tác hành động này. Bạn có muốn xóa chi tiêu của
+              bạn.
             </DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>
@@ -64,7 +65,7 @@ const DeleteExpense = ({ expense, open, setOpen }: IProps) => {
               {isDeleting ? (
                 <Loader2 className="mr-2 size-4 animate-spin" />
               ) : null}
-              Delete
+              Xóa
             </Button>
           </DrawerFooter>
         </DrawerContent>
@@ -76,10 +77,9 @@ const DeleteExpense = ({ expense, open, setOpen }: IProps) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Bạn có chắc chắn không?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your
-            expense.
+            Không thể hoàn tác hành động này. Bạn có muốn xóa chi tiêu của bạn.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -91,7 +91,7 @@ const DeleteExpense = ({ expense, open, setOpen }: IProps) => {
             {isDeleting ? (
               <Loader2 className="mr-2 size-4 animate-spin" />
             ) : null}
-            Delete
+            Xóa
           </Button>
         </DialogFooter>
       </DialogContent>

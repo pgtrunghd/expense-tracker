@@ -1,3 +1,4 @@
+import AuthProvider from "@/components/auth-provider";
 import React from "react";
 
 export default function AuthLayout({
@@ -5,5 +6,9 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <main className="min-h-screen grid place-items-center py-10 container">{children}</main>;
+  return (
+    <main className="container grid min-h-screen place-items-center py-10">
+      <AuthProvider>{children}</AuthProvider>
+    </main>
+  );
 }

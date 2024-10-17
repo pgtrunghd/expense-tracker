@@ -12,6 +12,7 @@ import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
 import { useState } from "react";
 import { CreateIncomeMemo } from "./create-income";
 import { formatter } from "@/lib/utils";
+import DeleteIncome from "./delete-income";
 
 export const desktopColumns = (): ColumnDef<any>[] => {
   return [
@@ -82,6 +83,12 @@ export const desktopColumns = (): ColumnDef<any>[] => {
             <CreateIncomeMemo
               open={modalEdit}
               setOpen={setModalEdit}
+              income={row?.original}
+            />
+
+            <DeleteIncome
+              open={modalDelete}
+              setOpen={setModalDelete}
               income={row?.original}
             />
           </div>

@@ -17,6 +17,9 @@ export const formRegisterSchema = z
     path: ["confirmPassword"],
   });
 export const formCreateExpenseSchema = z.object({
+  createDate: z.date({
+    required_error: "Date is required",
+  }),
   description: z.string().min(1, { message: "Description is required" }),
   amount: z.string().min(1, { message: "Amount is required" }),
   categoryId: z.string().min(1, { message: "Category is required" }),

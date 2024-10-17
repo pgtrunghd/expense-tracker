@@ -17,27 +17,28 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { useDeleteCategoryMutation } from "@/features/category.slice";
+import { useDeleteExpenseMutation } from "@/features/expense.slice";
+import { useDeleteIncomeMutation } from "@/features/income.slice";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { notification } from "@/lib/constants";
 import { Loader2 } from "lucide-react";
-import { memo } from "react";
+import React, { memo } from "react";
 import { toast } from "sonner";
 
 interface IProps {
-  category: Category;
+  income: Income;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DeleteCategory = ({ category, open, setOpen }: IProps) => {
-  const [deleteCategory, { isLoading: isDeleting }] =
-    useDeleteCategoryMutation();
+const DeleteIncome = ({ income, open, setOpen }: IProps) => {
+  const [deleteExpense, { isLoading: isDeleting }] = useDeleteIncomeMutation();
   const { width } = useWindowSize();
 
   const onDelete = async () => {
     try {
-      await deleteCategory(category.id).unwrap();
-      toast.success("Category deleted successfully");
+      await deleteExpense(income.id).unwrap();
+      toast.success(notification.DELETE_SUCCESS);
       setOpen(false);
     } catch (error: any) {
       console.log(error);
@@ -52,7 +53,8 @@ const DeleteCategory = ({ category, open, setOpen }: IProps) => {
           <DrawerHeader>
             <DrawerTitle>Bạn có chắc chắn không?</DrawerTitle>
             <DrawerDescription>
-              Không thể hoàn tác hành động này. Bạn có muốn xóa category này.
+              Không thể hoàn tác hành động này. Bạn có muốn xóa thu nhập của
+              bạn.
             </DrawerDescription>
           </DrawerHeader>
           <DrawerFooter>
@@ -61,7 +63,9 @@ const DeleteCategory = ({ category, open, setOpen }: IProps) => {
               onClick={onDelete}
               disabled={isDeleting}
             >
-              {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+              {isDeleting ? (
+                <Loader2 className="mr-2 size-4 animate-spin" />
+              ) : null}
               Xóa
             </Button>
           </DrawerFooter>
@@ -76,7 +80,7 @@ const DeleteCategory = ({ category, open, setOpen }: IProps) => {
         <DialogHeader>
           <DialogTitle>Bạn có chắc chắn không?</DialogTitle>
           <DialogDescription>
-            Không thể hoàn tác hành động này. Bạn có muốn xóa category này.
+            Không thể hoàn tác hành động này. Bạn có muốn xóa thu nhập của bạn.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -85,7 +89,9 @@ const DeleteCategory = ({ category, open, setOpen }: IProps) => {
             onClick={onDelete}
             disabled={isDeleting}
           >
-            {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isDeleting ? (
+              <Loader2 className="mr-2 size-4 animate-spin" />
+            ) : null}
             Xóa
           </Button>
         </DialogFooter>
@@ -94,4 +100,4 @@ const DeleteCategory = ({ category, open, setOpen }: IProps) => {
   );
 };
 
-export default memo(DeleteCategory);
+export default memo(DeleteIncome);

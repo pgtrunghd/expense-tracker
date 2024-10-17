@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Dialog,
   DialogContent,
@@ -13,6 +14,7 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
+  DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
@@ -24,6 +26,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Select,
   SelectContent,
@@ -38,10 +45,13 @@ import {
   useUpdateExpenseMutation,
 } from "@/features/expense.slice";
 import { useWindowSize } from "@/hooks/useWindowSize";
+import { notification } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import { formCreateExpenseSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { CalendarIcon, Loader2 } from "lucide-react";
 import { memo, useEffect } from "react";
+import { DayPicker } from "react-day-picker";
 import { FormProps, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -63,17 +73,20 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
 
   const onSubmit = async (data: z.infer<typeof formCreateExpenseSchema>) => {
     try {
-      expense
-        ? await updateExpense({
-            ...data,
-            amount: Number(data.amount),
-            id: expense.id,
-          }).unwrap()
-        : await createExpense({
-            ...data,
-            amount: Number(data.amount),
-          }).unwrap();
-      toast.success("Expense created successfully");
+      if (expense) {
+        await updateExpense({
+          ...data,
+          amount: Number(data.amount),
+          id: expense.id,
+        }).unwrap();
+        toast.success(notification.UPDATE_SUCCESS);
+      } else {
+        await createExpense({
+          ...data,
+          amount: Number(data.amount),
+        }).unwrap();
+        toast.success(notification.CREATE_SUCCESS);
+      }
       setOpen(false);
       form.reset();
     } catch (error: any) {
@@ -87,6 +100,7 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
         description: expense?.description,
         amount: expense?.amount?.toString(),
         categoryId: expense?.category?.id,
+        createDate: expense?.createDate,
       });
     }
   }, [expense]);
@@ -97,12 +111,12 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
         <Form {...form}>
           <DrawerContent>
             <DrawerHeader>
-              <DialogTitle>
+              <DrawerTitle>
                 {expense ? "Cập nhật chi tiêu" : "Tạo chi tiêu"}
-              </DialogTitle>
+              </DrawerTitle>
             </DrawerHeader>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="space-y-4 px-4">
+              <div className="space-y-3 px-4 sm:space-y-4">
                 <CreateForm form={form} data={data} />
               </div>
               <DrawerFooter className="mt-0">
@@ -181,6 +195,44 @@ const CreateForm = ({
 }) => {
   return (
     <>
+      <FormField
+        name="createDate"
+        control={form.control}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>Ngày</FormLabel>
+            <Popover>
+              <PopoverTrigger asChild>
+                <FormControl>
+                  <Button
+                    variant="outline"
+                    className={cn(
+                      "w-full font-normal",
+                      !field.value && "text-muted-foreground",
+                    )}
+                  >
+                    {field.value ? (
+                      new Date(field.value).toLocaleDateString()
+                    ) : (
+                      <span>Chọn ngày</span>
+                    )}
+                    <CalendarIcon className="ml-auto size-4 opacity-50" />
+                  </Button>
+                </FormControl>
+              </PopoverTrigger>
+              <PopoverContent className="w-full p-0">
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={field.onChange}
+                  disabled={(date) => date > new Date()}
+                />
+              </PopoverContent>
+            </Popover>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
       <FormField
         name="description"
         control={form.control}

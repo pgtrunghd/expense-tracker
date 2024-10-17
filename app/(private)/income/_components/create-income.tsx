@@ -10,6 +10,13 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import {
   Form,
   FormControl,
   FormField,
@@ -27,6 +34,7 @@ import {
   useCreateIncomeMutation,
   useUpdateIncomeMutation,
 } from "@/features/income.slice";
+import { useWindowSize } from "@/hooks/useWindowSize";
 import { notification } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { formCreateIncomeSchema } from "@/lib/validate";
@@ -47,22 +55,26 @@ const CreateIncome = ({ open, setOpen, income }: IProps) => {
   const form = useForm<z.infer<typeof formCreateIncomeSchema>>({
     resolver: zodResolver(formCreateIncomeSchema),
   });
+  const { width } = useWindowSize();
   const [createIncome, { isLoading: isCreating }] = useCreateIncomeMutation();
   const [updateIncome, { isLoading: isUpdating }] = useUpdateIncomeMutation();
 
   const onSubmit = async (data: z.infer<typeof formCreateIncomeSchema>) => {
     try {
-      income
-        ? await updateIncome({
-            ...data,
-            amount: Number(data.amount),
-            id: income.id,
-          }).unwrap()
-        : await createIncome({
-            ...data,
-            amount: Number(data.amount),
-          }).unwrap();
-      toast.success(notification.CREATE_SUCCESS);
+      if (income) {
+        await updateIncome({
+          ...data,
+          amount: Number(data.amount),
+          id: income.id,
+        }).unwrap();
+        toast.success(notification.UPDATE_SUCCESS);
+      } else {
+        await createIncome({
+          ...data,
+          amount: Number(data.amount),
+        }).unwrap();
+        toast.success(notification.CREATE_SUCCESS);
+      }
       setOpen(false);
       form.reset();
     } catch (error: any) {
@@ -79,6 +91,47 @@ const CreateIncome = ({ open, setOpen, income }: IProps) => {
       });
     }
   }, [income]);
+
+  if (width && width < 768) {
+    return (
+      <Drawer open={open} onOpenChange={setOpen}>
+        <Form {...form}>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>
+                {income ? "Cập nhật incom" : "Tạo income"}
+              </DrawerTitle>
+            </DrawerHeader>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="space-y-3 px-4 sm:space-y-4">
+                <CreateForm form={form} />
+              </div>
+              <DrawerFooter className="mt-0">
+                <Button
+                  size="sm"
+                  type="submit"
+                  disabled={isCreating || isUpdating}
+                >
+                  {isCreating || isUpdating ? (
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                  ) : null}
+                  {income ? "Cập nhật" : "Tạo"}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setOpen(false)}
+                  type="button"
+                >
+                  Hủy
+                </Button>
+              </DrawerFooter>
+            </form>
+          </DrawerContent>
+        </Form>
+      </Drawer>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

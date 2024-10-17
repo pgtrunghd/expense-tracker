@@ -30,22 +30,6 @@ export const CardList = () => {
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      {/* {data?.map((category: Category) => (
-        <Card key={category.id}>
-          <CardHeader className="pb-4">
-            <CardTitle className="flex items-center justify-between">
-              {category.name} <CreditCard className="size-5" />
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-lg font-semibold text-muted-foreground">
-              {formatter.format(
-                category.expenses.reduce((acc, curr) => acc + curr.amount, 0),
-              )}
-            </p>
-          </CardContent>
-        </Card>
-      ))} */}
       <Card>
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center justify-between">
@@ -53,7 +37,7 @@ export const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-lg font-semibold text-muted-foreground">
+          <p className="text-base font-semibold text-muted-foreground md:text-lg">
             {formatter.format(overviewData?.totalExpense ?? 0)}
           </p>
         </CardContent>
@@ -65,7 +49,7 @@ export const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-lg font-semibold text-muted-foreground">
+          <p className="text-base md:text-lg font-semibold text-muted-foreground">
             {formatter.format(overviewData?.totalIncome ?? 0)}
           </p>
         </CardContent>
@@ -77,7 +61,7 @@ export const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-lg font-semibold text-muted-foreground">
+          <p className="text-base md:text-lg font-semibold text-muted-foreground">
             {formatter.format(overviewData?.totalSaving ?? 0)}
           </p>
         </CardContent>

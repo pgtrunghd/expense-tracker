@@ -43,6 +43,18 @@ export const incomeSlice = createApi({
       }),
       providesTags: ["Income"],
     }),
+    deleteIncome: builder.mutation<void, string>({
+      query: (id) => ({
+        url: `${apiRoutes.INCOME}/${id}`,
+        method: "DELETE",
+      }),
+      onQueryStarted(arg, api) {
+        api.queryFulfilled.then(() => {
+          api.dispatch(balanceSlice.util.invalidateTags(["Balance"]));
+        });
+      },
+      invalidatesTags: ["Income"],
+    }),
   }),
 });
 
@@ -50,4 +62,5 @@ export const {
   useCreateIncomeMutation,
   useGetIncomeQuery,
   useUpdateIncomeMutation,
+  useDeleteIncomeMutation,
 } = incomeSlice;

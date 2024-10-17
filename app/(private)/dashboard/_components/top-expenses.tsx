@@ -22,6 +22,7 @@ export const TopExpenses = () => {
       ?.map((category) => ({
         category: category.name,
         expense: category.expenses.reduce((acc, curr) => acc + curr.amount, 0),
+        fill: category.color,
       }))
       .filter((item) => item.expense > 0)
       .sort((a, b) => b.expense - a.expense);
@@ -51,7 +52,7 @@ export const TopExpenses = () => {
               tickMargin={10}
               axisLine={false}
             />
-            <Bar dataKey="expense" fill="hsl(var(--chart-2))" radius={4} />
+            <Bar dataKey="expense" radius={4} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           </BarChart>
         </ChartContainer>

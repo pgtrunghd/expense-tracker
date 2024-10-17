@@ -148,7 +148,8 @@ export const PaginationWithLinks = ({
         <PaginationContent className="max-sm:gap-0">
           <PaginationItem>
             <PaginationPrevious
-              href={buildLink(Math.max(page - 1, 1))}
+              // href={buildLink(Math.max(page - 1, 1))}
+              href={""}
               onClick={() => handleChangePage(Math.max(page - 1, 1))}
               aria-disabled={page === 1}
               tabIndex={page === 1 ? -1 : undefined}
@@ -160,7 +161,8 @@ export const PaginationWithLinks = ({
           {renderPageNumbers()}
           <PaginationItem>
             <PaginationNext
-              href={buildLink(Math.min(page + 1, totalPageCount))}
+              // href={buildLink(Math.min(page + 1, totalPageCount))}
+              href={""}
               onClick={() =>
                 handleChangePage(Math.min(page + 1, totalPageCount))
               }

@@ -106,7 +106,7 @@ const CreateCategory = ({ open, setOpen, category }: IProps) => {
               </DrawerTitle>
             </DrawerHeader>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="space-y-4 px-4">
+              <div className="space-y-3 sm:space-y-4 px-4">
                 <CreateForm form={form} />
               </div>
 

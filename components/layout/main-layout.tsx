@@ -12,7 +12,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main
       className={cn(
-        "flex min-h-screen flex-col pb-4 duration-200 md:pl-16 lg:pl-40 xl:pl-60",
+        "flex min-h-screen flex-col gap-6 pb-4 duration-200 md:pl-16 lg:pl-40 xl:pl-60",
         // expand ? "pl-48" : "pl-16",
       )}
     >
