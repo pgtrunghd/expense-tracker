@@ -9,15 +9,14 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-// import {
-//   Drawer,
-//   DrawerContent,
-//   DrawerFooter,
-//   DrawerHeader,
-//   DrawerTitle,
-//   DrawerTrigger,
-// } from "@/components/ui/drawer";
-import { Drawer } from "vaul";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import {
   Form,
   FormControl,
@@ -108,77 +107,34 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
 
   if (width && width < 768) {
     return (
-      // <Drawer open={open} onOpenChange={setOpen}>
-      //   <Form {...form}>
-      //     <DrawerContent>
-      //       <DrawerHeader>
-      //         <DrawerTitle>
-      //           {expense ? "Cập nhật chi tiêu" : "Tạo chi tiêu"}
-      //         </DrawerTitle>
-      //       </DrawerHeader>
-      //       <form onSubmit={form.handleSubmit(onSubmit)}>
-      //         <div className="space-y-3 px-4 sm:space-y-4">
-      //           <CreateForm form={form} data={data} />
-      //         </div>
-      //         <DrawerFooter className="mt-0">
-      //           <Button
-      //             size="sm"
-      //             type="submit"
-      //             disabled={isCreating || isUpdating}
-      //           >
-      //             {isCreating || isUpdating ? (
-      //               <Loader2 className="mr-2 size-4 animate-spin" />
-      //             ) : null}
-      //             {expense ? "Cập nhật" : "Tạo"}
-      //           </Button>
-      //         </DrawerFooter>
-      //       </form>
-      //     </DrawerContent>
-      //   </Form>
-      // </Drawer>
-      <Drawer.Root repositionInputs={false}>
-        <Drawer.Trigger className="relative flex h-10 flex-shrink-0 items-center justify-center gap-2 overflow-hidden rounded-full bg-white px-4 text-sm font-medium shadow-sm transition-all hover:bg-[#FAFAFA] dark:bg-[#161615] dark:text-white dark:hover:bg-[#1A1A19]">
-          Open Drawer
-        </Drawer.Trigger>
-        <Drawer.Portal>
-          <Drawer.Overlay className="fixed inset-0 bg-black/40" />
-          <Drawer.Content className="fixed bottom-0 left-0 right-0 flex max-h-[82vh] flex-col rounded-t-[10px] bg-white z-50">
-            <div className="mx-auto w-full max-w-md overflow-auto rounded-t-[10px] p-4">
-              {/* <Drawer.Handle /> */}
-              <Drawer.Title className="mt-8 font-medium text-gray-900">
-                New Project
-              </Drawer.Title>
-              <Drawer.Description className="mt-2 leading-6 text-gray-600">
-                Get started by filling in the information below to create your
-                new project.
-              </Drawer.Description>
-              <label
-                htmlFor="name"
-                className="mb-2 mt-8 block text-sm font-medium text-gray-900"
-              >
-                Project name
-              </label>
-              <input
-                id="name"
-                className="h-9 w-full rounded-lg border border-gray-200 bg-white px-3 text-gray-900 outline-none focus:ring-2 focus:ring-black/5"
-              />
-              <label
-                htmlFor="name"
-                className="mb-2 mt-8 block text-sm font-medium text-gray-900"
-              >
-                Description
-              </label>
-              <textarea
-                rows={6}
-                className="w-full resize-none rounded-lg border border-gray-200 bg-white p-3 pt-2.5 text-gray-900 outline-none focus:ring-2 focus:ring-black/5 focus:ring-offset-0"
-              />
-              <button className="mt-4 h-[44px] w-full rounded-lg bg-black font-medium text-gray-50">
-                Submit
-              </button>
-            </div>
-          </Drawer.Content>
-        </Drawer.Portal>
-      </Drawer.Root>
+      <Drawer open={open} onOpenChange={setOpen}>
+        <Form {...form}>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>
+                {expense ? "Cập nhật chi tiêu" : "Tạo chi tiêu"}
+              </DrawerTitle>
+            </DrawerHeader>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <div className="space-y-3 px-4 sm:space-y-4">
+                <CreateForm form={form} data={data} />
+              </div>
+              <DrawerFooter className="mt-0">
+                <Button
+                  size="sm"
+                  type="submit"
+                  disabled={isCreating || isUpdating}
+                >
+                  {isCreating || isUpdating ? (
+                    <Loader2 className="mr-2 size-4 animate-spin" />
+                  ) : null}
+                  {expense ? "Cập nhật" : "Tạo"}
+                </Button>
+              </DrawerFooter>
+            </form>
+          </DrawerContent>
+        </Form>
+      </Drawer>
     );
   }
 
