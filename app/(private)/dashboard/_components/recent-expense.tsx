@@ -43,13 +43,13 @@ export const RecentExpense = () => {
     );
   };
 
-  if (isSuccess && !expenseData?.length) {
+  const empty = () => {
     return (
       <div className="items flex h-full justify-center">
         <NoDataFound />
       </div>
     );
-  }
+  };
 
   return (
     <>
@@ -79,6 +79,8 @@ export const RecentExpense = () => {
       <CardContent>
         {isLoading ? (
           loading()
+        ) : isSuccess && !expenseData?.length ? (
+          empty()
         ) : (
           <div className="relative pl-4 before:absolute before:bottom-[38px] before:left-0 before:top-[38px] before:z-[2] before:block before:w-[2px] before:-translate-x-1/2 before:bg-primary">
             {expenseData?.map((expense) => (

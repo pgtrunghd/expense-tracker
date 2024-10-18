@@ -26,8 +26,10 @@ import { useTransition } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useRouter } from "next/navigation";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [createUser, { isLoading }] = useCreateUserMutation();
   const [isPending, startTransition] = useTransition();
   const form = useForm<z.infer<typeof formRegisterSchema>>({
@@ -42,8 +44,10 @@ export default function RegisterPage() {
   const onSubmit = (data: z.infer<typeof formRegisterSchema>) => {
     startTransition(async () => {
       try {
-        const response = await createUser(data).unwrap();
+        await createUser(data).unwrap();
         toast.success("Registration successful");
+        form.reset();
+        router.push("/login");
       } catch (error: any) {
         toast.error(error.data.message);
         console.error(error);
@@ -53,7 +57,7 @@ export default function RegisterPage() {
 
   return (
     <>
-      <Card className="max-w-[400px] w-full">
+      <Card className="w-full max-w-[400px]">
         <CardHeader>
           <CardTitle>Register</CardTitle>
         </CardHeader>
