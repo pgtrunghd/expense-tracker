@@ -117,14 +117,14 @@ const CreateIncome = ({ open, setOpen, income }: IProps) => {
                   ) : null}
                   {income ? "Cập nhật" : "Tạo"}
                 </Button>
-                <Button
+                {/* <Button
                   variant="outline"
                   size="sm"
                   onClick={() => setOpen(false)}
                   type="button"
                 >
                   Hủy
-                </Button>
+                </Button> */}
               </DrawerFooter>
             </form>
           </DrawerContent>
