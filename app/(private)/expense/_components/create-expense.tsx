@@ -50,7 +50,7 @@ import { cn } from "@/lib/utils";
 import { formCreateExpenseSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Loader2 } from "lucide-react";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useRef } from "react";
 import { DayPicker } from "react-day-picker";
 import { FormProps, useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -70,6 +70,7 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
   const { width } = useWindowSize();
   const [createExpense, { isLoading: isCreating }] = useCreateExpenseMutation();
   const [updateExpense, { isLoading: isUpdating }] = useUpdateExpenseMutation();
+  const formContainerRef = useRef<HTMLDivElement | null>(null);
 
   const onSubmit = async (data: z.infer<typeof formCreateExpenseSchema>) => {
     try {
@@ -105,11 +106,33 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
     }
   }, [expense]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (formContainerRef.current) {
+        formContainerRef.current.style.setProperty(
+          "bottom",
+          `env(safe-area-inset-bottom)`,
+        );
+      }
+    };
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", handleResize);
+      handleResize(); // Initial call in case the keyboard is already open
+    }
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", handleResize);
+      }
+    };
+  }, []);
+
   if (width && width < 768) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <Form {...form}>
-          <DrawerContent>
+          <DrawerContent ref={formContainerRef}>
             <DrawerHeader>
               <DrawerTitle>
                 {expense ? "Cập nhật chi tiêu" : "Tạo chi tiêu"}
