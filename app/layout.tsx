@@ -42,7 +42,7 @@ export default function RootLayout({
         <TooltipProvider delayDuration={500} disableHoverableContent>
           <GlobalProvider>
             <div
-              vaul-drawer-wrapper=""
+              data-vaul-drawer-wrapper=""
               className="min-h-screen bg-background"
             >
               {children}
