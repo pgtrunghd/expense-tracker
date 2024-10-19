@@ -7,6 +7,7 @@ import { useGetIncomeQuery } from "@/features/income.slice";
 import { desktopColumns } from "./columns";
 import DataTable from "@/components/data-table";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
+import MyDrawer from "./my-drawer";
 
 export const IncomeTable = () => {
   const { filter, setPage } = useFilter();
@@ -17,6 +18,7 @@ export const IncomeTable = () => {
   return (
     <>
       <ToolbarActions />
+      <MyDrawer />
       <DataTable
         data={incomeData?.data}
         loading={isLoading || isFetching}
