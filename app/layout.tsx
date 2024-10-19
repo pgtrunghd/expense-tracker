@@ -31,12 +31,18 @@ export default function RootLayout({
           type="image/<generated>"
           sizes="<generated>"
         />
+        <link
+          rel="apple-touch-icon"
+          href="/apple-icon?<generated>"
+          type="image/<generated>"
+          sizes="<generated>"
+        />
       </head>
       <body className={cn("font-sans antialiased", fontSans.variable)}>
         <TooltipProvider delayDuration={500} disableHoverableContent>
           <GlobalProvider>
             <div
-              data-vaul-drawer-wrapper=""
+              vaul-drawer-wrapper=""
               className="min-h-screen bg-background"
             >
               {children}
