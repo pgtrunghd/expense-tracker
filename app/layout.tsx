@@ -5,7 +5,6 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro as FontSans } from "next/font/google";
 import "./globals.css";
-import Head from "next/head";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -25,6 +24,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link
+          rel="icon"
+          href="/icon?<generated>"
+          type="image/<generated>"
+          sizes="<generated>"
+        />
+      </head>
       <body className={cn("font-sans antialiased", fontSans.variable)}>
         <TooltipProvider delayDuration={500} disableHoverableContent>
           <GlobalProvider>
