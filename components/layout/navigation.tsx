@@ -31,11 +31,11 @@ export const Navigation = () => {
             </Link>
           ) : (
             <CreateExpense
+              key={item.path}
               open={modalCreate}
               setOpen={setModalCreate}
               trigger={
                 <Button
-                  key={item.path}
                   size="iconSm"
                   className="rounded-lg"
                   onClick={() => setModalCreate(true)}
