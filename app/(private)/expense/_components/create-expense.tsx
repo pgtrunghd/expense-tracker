@@ -51,19 +51,18 @@ import { cn } from "@/lib/utils";
 import { formCreateExpenseSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Loader2 } from "lucide-react";
-import { memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { FormProps, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
 interface IProps {
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   expense?: Expense;
   trigger?: React.ReactNode;
 }
 
-const CreateExpense = ({ open, expense, setOpen, trigger }: IProps) => {
+const CreateExpense = ({ expense, trigger }: IProps) => {
+  const [open, setOpen] = useState(false);
   const form = useForm<z.infer<typeof formCreateExpenseSchema>>({
     resolver: zodResolver(formCreateExpenseSchema),
   });

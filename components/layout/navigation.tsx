@@ -11,7 +11,6 @@ import CreateExpense from "@/app/(private)/expense/_components/create-expense";
 
 export const Navigation = () => {
   const pathname = usePathname();
-  const [modalCreate, setModalCreate] = useState(false);
 
   return (
     <section className="sticky inset-x-0 bottom-0 z-20 block border-t bg-background/60 shadow-md backdrop-blur md:hidden">
@@ -32,14 +31,8 @@ export const Navigation = () => {
           ) : (
             <CreateExpense
               key={item.path}
-              open={modalCreate}
-              setOpen={setModalCreate}
               trigger={
-                <Button
-                  size="iconSm"
-                  className="rounded-lg"
-                  onClick={() => setModalCreate(true)}
-                >
+                <Button size="iconSm" className="rounded-lg">
                   <Plus className="size-5" />
                 </Button>
               }

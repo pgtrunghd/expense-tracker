@@ -3,11 +3,10 @@
 import DataTable from "@/components/data-table";
 import { PaginationWithLinks } from "@/components/ui/pagination-with-links";
 import { useGetExpensesQuery } from "@/features/expense.slice";
-import { useMemo, useState } from "react";
-import { desktopColumns, mobileColumns } from "./columns";
-import ToolbarActions from "./toolbar-actions";
-import { useWindowSize } from "@/hooks/useWindowSize";
 import { useFilter } from "@/hooks/useFilter";
+import { useMemo } from "react";
+import { desktopColumns } from "./columns";
+import ToolbarActions from "./toolbar-actions";
 
 export const ExpenseTable = () => {
   const { filter, setPage } = useFilter();

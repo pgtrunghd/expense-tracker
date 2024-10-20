@@ -93,22 +93,24 @@ export const desktopColumns = (): ColumnDef<any>[] => {
               </DropdownMenuTrigger>
 
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onSelect={() => setModalEdit(true)}>
-                  <FilePenLine className="mr-2 size-4" />
-                  <span>Sửa</span>
+                <DropdownMenuItem>
+                  <CreateExpense
+                    expense={row.original}
+                    trigger={
+                      <Button>
+                        <FilePenLine className="mr-2 size-4" />
+                        <span>Sửa</span>
+                      </Button>
+                    }
+                  />
                 </DropdownMenuItem>
+
                 <DropdownMenuItem onSelect={() => setModalDelete(true)}>
                   <Eraser className="mr-2 size-4" />
                   <span>Xóa</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-
-            <CreateExpense
-              open={modalEdit}
-              setOpen={setModalEdit}
-              expense={row.original}
-            />
 
             <DeleteExpense
               expense={row.original}
@@ -122,63 +124,63 @@ export const desktopColumns = (): ColumnDef<any>[] => {
   ];
 };
 
-export const mobileColumns = (): ColumnDef<any>[] => {
-  return [
-    {
-      accessorKey: "createDate",
-      header: "Date",
-      cell: ({ row }) => {
-        const date = row?.original?.createDate;
-        return (
-          <>
-            <p>{new Date(date).toLocaleDateString()}</p>
-            <ContextMenuExpense data={row.original} />
-          </>
-        );
-      },
-    },
-    {
-      accessorKey: "category",
-      header: "Category",
-      cell: ({ row }) => {
-        const category = row?.original?.category;
+// export const mobileColumns = (): ColumnDef<any>[] => {
+//   return [
+//     {
+//       accessorKey: "createDate",
+//       header: "Date",
+//       cell: ({ row }) => {
+//         const date = row?.original?.createDate;
+//         return (
+//           <>
+//             <p>{new Date(date).toLocaleDateString()}</p>
+//             <ContextMenuExpense data={row.original} />
+//           </>
+//         );
+//       },
+//     },
+//     {
+//       accessorKey: "category",
+//       header: "Category",
+//       cell: ({ row }) => {
+//         const category = row?.original?.category;
 
-        return (
-          <>
-            <Badge style={{ backgroundColor: category?.color }}>
-              {category?.name}
-            </Badge>
-            <ContextMenuExpense data={row.original} />
-          </>
-        );
-      },
-    },
-    {
-      accessorKey: "description",
-      header: "Description",
-      cell: ({ row }) => {
-        const description = row?.original?.description;
-        return (
-          <>
-            <p className="line-clamp-1">{description}</p>
-            <ContextMenuExpense data={row.original} />
-          </>
-        );
-      },
-    },
-    {
-      accessorKey: "amount",
-      header: "Amount",
+//         return (
+//           <>
+//             <Badge style={{ backgroundColor: category?.color }}>
+//               {category?.name}
+//             </Badge>
+//             <ContextMenuExpense data={row.original} />
+//           </>
+//         );
+//       },
+//     },
+//     {
+//       accessorKey: "description",
+//       header: "Description",
+//       cell: ({ row }) => {
+//         const description = row?.original?.description;
+//         return (
+//           <>
+//             <p className="line-clamp-1">{description}</p>
+//             <ContextMenuExpense data={row.original} />
+//           </>
+//         );
+//       },
+//     },
+//     {
+//       accessorKey: "amount",
+//       header: "Amount",
 
-      cell: ({ row }) => {
-        const amount = row?.original?.amount;
-        return (
-          <>
-            <p>{formatter.format(amount)}</p>
-            <ContextMenuExpense data={row.original} />
-          </>
-        );
-      },
-    },
-  ];
-};
+//       cell: ({ row }) => {
+//         const amount = row?.original?.amount;
+//         return (
+//           <>
+//             <p>{formatter.format(amount)}</p>
+//             <ContextMenuExpense data={row.original} />
+//           </>
+//         );
+//       },
+//     },
+//   ];
+// };
