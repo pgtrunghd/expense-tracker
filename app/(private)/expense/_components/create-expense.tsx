@@ -8,6 +8,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Drawer,
@@ -15,6 +16,7 @@ import {
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from "@/components/ui/drawer";
 import {
   Form,
@@ -58,9 +60,10 @@ interface IProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   expense?: Expense;
+  trigger?: React.ReactNode;
 }
 
-const CreateExpense = ({ open, expense, setOpen }: IProps) => {
+const CreateExpense = ({ open, expense, setOpen, trigger }: IProps) => {
   const form = useForm<z.infer<typeof formCreateExpenseSchema>>({
     resolver: zodResolver(formCreateExpenseSchema),
   });
@@ -106,58 +109,43 @@ const CreateExpense = ({ open, expense, setOpen }: IProps) => {
   if (width && width < 768) {
     return (
       <Drawer open={open} onOpenChange={setOpen}>
-        {/* <Form {...form}> */}
-        <DrawerContent>
-          {/* <DrawerHeader> */}
-          <DrawerTitle>
-            {expense ? "Cập nhật chi tiêu" : "Tạo chi tiêu"}
-          </DrawerTitle>
-          {/* </DrawerHeader> */}
-          {/* <form
+        <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+
+        <Form {...form}>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>
+                {expense ? "Cập nhật chi tiêu" : "Tạo chi tiêu"}
+              </DrawerTitle>
+            </DrawerHeader>
+            <form
               onSubmit={form.handleSubmit(onSubmit)}
               className="space-y-3 sm:space-y-4"
-            > */}
-          {/* <CreateForm form={form} data={data} /> */}
-          <label
-            htmlFor="name"
-            className="mb-2 mt-8 block text-sm font-medium text-gray-900"
-          >
-            Project name
-          </label>
-          <input
-            id="name"
-            className="h-9 w-full rounded-lg border border-gray-200 bg-white px-3 text-gray-900 outline-none focus:ring-2 focus:ring-black/5"
-          />
-          <label
-            htmlFor="name"
-            className="mb-2 mt-8 block text-sm font-medium text-gray-900"
-          >
-            Description
-          </label>
-          <textarea
-            rows={6}
-            className="w-full resize-none rounded-lg border border-gray-200 bg-white p-3 pt-2.5 text-gray-900 outline-none focus:ring-2 focus:ring-black/5 focus:ring-offset-0"
-          />
-          <Button
-            size="sm"
-            type="submit"
-            disabled={isCreating || isUpdating}
-            className="w-full"
-          >
-            {isCreating || isUpdating ? (
-              <Loader2 className="mr-2 size-4 animate-spin" />
-            ) : null}
-            {expense ? "Cập nhật" : "Tạo"}
-          </Button>
-          {/* </form> */}
-        </DrawerContent>
-        {/* </Form> */}
+            >
+              <CreateForm form={form} data={data} />
+
+              <Button
+                size="sm"
+                type="submit"
+                disabled={isCreating || isUpdating}
+                className="w-full"
+              >
+                {isCreating || isUpdating ? (
+                  <Loader2 className="mr-2 size-4 animate-spin" />
+                ) : null}
+                {expense ? "Cập nhật" : "Tạo"}
+              </Button>
+            </form>
+          </DrawerContent>
+        </Form>
       </Drawer>
     );
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{trigger}</DialogTrigger>
+
       <Form {...form}>
         <DialogContent>
           <DialogHeader>
