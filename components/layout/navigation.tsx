@@ -8,7 +8,13 @@ import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import CreateExpense from "@/app/(private)/expense/_components/create-expense";
-import { Drawer, DrawerContent, DrawerDescription, DrawerTitle, DrawerTrigger } from "../ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../ui/drawer";
 
 export const Navigation = () => {
   const pathname = usePathname();
@@ -41,8 +47,12 @@ export const Navigation = () => {
             </Button>
           ),
         )} */}
-        <Drawer shouldScaleBackground={true}>
-          <DrawerTrigger className="">Open Drawer</DrawerTrigger>
+        <Button onClick={() => setModalCreate(true)}>Open Drawer</Button>
+        <Drawer
+          shouldScaleBackground={true}
+          open={modalCreate}
+          onOpenChange={setModalCreate}
+        >
           <>
             <DrawerContent>
               <div className="mx-auto w-full max-w-md overflow-auto rounded-t-[10px] p-4">
@@ -81,7 +91,7 @@ export const Navigation = () => {
           </>
         </Drawer>
 
-        <CreateExpense open={modalCreate} setOpen={setModalCreate} />
+        {/* <CreateExpense open={modalCreate} setOpen={setModalCreate} /> */}
       </ul>
     </section>
   );
