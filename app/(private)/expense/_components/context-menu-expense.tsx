@@ -34,7 +34,7 @@ export function ContextMenuExpense({ data }: IProps) {
         </ContextMenuItem>
       </ContextMenuContent>
 
-      <CreateExpense open={modalEdit} expense={data} setOpen={setModalEdit} />
+      {/* <CreateExpense open={modalEdit} expense={data} setOpen={setModalEdit} /> */}
       <DeleteExpense
         open={modalDelete}
         setOpen={setModalDelete}
