@@ -113,7 +113,7 @@ export const RecentExpense = () => {
         )}
       </CardContent>
 
-      <CreateExpense open={modal} setOpen={setModal} />
+      {/* <CreateExpense open={modal} setOpen={setModal} /> */}
     </>
   );
 };
