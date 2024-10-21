@@ -5,13 +5,14 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatter } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { ContextMenuExpense } from "./context-menu-expense";
 import CreateExpense from "./create-expense";
@@ -80,43 +81,68 @@ export const desktopColumns = (): ColumnDef<any>[] => {
       id: "actions",
       size: 40,
       cell: function Cell({ row }) {
-        const [modalEdit, setModalEdit] = useState(false);
-        const [modalDelete, setModalDelete] = useState(false);
+        const [dropdownOpen, setDropdownOpen] = useState(false);
+        const dropdownTriggerRef = useRef(null);
+
+        const handleDialogItemOpenChange = (open: boolean) => {
+          if (open === false) {
+            setDropdownOpen(false);
+          }
+        };
 
         return (
           <div className="text-right">
-            <DropdownMenu modal={false}>
+            <DropdownMenu
+              modal={false}
+              open={dropdownOpen}
+              onOpenChange={setDropdownOpen}
+            >
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" ref={dropdownTriggerRef}>
                   <Ellipsis className="size-4" />
                 </Button>
               </DropdownMenuTrigger>
 
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem>
+              <DropdownMenuContent
+                align="end"
+                // hidden={hasOpenDialog}
+                onCloseAutoFocus={(event) => {
+                  event.preventDefault();
+                }}
+              >
+                <DropdownMenuGroup>
                   <CreateExpense
+                    callback={handleDialogItemOpenChange}
                     expense={row.original}
                     trigger={
-                      <Button>
+                      <DropdownMenuItem
+                        onSelect={(event) => {
+                          event.preventDefault();
+                        }}
+                      >
                         <FilePenLine className="mr-2 size-4" />
                         <span>Sửa</span>
-                      </Button>
+                      </DropdownMenuItem>
                     }
                   />
-                </DropdownMenuItem>
 
-                <DropdownMenuItem onSelect={() => setModalDelete(true)}>
-                  <Eraser className="mr-2 size-4" />
-                  <span>Xóa</span>
-                </DropdownMenuItem>
+                  <DeleteExpense
+                    callback={handleDialogItemOpenChange}
+                    expense={row.original}
+                    trigger={
+                      <DropdownMenuItem
+                        onSelect={(event) => {
+                          event.preventDefault();
+                        }}
+                      >
+                        <Eraser className="mr-2 size-4" />
+                        <span>Xóa</span>
+                      </DropdownMenuItem>
+                    }
+                  />
+                </DropdownMenuGroup>
               </DropdownMenuContent>
             </DropdownMenu>
-
-            <DeleteExpense
-              expense={row.original}
-              open={modalDelete}
-              setOpen={setModalDelete}
-            />
           </div>
         );
       },

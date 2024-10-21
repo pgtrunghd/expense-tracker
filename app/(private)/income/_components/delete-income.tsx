@@ -1,39 +1,22 @@
 "use client";
 
+import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
-import { useDeleteExpenseMutation } from "@/features/expense.slice";
 import { useDeleteIncomeMutation } from "@/features/income.slice";
-import { useWindowSize } from "@/hooks/useWindowSize";
 import { notification } from "@/lib/constants";
 import { Loader2 } from "lucide-react";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import { toast } from "sonner";
 
 interface IProps {
   income: Income;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  trigger: React.ReactNode;
+  callback?: (open: boolean) => void;
 }
 
-const DeleteIncome = ({ income, open, setOpen }: IProps) => {
+const DeleteIncome = ({ income, callback, trigger }: IProps) => {
+  const [open, setOpen] = useState(false);
   const [deleteExpense, { isLoading: isDeleting }] = useDeleteIncomeMutation();
-  const { width } = useWindowSize();
 
   const onDelete = async () => {
     try {
@@ -46,57 +29,27 @@ const DeleteIncome = ({ income, open, setOpen }: IProps) => {
     }
   };
 
-  if (width && width < 768) {
-    return (
-      <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>Bạn có chắc chắn không?</DrawerTitle>
-            <DrawerDescription>
-              Không thể hoàn tác hành động này. Bạn có muốn xóa thu nhập của
-              bạn.
-            </DrawerDescription>
-          </DrawerHeader>
-          <DrawerFooter>
-            <Button
-              variant="destructive"
-              onClick={onDelete}
-              disabled={isDeleting}
-            >
-              {isDeleting ? (
-                <Loader2 className="mr-2 size-4 animate-spin" />
-              ) : null}
-              Xóa
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    );
-  }
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Bạn có chắc chắn không?</DialogTitle>
-          <DialogDescription>
-            Không thể hoàn tác hành động này. Bạn có muốn xóa thu nhập của bạn.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button
-            variant="destructive"
-            onClick={onDelete}
-            disabled={isDeleting}
-          >
-            {isDeleting ? (
-              <Loader2 className="mr-2 size-4 animate-spin" />
-            ) : null}
-            Xóa
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      title="Bạn có chắc chắn không?"
+      description="Không thể hoàn tác hành động này. Bạn có muốn xóa thu nhập của bạn."
+      trigger={trigger}
+      open={open}
+      setOpen={(open: boolean) => {
+        setOpen(open);
+        callback && callback(open);
+      }}
+    >
+      <Button
+        variant="destructive"
+        onClick={onDelete}
+        disabled={isDeleting}
+        className="mt-2 w-full"
+      >
+        {isDeleting ? <Loader2 className="mr-2 size-4 animate-spin" /> : null}
+        Xóa
+      </Button>
+    </ResponsiveDialog>
   );
 };
 

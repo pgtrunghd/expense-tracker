@@ -25,7 +25,8 @@ export const TopExpenses = () => {
         fill: category.color,
       }))
       .filter((item) => item.expense > 0)
-      .sort((a, b) => b.expense - a.expense);
+      .sort((a, b) => b.expense - a.expense)
+      .slice(0, 5);
   }, [data]);
 
   const chartConfig = {
@@ -52,7 +53,7 @@ export const TopExpenses = () => {
               tickMargin={10}
               axisLine={false}
             />
-            <Bar dataKey="expense" radius={4} />
+            <Bar dataKey="expense" radius={4} barSize={`${100 / 5}%`} />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
           </BarChart>
         </ChartContainer>

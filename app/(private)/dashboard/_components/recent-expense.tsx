@@ -1,7 +1,6 @@
 "use client";
 
 import { NoDataFound } from "@/components/no-data-found";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -12,8 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-  useGetExpensesQuery,
-  useGetRecentActivityQuery,
+  useGetRecentActivityQuery
 } from "@/features/expense.slice";
 import { formatter } from "@/lib/utils";
 import { format } from "date-fns";
@@ -21,15 +19,18 @@ import { Ellipsis, ListCollapse, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CreateExpense from "../../expense/_components/create-expense";
-import { useFilter } from "@/hooks/useFilter";
 
 export const RecentExpense = () => {
-  const [modal, setModal] = useState(false);
-  // const { filter } = useFilter({ take: 5 });
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { data: res, isLoading, isSuccess } = useGetRecentActivityQuery();
   const expenseData = res?.slice(0, 5);
-  // const expenseMeta = res?.meta;
   const router = useRouter();
+
+  const handleDialogOpenChange = (open: boolean) => {
+    if (!open) {
+      setDropdownOpen(false);
+    }
+  };
 
   const loading = () => {
     return (
@@ -56,17 +57,31 @@ export const RecentExpense = () => {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           Hoạt động gần đây
-          <DropdownMenu modal={false}>
+          <DropdownMenu
+            modal={false}
+            open={dropdownOpen}
+            onOpenChange={setDropdownOpen}
+          >
             <DropdownMenuTrigger asChild>
               <Button size="iconSm" variant="ghost">
                 <Ellipsis className="size-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => setModal(true)}>
-                <Plus className="mr-2 size-4" />
-                Tạo chi tiêu
-              </DropdownMenuItem>
+            <DropdownMenuContent
+              align="end"
+              onCloseAutoFocus={(event) => event.preventDefault()}
+            >
+              <CreateExpense
+                callback={handleDialogOpenChange}
+                trigger={
+                  <DropdownMenuItem
+                    onSelect={(event) => event.preventDefault()}
+                  >
+                    <Plus className="mr-2 size-4" />
+                    Tạo chi tiêu
+                  </DropdownMenuItem>
+                }
+              />
 
               <DropdownMenuItem onClick={() => router.push("/expense")}>
                 <ListCollapse className="mr-2 size-4" />
@@ -112,8 +127,6 @@ export const RecentExpense = () => {
           </div>
         )}
       </CardContent>
-
-      {/* <CreateExpense open={modal} setOpen={setModal} /> */}
     </>
   );
 };

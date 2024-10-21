@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { CreateIncomeMemo } from "./create-income";
 import { formatter } from "@/lib/utils";
 import DeleteIncome from "./delete-income";
@@ -56,41 +56,61 @@ export const desktopColumns = (): ColumnDef<any>[] => {
       id: "actions",
       size: 40,
       cell: function Cell({ row }) {
-        const [modalEdit, setModalEdit] = useState(false);
-        const [modalDelete, setModalDelete] = useState(false);
+        const [dropdownOpen, setDropdownOpen] = useState(false);
+        const dropdownTriggerRef = useRef(null);
+
+        const handleDialogOpenChange = (open: boolean) => {
+          if (!open) {
+            setDropdownOpen(false);
+          }
+        };
 
         return (
           <div className="text-right">
-            <DropdownMenu modal={false}>
+            <DropdownMenu
+              modal={false}
+              open={dropdownOpen}
+              onOpenChange={setDropdownOpen}
+            >
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" ref={dropdownTriggerRef}>
                   <Ellipsis className="size-4" />
                 </Button>
               </DropdownMenuTrigger>
 
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onSelect={() => setModalEdit(true)}>
-                  <FilePenLine className="mr-2 size-4" />
-                  <span>Sửa</span>
-                </DropdownMenuItem>
-                <DropdownMenuItem onSelect={() => setModalDelete(true)}>
-                  <Eraser className="mr-2 size-4" />
-                  <span>Xóa</span>
-                </DropdownMenuItem>
+              <DropdownMenuContent
+                align="end"
+                onCloseAutoFocus={(event) => {
+                  event.preventDefault();
+                }}
+              >
+                <CreateIncomeMemo
+                  callback={handleDialogOpenChange}
+                  income={row?.original}
+                  trigger={
+                    <DropdownMenuItem
+                      onSelect={(event) => event.preventDefault()}
+                    >
+                      <FilePenLine className="mr-2 size-4" />
+                      <span>Sửa</span>
+                    </DropdownMenuItem>
+                  }
+                />
+
+                <DeleteIncome
+                  callback={handleDialogOpenChange}
+                  income={row?.original}
+                  trigger={
+                    <DropdownMenuItem
+                      onSelect={(event) => event.preventDefault()}
+                    >
+                      <Eraser className="mr-2 size-4" />
+                      <span>Xóa</span>
+                    </DropdownMenuItem>
+                  }
+                />
               </DropdownMenuContent>
             </DropdownMenu>
-
-            <CreateIncomeMemo
-              open={modalEdit}
-              setOpen={setModalEdit}
-              income={row?.original}
-            />
-
-            <DeleteIncome
-              open={modalDelete}
-              setOpen={setModalDelete}
-              income={row?.original}
-            />
           </div>
         );
       },

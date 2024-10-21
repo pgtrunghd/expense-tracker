@@ -7,19 +7,15 @@ import React, { memo, useState } from "react";
 import CreateCategory from "./create-category";
 
 const ToolbarActions = () => {
-  const [open, setOpen] = useState(false);
-
   return (
     <section className="pb-3 text-right">
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>
+      <CreateCategory
+        trigger={
           <Button size="xs">
             <Plus className="mr-2 size-4" /> Tạo category
           </Button>
-        </DialogTrigger>
-
-        <CreateCategory open={open} setOpen={setOpen} />
-      </Dialog>
+        }
+      />
     </section>
   );
 };

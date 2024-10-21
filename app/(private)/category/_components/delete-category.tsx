@@ -1,43 +1,28 @@
 "use client";
 
+import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-} from "@/components/ui/drawer";
 import { useDeleteCategoryMutation } from "@/features/category.slice";
-import { useWindowSize } from "@/hooks/useWindowSize";
+import { notification } from "@/lib/constants";
 import { Loader2 } from "lucide-react";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { toast } from "sonner";
 
 interface IProps {
   category: Category;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  trigger: React.ReactNode;
+  callback?: (open: boolean) => void;
 }
 
-const DeleteCategory = ({ category, open, setOpen }: IProps) => {
+const DeleteCategory = ({ category, trigger, callback }: IProps) => {
+  const [open, setOpen] = useState(false);
   const [deleteCategory, { isLoading: isDeleting }] =
     useDeleteCategoryMutation();
-  const { width } = useWindowSize();
 
   const onDelete = async () => {
     try {
       await deleteCategory(category.id).unwrap();
-      toast.success("Category deleted successfully");
+      toast.success(notification.DELETE_SUCCESS);
       setOpen(false);
     } catch (error: any) {
       console.log(error);
@@ -45,52 +30,27 @@ const DeleteCategory = ({ category, open, setOpen }: IProps) => {
     }
   };
 
-  if (width && width < 768) {
-    return (
-      <Drawer open={open} onOpenChange={setOpen}>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>Bạn có chắc chắn không?</DrawerTitle>
-            <DrawerDescription>
-              Không thể hoàn tác hành động này. Bạn có muốn xóa category này.
-            </DrawerDescription>
-          </DrawerHeader>
-          <DrawerFooter>
-            <Button
-              variant="destructive"
-              onClick={onDelete}
-              disabled={isDeleting}
-            >
-              {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Xóa
-            </Button>
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    );
-  }
-
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Bạn có chắc chắn không?</DialogTitle>
-          <DialogDescription>
-            Không thể hoàn tác hành động này. Bạn có muốn xóa category này.
-          </DialogDescription>
-        </DialogHeader>
-        <DialogFooter>
-          <Button
-            variant="destructive"
-            onClick={onDelete}
-            disabled={isDeleting}
-          >
-            {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Xóa
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <ResponsiveDialog
+      title="Bạn có chắc chắn không?"
+      description="Không thể hoàn tác hành động này. Bạn có muốn xóa category này."
+      trigger={trigger}
+      open={open}
+      setOpen={(open: boolean) => {
+        setOpen(open);
+        callback && callback(open);
+      }}
+    >
+      <Button
+        variant="destructive"
+        onClick={onDelete}
+        disabled={isDeleting}
+        className="mt-2 w-full"
+      >
+        {isDeleting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        Xóa
+      </Button>
+    </ResponsiveDialog>
   );
 };
 
