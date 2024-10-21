@@ -1,4 +1,3 @@
-import { logout } from "@/app/(private)/actions";
 import {
   BaseQueryFn,
   FetchArgs,
@@ -58,7 +57,8 @@ export const baseQueryWithAuth: BaseQueryFn<
           result = await baseQuery(arg, api, extraOptions);
         } else {
           localStorage.removeItem("user");
-          await logout();
+          window.location.href = "/login";
+          return result;
         }
       } finally {
         release();

@@ -1,8 +1,4 @@
-import { logout } from "@/app/(private)/actions";
-import { getToken } from "@/app/actions";
 import { type ClassValue, clsx } from "clsx";
-import { redirect } from "next/navigation";
-import { toast } from "sonner";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
