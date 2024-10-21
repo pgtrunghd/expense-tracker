@@ -11,12 +11,10 @@ import {
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetBalanceQuery } from "@/features/balance.slice";
-import { useGetDailyCategoryQuery } from "@/features/category.slice";
-import { formatDate } from "@/lib/utils";
 import { useMemo } from "react";
 import { Pie, PieChart } from "recharts";
 
-export const ReportOverview = () => {
+const ReportOverview = () => {
   const { data, isLoading } = useGetBalanceQuery();
 
   const chartData = useMemo(
@@ -83,32 +81,6 @@ export const ReportOverview = () => {
       <NoDataFound />
     </div>
   );
-  // <Card className="md:col-span-1">
-  //   <CardHeader>
-  //     <CardTitle>Chi tiêu hôm nay</CardTitle>
-  //   </CardHeader>
-  //   <CardContent>
-  //     {data?.length > 0 ? (
-  //       <ChartContainer
-  //         config={chartConfig}
-  //         className="mx-auto aspect-square max-h-[250px] sm:max-h-[300px]"
-  //       >
-  //         <PieChart>
-  //           <ChartTooltip
-  //             cursor={false}
-  //             content={
-  //               <ChartTooltipContent
-  //                 className="flex items-center gap-4"
-  //                 hideLabel
-  //               />
-  //             }
-  //           />
-  //           <Pie data={chartData} dataKey="amount" nameKey="category" />
-  //         </PieChart>
-  //       </ChartContainer>
-  //     ) : (
-  //       <NoDataFound />
-  //     )}
-  //   </CardContent>
-  // </Card>
 };
+
+export default ReportOverview;

@@ -14,19 +14,19 @@ import { formatter } from "@/lib/utils";
 import { CircleDollarSign, CreditCard, HandCoins, PiggyBank, Wallet } from "lucide-react";
 import React from "react";
 
-export const CardList = () => {
+const CardList = () => {
   const { data: overviewData, isLoading } = useGetBalanceQuery();
 
-  if (isLoading)
-    return (
-      <div className="grid grid-cols-1 gap-4 duration-200 sm:grid-cols-2 lg:grid-cols-4">
-        {Array(3)
-          .fill(0)
-          .map((_, index) => (
-            <Skeleton className="h-28 w-full" key={index} />
-          ))}
-      </div>
-    );
+  // if (isLoading)
+  //   return (
+  //     <div className="grid grid-cols-1 gap-4 duration-200 sm:grid-cols-2 lg:grid-cols-4">
+  //       {Array(3)
+  //         .fill(0)
+  //         .map((_, index) => (
+  //           <Skeleton className="h-28 w-full" key={index} />
+  //         ))}
+  //     </div>
+  //   );
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -69,3 +69,5 @@ export const CardList = () => {
     </div>
   );
 };
+
+export default CardList;

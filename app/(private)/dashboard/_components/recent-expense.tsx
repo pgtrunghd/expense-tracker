@@ -10,9 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
-import {
-  useGetRecentActivityQuery
-} from "@/features/expense.slice";
+import { useGetRecentActivityQuery } from "@/features/expense.slice";
 import { formatter } from "@/lib/utils";
 import { format } from "date-fns";
 import { Ellipsis, ListCollapse, Plus } from "lucide-react";
@@ -20,7 +18,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CreateExpense from "../../expense/_components/create-expense";
 
-export const RecentExpense = () => {
+const RecentExpense = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { data: res, isLoading, isSuccess } = useGetRecentActivityQuery();
   const expenseData = res?.slice(0, 5);
@@ -63,7 +61,7 @@ export const RecentExpense = () => {
             onOpenChange={setDropdownOpen}
           >
             <DropdownMenuTrigger asChild>
-              <Button size="iconSm" variant="ghost">
+              <Button size="iconSm" variant="ghost" aria-label="detail">
                 <Ellipsis className="size-4" />
               </Button>
             </DropdownMenuTrigger>
@@ -113,11 +111,11 @@ export const RecentExpense = () => {
                   </p>
                 </div>
                 {expense.type === "income" ? (
-                  <p className="text-sm text-green-500">
+                  <p className="text-sm font-medium text-green-500">
                     +{formatter.format(expense.amount)}
                   </p>
                 ) : (
-                  <p className="text-sm text-destructive">
+                  <p className="text-sm font-medium text-destructive">
                     -{formatter.format(expense.amount)}
                   </p>
                 )}
@@ -130,3 +128,5 @@ export const RecentExpense = () => {
     </>
   );
 };
+
+export default RecentExpense;

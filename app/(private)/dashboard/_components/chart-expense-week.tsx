@@ -13,9 +13,8 @@ import { formatDate } from "@/lib/utils";
 import { useCallback, useMemo } from "react";
 import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
-export const ChartExpenseWeek = () => {
+const ChartExpenseWeek = () => {
   const { data, isLoading } = useGetWeeklyExpenseQuery(formatDate(new Date()));
-  // const { width } = useWindowSize();
 
   const getCategories = useCallback(() => {
     const checkDuplicate: { [key: string]: boolean } = {};
@@ -31,25 +30,6 @@ export const ChartExpenseWeek = () => {
     });
     return result;
   }, [data]);
-
-  const categories = useMemo(getCategories, [data]);
-
-  // const chartData = useMemo(
-  //   () =>
-  //     data?.reduce((acc: any[], curr: Expense) => {
-  //       const date = formatDate(new Date(curr.createDate));
-  //       let entry = acc.find((item) => item.date === date);
-  //       if (!entry) {
-  //         entry = { date };
-  //         // categories.forEach((category: string) => (entry[category] = 0));
-  //         acc.push(entry);
-  //       }
-  //       entry[curr.category.name] =
-  //         (entry[curr.category.name] || 0) + curr.amount;
-  //       return acc;
-  //     }, []),
-  //   [data],
-  // );
 
   const chartData = useMemo(() => {
     return data?.reduce((acc: any[], curr: Expense) => {
@@ -118,22 +98,7 @@ export const ChartExpenseWeek = () => {
             />
           }
         />
-        {/* <ChartLegend content={<ChartLegendContent />} /> */}
-        {/* {categories.map((category, index) => (
-          <Bar
-            key={category.name}
-            dataKey={category.name}
-            type="natural"
-            // stackId="a"
-            fill={category.color}
-            // stroke={category.color}
-            // strokeWidth={2}
-            fillOpacity={0.8}
-            radius={4}
-          >
-            <LabelList dataKey={category.name} />
-          </Bar>
-        ))} */}
+
         <Line
           dataKey="amount"
           type="linear"
@@ -148,3 +113,5 @@ export const ChartExpenseWeek = () => {
     </div>
   );
 };
+
+export default ChartExpenseWeek;

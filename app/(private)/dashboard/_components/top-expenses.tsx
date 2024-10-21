@@ -12,7 +12,7 @@ import { useGetCategoriesQuery } from "@/features/category.slice";
 import { useMemo } from "react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 
-export const TopExpenses = () => {
+const TopExpenses = () => {
   const { data, isLoading } = useGetCategoriesQuery();
 
   const topExpensesData = useMemo(() => {
@@ -65,3 +65,5 @@ export const TopExpenses = () => {
     </>
   );
 };
+
+export default TopExpenses;

@@ -1,10 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CardList } from "./_components/card-list";
-import { ChartExpenseToday } from "./_components/chart-expense-today";
-import { ChartExpenseWeek } from "./_components/chart-expense-week";
-import { RecentExpense } from "./_components/recent-expense";
-import { TopExpenses } from "./_components/top-expenses";
-import { ReportOverview } from "./_components/report-overview";
+import dynamic from "next/dynamic";
+
+const ChartExpenseWeek = dynamic(
+  () => import("./_components/chart-expense-week"),
+);
+
+const TopExpenses = dynamic(() => import("./_components/top-expenses"));
+
+const ReportOverview = dynamic(() => import("./_components/report-overview"));
+
+const CardList = dynamic(() => import("./_components/card-list"));
+
+const RecentExpense = dynamic(() => import("./_components/recent-expense"));
 
 function DashboardPage() {
   return (
@@ -12,24 +19,6 @@ function DashboardPage() {
       <CardList />
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-        {/* <Card className="col-span-2">
-          <CardContent className="p-6">
-            <Tabs defaultValue="today">
-              <TabsList>
-                <TabsTrigger value="today">Chi tiêu hôm nay</TabsTrigger>
-                <TabsTrigger value="week">Chi tiêu trong tuần</TabsTrigger>
-              </TabsList>
-
-              <TabsContent value="today" className="mt-10">
-                <ChartExpenseToday />
-              </TabsContent>
-              <TabsContent value="week" className="mt-10">
-                <ChartExpenseWeek />
-              </TabsContent>
-            </Tabs>
-          </CardContent>
-        </Card> */}
-
         <Card className="order-2 md:order-1 lg:col-span-2 2xl:col-span-3">
           <CardHeader>
             <CardTitle>Top chi tiêu</CardTitle>

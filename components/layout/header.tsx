@@ -11,11 +11,10 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
+import { useGetBalanceQuery } from "@/features/balance.slice";
+import { cn, formatter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { cn, formatter } from "@/lib/utils";
-import { useGetBalanceQuery } from "@/features/balance.slice";
-import { Skeleton } from "../ui/skeleton";
 
 export default function Header() {
   const router = useRouter();
@@ -52,18 +51,21 @@ export default function Header() {
     >
       <div className="flex flex-col items-end text-xs md:text-sm">
         <p>Số dư</p>
-        {isLoading ? (
+        {/* {isLoading ? (
           <Skeleton className="h-5 w-20" />
-        ) : (
-          <p className="font-semibold">
-            {formatter.format(overviewData?.balance ?? 0)}
-          </p>
-        )}
+        ) : ( */}
+        <p className="font-semibold">
+          {formatter.format(overviewData?.balance ?? 0)}
+        </p>
+        {/* )} */}
       </div>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
-          <Avatar className="size-9 cursor-pointer duration-200 hover:opacity-75 sm:size-10">
-            <AvatarImage src="https://github.com/shadcn.png" />
+          <Avatar
+            className="size-9 cursor-pointer duration-200 hover:opacity-75 sm:size-10"
+            aria-expanded="true"
+          >
+            <AvatarImage loading="lazy" src="avatar.jpg" alt="avatar" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
         </DropdownMenuTrigger>

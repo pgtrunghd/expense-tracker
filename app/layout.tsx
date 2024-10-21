@@ -37,6 +37,11 @@ export default function RootLayout({
           type="image/png"
           sizes="16x16"
         />
+        <meta
+          name="apple-mobile-web-app-status-bar-style"
+          content="black-translucent"
+        />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
       </head>
       <body className={cn("font-sans antialiased", fontSans.variable)}>
         <TooltipProvider delayDuration={500} disableHoverableContent>
