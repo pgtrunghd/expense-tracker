@@ -29,13 +29,13 @@ export default function RootLayout({
           rel="icon"
           href="/icon?<generated>"
           type="image/<generated>"
-          sizes="<generated>"
+          sizes="24x24"
         />
         <link
           rel="apple-touch-icon"
           href="/apple-icon?<generated>"
           type="image/png"
-          sizes="24x24"
+          sizes="16x16"
         />
       </head>
       <body className={cn("font-sans antialiased", fontSans.variable)}>

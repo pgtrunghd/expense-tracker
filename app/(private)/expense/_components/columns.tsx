@@ -14,7 +14,6 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
 import { useRef, useState } from "react";
 
-import { ContextMenuExpense } from "./context-menu-expense";
 import CreateExpense from "./create-expense";
 import DeleteExpense from "./delete-expense";
 
@@ -28,7 +27,6 @@ export const desktopColumns = (): ColumnDef<any>[] => {
         return (
           <>
             <p>{new Date(date).toLocaleDateString()}</p>
-            <ContextMenuExpense data={row.original} />
           </>
         );
       },
@@ -44,7 +42,6 @@ export const desktopColumns = (): ColumnDef<any>[] => {
             <Badge style={{ backgroundColor: category?.color }}>
               {category?.name}
             </Badge>
-            <ContextMenuExpense data={row.original} />
           </div>
         );
       },
@@ -57,7 +54,6 @@ export const desktopColumns = (): ColumnDef<any>[] => {
         return (
           <>
             <p className="max-w-[200px] truncate">{description}</p>
-            <ContextMenuExpense data={row.original} />
           </>
         );
       },
@@ -71,7 +67,6 @@ export const desktopColumns = (): ColumnDef<any>[] => {
         return (
           <>
             <p className="text-destructive">-{formatter.format(amount)}</p>
-            <ContextMenuExpense data={row.original} />
           </>
         );
       },

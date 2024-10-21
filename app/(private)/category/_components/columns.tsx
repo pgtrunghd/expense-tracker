@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog } from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,7 +12,6 @@ import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
 import { useRef, useState } from "react";
 import CreateCategory from "./create-category";
 import DeleteCategory from "./delete-category";
-import { ContextMenuCategory } from "./context-menu-category";
 
 export const getColumns = (): ColumnDef<any>[] => {
   return [
@@ -25,7 +23,6 @@ export const getColumns = (): ColumnDef<any>[] => {
         return (
           <>
             <p>{name}</p>
-            <ContextMenuCategory data={row.original} />
           </>
         );
       },
@@ -44,7 +41,6 @@ export const getColumns = (): ColumnDef<any>[] => {
               ></span>
               <p>{color}</p>
             </div>
-            <ContextMenuCategory data={row.original} />
           </>
         );
       },
@@ -54,8 +50,6 @@ export const getColumns = (): ColumnDef<any>[] => {
       enableHiding: false,
       size: 40,
       cell: function Cell({ row }) {
-        const [modalEdit, setModalEdit] = useState(false);
-        const [modalDelete, setModalDelete] = useState(false);
         const [dropdownOpen, setDropdownOpen] = useState(false);
         const dropdownTriggerRef = useRef(null);
 
