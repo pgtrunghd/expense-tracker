@@ -5,29 +5,15 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import { Eraser, FilePenLine } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import CreateExpense from "./create-expense";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import DeleteExpense from "./delete-expense";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 interface IProps {
   data: Expense;
 }
 
 export function ContextMenuExpense({ data }: IProps) {
-  const [modalEdit, setModalEdit] = useState(false);
-  const [modalDelete, setModalDelete] = useState(false);
-  const [hasOpenDialog, setHasOpenDialog] = useState(false);
   const [contextOpen, setContextOpen] = useState(false);
 
   const handleDialogItemOpenChange = (open: boolean) => {
