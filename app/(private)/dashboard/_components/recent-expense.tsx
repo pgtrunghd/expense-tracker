@@ -7,6 +7,7 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -17,6 +18,7 @@ import { Ellipsis, ListCollapse, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import CreateExpense from "../../expense/_components/create-expense";
+import { CreateIncomeMemo } from "../../income/_components/create-income";
 
 const RecentExpense = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -83,7 +85,26 @@ const RecentExpense = () => {
 
               <DropdownMenuItem onClick={() => router.push("/expense")}>
                 <ListCollapse className="mr-2 size-4" />
-                Xem chi tiết
+                Chi tiết chi tiêu
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator />
+
+              <CreateIncomeMemo
+                callback={handleDialogOpenChange}
+                trigger={
+                  <DropdownMenuItem
+                    onSelect={(event) => event.preventDefault()}
+                  >
+                    <Plus className="mr-2 size-4" />
+                    Tạo thu nhập
+                  </DropdownMenuItem>
+                }
+              />
+
+              <DropdownMenuItem onClick={() => router.push("/income")}>
+                <ListCollapse className="mr-2 size-4" />
+                Chi tiết thu nhập
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -105,7 +126,7 @@ const RecentExpense = () => {
                   {/* <Badge style={{ backgroundColor: expense.category.color }}>
                     {expense.category.name}
                   </Badge> */}
-                  <p className="text-sm">{expense.description}</p>
+                  <p className="line-clamp-1 text-sm">{expense.description}</p>
                   <p className="text-sm text-muted-foreground">
                     {format(expense.createDate, "dd/MM/yyyy")}
                   </p>

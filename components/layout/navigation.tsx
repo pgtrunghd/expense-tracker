@@ -14,7 +14,7 @@ export const Navigation = () => {
 
   return (
     <section className="sticky inset-x-0 bottom-0 z-20 block border-t bg-background/60 shadow-md backdrop-blur md:hidden">
-      <ul className="relative flex h-full items-center justify-evenly pt-2 pb-5">
+      <ul className="relative flex h-full items-center justify-evenly pt-2 pb-6">
         {navListMobile.map((item) =>
           item.type === "link" ? (
             <Link

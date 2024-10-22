@@ -10,23 +10,18 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetBalanceQuery } from "@/features/balance.slice";
 import { useGetCategoriesQuery } from "@/features/category.slice";
-import { formatter } from "@/lib/utils";
-import { CircleDollarSign, CreditCard, HandCoins, PiggyBank, Wallet } from "lucide-react";
+import { cn, formatter } from "@/lib/utils";
+import {
+  CircleDollarSign,
+  CreditCard,
+  HandCoins,
+  PiggyBank,
+  Wallet,
+} from "lucide-react";
 import React from "react";
 
 const CardList = () => {
   const { data: overviewData, isLoading } = useGetBalanceQuery();
-
-  // if (isLoading)
-  //   return (
-  //     <div className="grid grid-cols-1 gap-4 duration-200 sm:grid-cols-2 lg:grid-cols-4">
-  //       {Array(3)
-  //         .fill(0)
-  //         .map((_, index) => (
-  //           <Skeleton className="h-28 w-full" key={index} />
-  //         ))}
-  //     </div>
-  //   );
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -37,8 +32,8 @@ const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base font-semibold text-muted-foreground md:text-lg">
-            {formatter.format(overviewData?.totalExpense ?? 0)}
+          <p className="text-base font-semibold text-destructive md:text-lg">
+            -{formatter.format(overviewData?.totalExpense ?? 0)}
           </p>
         </CardContent>
       </Card>
@@ -49,8 +44,8 @@ const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base font-semibold text-muted-foreground md:text-lg">
-            {formatter.format(overviewData?.totalIncome ?? 0)}
+          <p className="text-base font-semibold text-green-500 md:text-lg">
+            +{formatter.format(overviewData?.totalIncome ?? 0)}
           </p>
         </CardContent>
       </Card>
@@ -61,7 +56,16 @@ const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base font-semibold text-muted-foreground md:text-lg">
+          <p
+            className={cn(
+              "text-base font-semibold md:text-lg",
+              !overviewData?.totalSaving
+                ? "text-muted-foreground"
+                : overviewData?.totalSaving < 0
+                  ? "text-destructive"
+                  : "text-green-500",
+            )}
+          >
             {formatter.format(overviewData?.totalSaving ?? 0)}
           </p>
         </CardContent>
