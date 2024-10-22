@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { DatabaseZap, Inbox } from "lucide-react";
+import { Inbox } from "lucide-react";
 import React from "react";
 
 type TProps = {} & React.HTMLAttributes<HTMLDivElement>;

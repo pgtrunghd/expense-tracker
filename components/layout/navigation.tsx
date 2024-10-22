@@ -32,7 +32,7 @@ export const Navigation = () => {
             <CreateExpense
               key={item.path}
               trigger={
-                <Button size="iconSm" className="rounded-lg">
+                <Button size="icon" className="rounded-lg">
                   <Plus className="size-5" />
                 </Button>
               }

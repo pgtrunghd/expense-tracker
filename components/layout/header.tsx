@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 export default function Header() {
   const router = useRouter();
   const [scroll, setScroll] = useState(false);
-  const { data: overviewData, isLoading } = useGetBalanceQuery();
+  const { data: overviewData } = useGetBalanceQuery();
 
   const signOut = () => {
     localStorage.removeItem("user");
@@ -75,7 +75,7 @@ export default function Header() {
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={signOut}>
             <LogOut className="mr-2 size-4" />
-            Logout
+            Đăng xuất
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

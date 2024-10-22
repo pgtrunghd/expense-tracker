@@ -24,7 +24,7 @@ const CardList = () => {
   const { data: overviewData, isLoading } = useGetBalanceQuery();
 
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
       <Card>
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center justify-between">
@@ -32,7 +32,7 @@ const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base font-semibold text-destructive md:text-lg">
+          <p className="truncate text-base font-semibold text-destructive md:text-lg">
             -{formatter.format(overviewData?.totalExpense ?? 0)}
           </p>
         </CardContent>
@@ -44,12 +44,12 @@ const CardList = () => {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-base font-semibold text-green-500 md:text-lg">
+          <p className="truncate text-base font-semibold text-green-500 md:text-lg">
             +{formatter.format(overviewData?.totalIncome ?? 0)}
           </p>
         </CardContent>
       </Card>
-      <Card>
+      <Card className="col-span-2 md:col-span-1">
         <CardHeader className="pb-4">
           <CardTitle className="flex items-center justify-between">
             Tiết kiệm <Wallet className="size-5" />
@@ -58,7 +58,7 @@ const CardList = () => {
         <CardContent>
           <p
             className={cn(
-              "text-base font-semibold md:text-lg",
+              "truncate text-base font-semibold md:text-lg",
               !overviewData?.totalSaving
                 ? "text-muted-foreground"
                 : overviewData?.totalSaving < 0
