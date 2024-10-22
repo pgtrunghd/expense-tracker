@@ -25,23 +25,27 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link
           rel="icon"
           href="/icon?<generated>"
           type="image/<generated>"
-          sizes="24x24"
+          sizes="<generated>"
         />
         <link
-          rel="apple-touch-icon"
+          rel="apple-icon"
           href="/apple-icon?<generated>"
+          type="image/<generated>"
+          sizes="<generated>"
+        />
+        <link
+          rel="icon"
           type="image/png"
-          sizes="16x16"
+          href="/favicon-48x48.png"
+          sizes="48x48"
         />
-        <meta
-          name="apple-mobile-web-app-status-bar-style"
-          content="black-translucent"
-        />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-title" content="Tracker" />
+        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body className={cn("font-sans antialiased", fontSans.variable)}>
         <TooltipProvider delayDuration={500} disableHoverableContent>

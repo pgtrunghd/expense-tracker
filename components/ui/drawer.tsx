@@ -11,6 +11,7 @@ const Drawer = ({
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root
     shouldScaleBackground={shouldScaleBackground}
+    repositionInputs={false}
     {...props}
   />
 );
@@ -85,10 +86,7 @@ const DrawerTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Title
     ref={ref}
-    className={cn(
-      "text-lg font-medium leading-none tracking-tight",
-      className,
-    )}
+    className={cn("text-lg font-medium leading-none tracking-tight", className)}
     {...props}
   />
 ));

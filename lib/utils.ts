@@ -9,13 +9,6 @@ export function getDomain(url: string) {
   return `${process.env.NEXT_PUBLIC_API_URL}${url}`;
 }
 
-// export async function authWithToken(headers: Headers) {
-//   const authToken = await getToken();
-//   if (authToken?.value) {
-//     headers.set("Authorization", `Bearer ${authToken.value}`);
-//   }
-// }
-
 export const requestWithToken = (headers: Headers) => {
   const store = localStorage.getItem("access_token");
   if (store) {
@@ -34,11 +27,9 @@ export const onQueryStartedErrorToast = async (
     console.log(err);
 
     if (err.error.status === 401) {
-      // toast.error(err.error.data.message);
       console.error(err.error.data.message);
       localStorage.removeItem("access_token");
     }
-    // await logout();
   }
 };
 
