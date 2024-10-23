@@ -1,5 +1,6 @@
 "use client";
 
+import { InputNumber } from "@/components/input-number";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -57,7 +58,7 @@ const CreateIncome = ({ income, callback, trigger }: IProps) => {
 
 export const CreateIncomeMemo = memo(CreateIncome);
 
-const CreateForm = ({
+export const CreateForm = ({
   income,
   setOpen,
 }: {
@@ -152,7 +153,7 @@ const CreateForm = ({
             <FormItem>
               <FormLabel>Số tiền</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <InputNumber {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -165,7 +166,7 @@ const CreateForm = ({
             <FormItem>
               <FormLabel>Mô tả</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input placeholder="Nhập mô tả" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

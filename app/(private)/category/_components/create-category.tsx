@@ -30,7 +30,7 @@ import { formCreateCatogorySchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { memo, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -42,6 +42,18 @@ interface IProps {
 
 const CreateCategory = ({ category, trigger, callback }: IProps) => {
   const [open, setOpen] = useState(false);
+  const form = useForm<z.infer<typeof formCreateCatogorySchema>>({
+    resolver: zodResolver(formCreateCatogorySchema),
+  });
+
+  useEffect(() => {
+    if (category) {
+      form.reset({
+        name: category.name,
+        color: category.color,
+      });
+    }
+  }, [category]);
 
   return (
     <ResponsiveDialog
@@ -53,7 +65,7 @@ const CreateCategory = ({ category, trigger, callback }: IProps) => {
         callback && callback(open);
       }}
     >
-      <CreateForm category={category} setOpen={setOpen} />
+      <CreateForm category={category} setOpen={setOpen} form={form} />
     </ResponsiveDialog>
   );
 };
@@ -63,13 +75,12 @@ export default memo(CreateCategory);
 const CreateForm = ({
   category,
   setOpen,
+  form,
 }: {
   category?: Category;
   setOpen: (open: boolean) => void;
+  form: UseFormReturn<z.infer<typeof formCreateCatogorySchema>>;
 }) => {
-  const form = useForm<z.infer<typeof formCreateCatogorySchema>>({
-    resolver: zodResolver(formCreateCatogorySchema),
-  });
   const [createCategory, { isLoading: isCreating }] =
     useCreateCategoryMutation();
   const [updateCategory, { isLoading: isUpdating }] =
@@ -96,15 +107,6 @@ const CreateForm = ({
     }
   };
 
-  useEffect(() => {
-    if (category) {
-      form.reset({
-        name: category.name,
-        color: category.color,
-      });
-    }
-  }, [category]);
-
   return (
     <Form {...form}>
       <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
@@ -115,7 +117,7 @@ const CreateForm = ({
             <FormItem>
               <FormLabel>Tên category</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input placeholder="Nhập tên category" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

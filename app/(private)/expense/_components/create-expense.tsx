@@ -1,5 +1,6 @@
 "use client";
 
+import { InputNumber } from "@/components/input-number";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -36,7 +37,7 @@ import { formCreateExpenseSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { memo, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -48,6 +49,20 @@ interface IProps {
 
 const CreateExpense = ({ expense, trigger, callback }: IProps) => {
   const [open, setOpen] = useState(false);
+  const form = useForm<z.infer<typeof formCreateExpenseSchema>>({
+    resolver: zodResolver(formCreateExpenseSchema),
+  });
+
+  useEffect(() => {
+    if (expense) {
+      form.reset({
+        description: expense?.description,
+        amount: expense?.amount?.toString(),
+        categoryId: expense?.category?.id,
+        createDate: new Date(expense?.createDate),
+      });
+    }
+  }, [expense]);
 
   return (
     <ResponsiveDialog
@@ -59,23 +74,22 @@ const CreateExpense = ({ expense, trigger, callback }: IProps) => {
         callback && callback(open);
       }}
     >
-      <CreateForm expense={expense} setOpen={setOpen} />
+      <CreateForm expense={expense} setOpen={setOpen} form={form} />
     </ResponsiveDialog>
   );
 };
 
 export default memo(CreateExpense);
 
-const CreateForm = ({
+export const CreateForm = ({
   expense,
   setOpen,
+  form,
 }: {
   expense?: Expense;
   setOpen: (open: boolean) => void;
+  form: UseFormReturn<z.infer<typeof formCreateExpenseSchema>>;
 }) => {
-  const form = useForm<z.infer<typeof formCreateExpenseSchema>>({
-    resolver: zodResolver(formCreateExpenseSchema),
-  });
   const { data } = useGetCategoriesQuery();
   const [createExpense, { isLoading: isCreating }] = useCreateExpenseMutation();
   const [updateExpense, { isLoading: isUpdating }] = useUpdateExpenseMutation();
@@ -102,17 +116,6 @@ const CreateForm = ({
       toast.error(error?.data.message);
     }
   };
-
-  useEffect(() => {
-    if (expense) {
-      form.reset({
-        description: expense?.description,
-        amount: expense?.amount?.toString(),
-        categoryId: expense?.category?.id,
-        createDate: new Date(expense?.createDate),
-      });
-    }
-  }, [expense]);
 
   return (
     <Form {...form}>
@@ -166,7 +169,7 @@ const CreateForm = ({
             <FormItem>
               <FormLabel>Mô tả</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input placeholder="Nhập mô tả" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -179,7 +182,7 @@ const CreateForm = ({
             <FormItem>
               <FormLabel>Số tiền</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <InputNumber {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

@@ -18,7 +18,7 @@ import {
 
 interface IProps {
   trigger: React.ReactNode;
-  title: string;
+  title?: string;
   children: React.ReactNode;
   open?: boolean;
   setOpen:
