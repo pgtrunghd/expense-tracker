@@ -25,7 +25,7 @@ const CardList = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+    <div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-3">
       <Card>
         <CardHeader className="!pb-2">
           <CardTitle className="flex items-center justify-between">
@@ -59,6 +59,7 @@ const CardList = () => {
           )}
         </CardContent>
       </Card>
+
       <Card className="col-span-2 md:col-span-1">
         <CardHeader className="!pb-2">
           <CardTitle className="flex items-center justify-between">

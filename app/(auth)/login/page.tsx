@@ -64,8 +64,8 @@ const LoginPage = () => {
     <>
       <Card className="w-full max-w-[400px]">
         <CardHeader>
-          <CardTitle>Login</CardTitle>
-          <CardDescription>Login to track your budget</CardDescription>
+          <CardTitle>Đăng nhập</CardTitle>
+          <CardDescription>Đăng nhập để theo dõi chi tiêu của bạn</CardDescription>
         </CardHeader>
 
         <Form {...form}>
@@ -76,9 +76,9 @@ const LoginPage = () => {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Tên đăng nhập</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Username" />
+                      <Input {...field} placeholder="Nhập tên" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,11 +89,11 @@ const LoginPage = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Mật khẩu</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Password"
+                        placeholder="Nhập mật khẩu"
                         type="password"
                       />
                     </FormControl>
@@ -102,7 +102,7 @@ const LoginPage = () => {
                 )}
               ></FormField>
               <Button variant="link" className="p-0" asChild>
-                <Link href="/register">You are not have account?</Link>
+                <Link href="/register">Bạn chưa có tài khoản?</Link>
               </Button>
             </CardContent>
 
@@ -115,7 +115,7 @@ const LoginPage = () => {
                 {(isLoading || isPending) && (
                   <Loader2 className="mr-2 size-4 animate-spin" />
                 )}
-                Login
+                Đăng nhập
               </Button>
             </CardFooter>
           </form>

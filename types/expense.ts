@@ -12,4 +12,5 @@ interface RecentActivity {
   amount: number;
   createDate: string;
   type: string;
+  category?: Category;
 }

@@ -59,7 +59,7 @@ export default function RegisterPage() {
     <>
       <Card className="w-full max-w-[400px]">
         <CardHeader>
-          <CardTitle>Register</CardTitle>
+          <CardTitle>Đăng ký</CardTitle>
         </CardHeader>
 
         <Form {...form}>
@@ -70,9 +70,9 @@ export default function RegisterPage() {
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Tên đăng nhập</FormLabel>
                     <FormControl>
-                      <Input {...field} placeholder="Username" />
+                      <Input {...field} placeholder="Nhập tên" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -83,11 +83,11 @@ export default function RegisterPage() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Mật khẩu</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Password"
+                        placeholder="Nhập mật khẩu"
                         type="password"
                       />
                     </FormControl>
@@ -100,11 +100,11 @@ export default function RegisterPage() {
                 name="confirmPassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
+                    <FormLabel>Xác nhận mật khẩu</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder="Password"
+                        placeholder="Nhập mật khẩu"
                         type="password"
                       />
                     </FormControl>
@@ -113,7 +113,7 @@ export default function RegisterPage() {
                 )}
               ></FormField>
               <Button variant="link" className="p-0" asChild>
-                <Link href="/login">You already have account?</Link>
+                <Link href="/login">Bạn đã có tài khoản?</Link>
               </Button>
             </CardContent>
 
@@ -126,7 +126,7 @@ export default function RegisterPage() {
                 {(isLoading || isPending) && (
                   <Loader2 className="mr-2 size-4 animate-spin" />
                 )}
-                Register
+                Đăng ký
               </Button>
             </CardFooter>
           </form>

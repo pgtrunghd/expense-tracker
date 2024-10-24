@@ -15,10 +15,10 @@ const RecentExpense = dynamic(() => import("./_components/recent-expense"));
 
 function DashboardPage() {
   return (
-    <section className="space-y-4">
+    <section className="space-y-2 sm:space-y-4">
       <CardList />
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+      <div className="grid gap-2 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         <Card className="order-2 md:order-1 lg:col-span-2 2xl:col-span-3">
           <CardHeader>
             <CardTitle>Top chi tiêu</CardTitle>
