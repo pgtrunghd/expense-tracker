@@ -43,3 +43,25 @@ export const formatter = new Intl.NumberFormat("vi-VN", {
 export const formatDate = (date: Date) => {
   return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, "0")}-${date.getDate().toString().padStart(2, "0")}`;
 };
+
+export const formatToNumber = (value: string) => {
+  return Number(value.replace(/\D/g, ""));
+};
+
+export const formatWithDots = (value: string) => {
+  if (!value) return;
+
+  const digits = value.replace(/\D/g, "");
+
+  return digits
+    .split("")
+    .reverse()
+    .reduce((groups: string[], digit: string, index: number) => {
+      if (index % 3 === 0 && index !== 0) {
+        groups.unshift(".");
+      }
+      groups.unshift(digit);
+      return groups;
+    }, [])
+    .join("");
+};

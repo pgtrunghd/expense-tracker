@@ -1,6 +1,5 @@
 "use client";
 
-import { InputNumber } from "@/components/input-number";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -32,7 +31,7 @@ import {
   useUpdateExpenseMutation,
 } from "@/features/expense.slice";
 import { notification } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { cn, formatToNumber, formatWithDots } from "@/lib/utils";
 import { formCreateExpenseSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CalendarIcon, Loader2 } from "lucide-react";
@@ -99,14 +98,14 @@ export const CreateForm = ({
       if (expense) {
         await updateExpense({
           ...data,
-          amount: Number(data.amount),
+          amount: formatToNumber(data.amount),
           id: expense.id,
         }).unwrap();
         toast.success(notification.UPDATE_SUCCESS);
       } else {
         await createExpense({
           ...data,
-          amount: Number(data.amount),
+          amount: formatToNumber(data.amount),
         }).unwrap();
         toast.success(notification.CREATE_SUCCESS);
       }
@@ -182,7 +181,14 @@ export const CreateForm = ({
             <FormItem>
               <FormLabel>Số tiền</FormLabel>
               <FormControl>
-                <InputNumber {...field} />
+                <Input
+                  {...field}
+                  value={formatWithDots(field.value)}
+                  onChange={(e) => {
+                    field.onChange(formatWithDots(e.target.value));
+                  }}
+                  placeholder="Nhập số tiền"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
