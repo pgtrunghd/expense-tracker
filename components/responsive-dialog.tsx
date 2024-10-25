@@ -1,13 +1,5 @@
 import { useWindowSize } from "@/hooks/useWindowSize";
 import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "./ui/drawer";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -15,6 +7,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "./ui/dialog";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "./ui/drawer";
 
 interface IProps {
   trigger: React.ReactNode;
@@ -25,6 +26,7 @@ interface IProps {
     | React.Dispatch<React.SetStateAction<boolean>>
     | ((open: boolean) => void);
   description?: string;
+  accept?: React.ReactNode;
 }
 
 export const ResponsiveDialog = ({
@@ -34,8 +36,10 @@ export const ResponsiveDialog = ({
   open,
   setOpen,
   description,
+  accept,
 }: IProps) => {
   const { width } = useWindowSize();
+  console.log(accept);
 
   if (width && width < 768) {
     return (
@@ -43,13 +47,21 @@ export const ResponsiveDialog = ({
         <DrawerTrigger asChild>{trigger}</DrawerTrigger>
 
         <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>{title}</DrawerTitle>
+          <div className="flex items-center justify-between">
+            <DrawerClose className="text-sm">Hủy</DrawerClose>
 
-            {description && (
-              <DrawerDescription>{description}</DrawerDescription>
-            )}
-          </DrawerHeader>
+            {accept}
+          </div>
+
+          {title && (
+            <DrawerHeader className="pt-3">
+              <DrawerTitle>{title}</DrawerTitle>
+
+              {description && (
+                <DrawerDescription>{description}</DrawerDescription>
+              )}
+            </DrawerHeader>
+          )}
 
           {children}
         </DrawerContent>

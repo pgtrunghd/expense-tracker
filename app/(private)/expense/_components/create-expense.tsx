@@ -68,6 +68,7 @@ const CreateExpense = ({ expense, trigger, callback }: IProps) => {
       title={expense ? "Cập nhật chi tiêu" : "Tạo chi tiêu"}
       trigger={trigger}
       open={open}
+      // accept={<Button size="drawer">Tạo</Button>}
       setOpen={(open: boolean) => {
         setOpen(open);
         callback && callback(open);
@@ -162,39 +163,6 @@ export const CreateForm = ({
           )}
         />
         <FormField
-          name="description"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Mô tả</FormLabel>
-              <FormControl>
-                <Input placeholder="Nhập mô tả" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="amount"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Số tiền</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  value={formatWithDots(field.value)}
-                  onChange={(e) => {
-                    field.onChange(formatWithDots(e.target.value));
-                  }}
-                  placeholder="Nhập số tiền"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
           name="categoryId"
           control={form.control}
           render={({ field }) => (
@@ -223,6 +191,39 @@ export const CreateForm = ({
                     </SelectGroup>
                   </SelectContent>
                 </Select>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="amount"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Số tiền</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  value={formatWithDots(field.value)}
+                  onChange={(e) => {
+                    field.onChange(formatWithDots(e.target.value));
+                  }}
+                  placeholder="Nhập số tiền"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="description"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Ghi chú</FormLabel>
+              <FormControl>
+                <Input placeholder="Nhập ghi chú" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

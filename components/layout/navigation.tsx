@@ -55,7 +55,7 @@ export const Navigation = () => {
                 </div>
               }
             >
-              <Tabs defaultValue="expense" className="flex flex-col">
+              <Tabs defaultValue="expense" className="flex flex-col mt-4">
                 <TabsList>
                   <TabsTrigger value="expense" className="flex-1">
                     Chi tiêu
