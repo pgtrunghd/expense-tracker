@@ -7,11 +7,12 @@ import { cn } from "@/lib/utils";
 
 const Drawer = ({
   shouldScaleBackground = true,
+  repositionInputs = true,
   ...props
 }: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
   <DrawerPrimitive.Root
     shouldScaleBackground={shouldScaleBackground}
-    repositionInputs={false}
+    repositionInputs={repositionInputs}
     {...props}
   />
 );
@@ -44,12 +45,12 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 flex max-h-[96%] flex-col rounded-t-lg border bg-background",
+        "fixed inset-x-0 bottom-0 z-50 flex max-h-[96%] flex-col rounded-t-xl border bg-background",
         className,
       )}
       {...props}
     >
-      <div className="mx-auto w-full max-w-md overflow-auto rounded-t-lg p-4 pt-2 pb-10">
+      <div className="mx-auto w-full max-w-md overflow-auto rounded-t-xl p-4 pb-10 pt-2">
         <DrawerPrimitive.Handle />
         {children}
       </div>

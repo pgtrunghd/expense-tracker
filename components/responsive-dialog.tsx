@@ -47,7 +47,7 @@ export const ResponsiveDialog = ({
 
         <DrawerContent>
           <div className="flex items-center justify-between">
-            <DrawerClose className="text-sm">Hủy</DrawerClose>
+            <DrawerClose>Hủy</DrawerClose>
 
             {accept}
           </div>

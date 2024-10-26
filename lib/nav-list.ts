@@ -8,7 +8,7 @@ import {
 
 export const navList = [
   {
-    name: "Dashboard",
+    name: "Tổng quan",
     path: "/dashboard",
     icon: LayoutDashboard,
   },
@@ -31,7 +31,7 @@ export const navList = [
 
 export const navListMobile = [
   {
-    name: "Dashboard",
+    name: "Tổng quan",
     path: "/dashboard",
     icon: LayoutDashboard,
     type: "link",
