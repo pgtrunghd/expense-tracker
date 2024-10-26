@@ -16,20 +16,20 @@ import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from "recharts";
 const ChartExpenseWeek = () => {
   const { data, isLoading } = useGetWeeklyExpenseQuery(formatDate(new Date()));
 
-  const getCategories = useCallback(() => {
-    const checkDuplicate: { [key: string]: boolean } = {};
-    const result: { name: string; color: string }[] = [];
-    data?.forEach((item: Expense) => {
-      if (!checkDuplicate[item.category.name]) {
-        checkDuplicate[item.category.name] = true;
-        result.push({
-          name: item.category.name,
-          color: item.category.color,
-        });
-      }
-    });
-    return result;
-  }, [data]);
+  // const getCategories = useCallback(() => {
+  //   const checkDuplicate: { [key: string]: boolean } = {};
+  //   const result: { name: string; color: string }[] = [];
+  //   data?.forEach((item: Expense) => {
+  //     if (!checkDuplicate[item.category.name]) {
+  //       checkDuplicate[item.category.name] = true;
+  //       result.push({
+  //         name: item.category.name,
+  //         color: item.category.color,
+  //       });
+  //     }
+  //   });
+  //   return result;
+  // }, [data]);
 
   const chartData = useMemo(() => {
     return data?.reduce((acc: any[], curr: Expense) => {
@@ -62,7 +62,7 @@ const ChartExpenseWeek = () => {
     return config;
   }, [chartData]) satisfies ChartConfig;
 
-  if (isLoading) return <Skeleton className="h-60 w-full" />;
+  if (isLoading) return <Skeleton className="h-[250px] w-full" />;
 
   return chartData?.length > 0 ? (
     <ChartContainer

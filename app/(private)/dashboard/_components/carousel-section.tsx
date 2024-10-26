@@ -7,7 +7,9 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
+import { useGetBalanceQuery } from "@/features/balance.slice";
 import { cn } from "@/lib/utils";
+import { Loader2 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 
@@ -19,15 +21,14 @@ const ReportOverview = dynamic(() => import("./report-overview"));
 
 const CarouselSection = () => {
   const [api, setApi] = useState<CarouselApi>();
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     if (!api) {
       return;
     }
-
-    setCount(api.scrollSnapList().length);
+    // setCount(api.scrollSnapList().length);
     setCurrent(api.selectedScrollSnap() + 1);
 
     api.on("select", () => {
@@ -37,18 +38,7 @@ const CarouselSection = () => {
 
   return (
     <Carousel setApi={setApi} className="block md:hidden">
-      <CarouselContent>
-        <CarouselItem>
-          <Card className="h-full">
-            <CardHeader>
-              <CardTitle>Top chi tiêu</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <TopExpenses />
-            </CardContent>
-          </Card>
-        </CarouselItem>
-
+      <CarouselContent className="min-h-[300px]">
         <CarouselItem>
           <Card className="h-full">
             <CardHeader>
@@ -56,6 +46,17 @@ const CarouselSection = () => {
             </CardHeader>
             <CardContent>
               <ReportOverview />
+            </CardContent>
+          </Card>
+        </CarouselItem>
+
+        <CarouselItem>
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle>Top chi tiêu</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <TopExpenses />
             </CardContent>
           </Card>
         </CarouselItem>
@@ -72,10 +73,10 @@ const CarouselSection = () => {
         </CarouselItem>
       </CarouselContent>
       <div className="flex items-center justify-center gap-2 py-2">
-        {Array.from({ length: count }).map((_, index) => (
+        {Array.from({ length: 3 }).map((_, index) => (
           <div
             className={cn(
-              "size-2 rounded-full bg-white",
+              "size-2 rounded-full bg-muted",
               index + 1 === current && "bg-muted-foreground",
             )}
             key={index}

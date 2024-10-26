@@ -49,7 +49,7 @@ const ReportOverview = () => {
     return config;
   }, [data]) satisfies ChartConfig;
 
-  if (isLoading) return <Skeleton className="h-60 w-full md:col-span-1" />;
+  if (isLoading) return <Skeleton className="h-[250px] w-full md:col-span-1" />;
 
   return chartData?.find((item) => item.amount > 0) ? (
     <ChartContainer
