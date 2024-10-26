@@ -39,7 +39,6 @@ export const ResponsiveDialog = ({
   accept,
 }: IProps) => {
   const { width } = useWindowSize();
-  console.log(accept);
 
   if (width && width < 768) {
     return (

@@ -13,12 +13,20 @@ const CardList = dynamic(() => import("./_components/card-list"));
 
 const RecentExpense = dynamic(() => import("./_components/recent-expense"));
 
+const CarouselSection = dynamic(() => import("./_components/carousel-section"));
+
 function DashboardPage() {
   return (
-    <section className="space-y-2 sm:space-y-4">
+    <section className="space-y-4">
+      <CarouselSection />
+
       <CardList />
 
-      <div className="grid gap-2 sm:gap-4 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
+      <Card className="block md:hidden">
+        <RecentExpense />
+      </Card>
+
+      <div className="hidden gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
         <Card className="order-2 md:order-1 lg:col-span-2 2xl:col-span-3">
           <CardHeader>
             <CardTitle>Top chi tiêu</CardTitle>
