@@ -117,10 +117,10 @@ const RecentExpense = () => {
         ) : isSuccess && !expenseData?.length ? (
           empty()
         ) : (
-          <div className="relative md:pl-3 before:absolute before:bottom-[30px] before:left-0 before:top-[30px] before:z-[2] before:hidden before:w-[2px] before:-translate-x-1/2 before:bg-primary md:before:block">
+          <div className="relative">
             {expenseData?.map((expense) => (
               <div
-                className="relative mt-4 flex justify-between rounded-md bg-muted p-3 before:absolute before:left-[-12px] before:top-1/2 before:z-[2] before:hidden before:size-2 before:-translate-x-1/2 before:-translate-y-1/2 before:rounded-full before:bg-primary first:mt-0 md:before:block"
+                className="relative mt-4 flex justify-between rounded-md bg-muted p-3 first:mt-0"
                 key={expense.id}
               >
                 <div className="space-y-1">
@@ -150,7 +150,6 @@ const RecentExpense = () => {
                 </div>
               </div>
             ))}
-            <div className="z-1 absolute bottom-0 left-0 top-0 hidden w-[2px] -translate-x-1/2 bg-primary-foreground md:block" />
           </div>
         )}
       </CardContent>
