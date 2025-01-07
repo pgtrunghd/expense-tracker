@@ -21,7 +21,10 @@ const TopExpenses = () => {
     return data
       ?.map((category) => ({
         category: category.name,
-        expense: category.expenses.reduce((acc, curr) => acc + curr.amount, 0),
+        expense: category?.expenses?.reduce(
+          (acc, curr) => acc + curr.amount,
+          0,
+        ),
         fill: category.color,
       }))
       .filter((item) => item.expense > 0)

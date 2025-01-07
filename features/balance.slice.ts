@@ -9,11 +9,16 @@ export const balanceSlice = createApi({
   tagTypes: ["Balance"],
   endpoints: (builder) => ({
     getBalance: builder.query<Balance, void>({
-      query: () => apiRoutes.BALANCE,
+      query: () => apiRoutes.BALANCE.INDEX,
+      onQueryStarted: onQueryStartedErrorToast,
+      providesTags: ["Balance"],
+    }),
+    getOverview: builder.query<Balance, string>({
+      query: (date: string) => `${apiRoutes.BALANCE.OVERVIEW}?date=${date}`,
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Balance"],
     }),
   }),
 });
 
-export const { useGetBalanceQuery } = balanceSlice;
+export const { useGetBalanceQuery, useGetOverviewQuery } = balanceSlice;

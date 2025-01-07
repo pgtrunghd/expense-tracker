@@ -54,8 +54,9 @@ export const expenseSlice = createApi({
       },
       invalidatesTags: ["Expense"],
     }),
-    getWeeklyExpense: builder.query<any, string | void>({
-      query: (date) => `${apiRoutes.EXPENSE}/by-week?date=${date}`,
+
+    getMonthlyExpense: builder.query<any, string | void>({
+      query: (date) => `${apiRoutes.EXPENSE}/by-month?date=${date}`,
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Expense"],
     }),
@@ -71,6 +72,6 @@ export const {
   useCreateExpenseMutation,
   useUpdateExpenseMutation,
   useDeleteExpenseMutation,
-  useGetWeeklyExpenseQuery,
+  useGetMonthlyExpenseQuery,
   useGetRecentActivityQuery,
 } = expenseSlice;

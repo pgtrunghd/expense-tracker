@@ -34,4 +34,5 @@ export const formCreateIncomeSchema = z.object({
   createDate: z.date({
     required_error: "Date is required",
   }),
+  categoryId: z.string().min(1, { message: "Category is required" }),
 });

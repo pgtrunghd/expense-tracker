@@ -8,13 +8,18 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetWeeklyExpenseQuery } from "@/features/expense.slice";
+import {
+  useGetMonthlyExpenseQuery
+} from "@/features/expense.slice";
 import { formatDate } from "@/lib/utils";
-import { useCallback, useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import { RootState } from "@/store";
+import { useMemo } from "react";
+import { useSelector } from "react-redux";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 const ChartExpenseWeek = () => {
-  const { data, isLoading } = useGetWeeklyExpenseQuery(formatDate(new Date()));
+  const { date } = useSelector((state: RootState) => state.global);
+  const { data, isLoading } = useGetMonthlyExpenseQuery(date);
 
   // const getCategories = useCallback(() => {
   //   const checkDuplicate: { [key: string]: boolean } = {};

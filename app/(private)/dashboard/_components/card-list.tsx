@@ -1,12 +1,25 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useGetBalanceQuery } from "@/features/balance.slice";
+import {
+  useGetBalanceQuery,
+  useGetOverviewQuery,
+} from "@/features/balance.slice";
 import { cn, formatter } from "@/lib/utils";
-import { CircleDollarSign, HandCoins, TrendingUp, Wallet } from "lucide-react";
+import { RootState } from "@/store";
+import {
+  CircleDollarSign,
+  HandCoins,
+  TrendingUp,
+  TrendingDown,
+  Wallet,
+} from "lucide-react";
+import { useSelector } from "react-redux";
 
 const CardList = () => {
-  const { data: overviewData, isLoading } = useGetBalanceQuery();
+  // const { data: balanceData, isLoading } = useGetBalanceQuery();
+  const { date } = useSelector((state: RootState) => state.global);
+  const { data: overviewData } = useGetOverviewQuery(date);
 
   const calculateDiff = (prev: number, current: number) => {
     return (
@@ -17,7 +30,12 @@ const CardList = () => {
             prev > current ? "text-destructive" : "text-green-500",
           )}
         >
-          <TrendingUp className="size-4" /> {formatter.format(current - prev)}
+          {prev > current ? (
+            <TrendingDown className="size-4" />
+          ) : (
+            <TrendingUp className="size-4" />
+          )}
+          {formatter.format(current - prev)}
         </span>
         <span className="inline-block truncate"> cùng kỳ</span>
       </div>

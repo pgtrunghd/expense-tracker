@@ -10,12 +10,15 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetBalanceQuery } from "@/features/balance.slice";
+import { useGetBalanceQuery, useGetOverviewQuery } from "@/features/balance.slice";
+import { RootState } from "@/store";
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { Pie, PieChart } from "recharts";
 
 const ReportOverview = () => {
-  const { data, isLoading } = useGetBalanceQuery();
+  const { date } = useSelector((state: RootState) => state.global);
+  const { data, isLoading } = useGetOverviewQuery(date);
 
   const chartData = useMemo(
     () => [

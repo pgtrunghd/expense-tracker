@@ -15,9 +15,13 @@ const RecentExpense = dynamic(() => import("./_components/recent-expense"));
 
 const CarouselSection = dynamic(() => import("./_components/carousel-section"));
 
+const Action = dynamic(() => import("./_components/action"));
+
 function DashboardPage() {
   return (
     <section className="space-y-4">
+      <Action />
+
       <CarouselSection />
 
       <CardList />
@@ -51,7 +55,7 @@ function DashboardPage() {
 
         <Card className="order-4 lg:col-span-2 2xl:col-span-3">
           <CardHeader>
-            <CardTitle>Chi tiêu trong tuần</CardTitle>
+            <CardTitle>Chi tiêu trong tháng</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartExpenseWeek />

@@ -10,7 +10,10 @@ export const apiRoutes = {
   RECENT_ACTIVITY: "/expense/recent-activity",
   CATEGORY: "/category",
   INCOME: "/income",
-  BALANCE: "/balance",
+  BALANCE: {
+    OVERVIEW: "/balance/overview",
+    INDEX: "/balance",
+  },
 };
 
 export const notification = {

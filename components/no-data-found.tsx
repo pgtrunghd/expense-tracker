@@ -12,7 +12,7 @@ export const NoDataFound = ({ ...props }: TProps) => {
         props.className,
       )}
     >
-      <Inbox className="size-12 sm:size-14" />
+      <Inbox className="size-12" />
       <p className="mt-1 text-sm sm:text-base">Không có dữ liệu</p>
     </div>
   );

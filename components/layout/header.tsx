@@ -11,18 +11,23 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 
-import { useGetBalanceQuery } from "@/features/balance.slice";
+import { balanceSlice, useGetBalanceQuery } from "@/features/balance.slice";
 import { cn, formatter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { userSlice } from "@/features/user-slice";
 
 export default function Header() {
   const router = useRouter();
   const [scroll, setScroll] = useState(false);
   const { data: overviewData } = useGetBalanceQuery();
 
+  const dispatch = useDispatch();
+
   const signOut = () => {
     localStorage.removeItem("user");
+    dispatch(balanceSlice.util.resetApiState());
     router.push("/login");
   };
 
@@ -45,8 +50,8 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "z-10 flex items-center justify-end gap-4 px-4 py-2 transition duration-200 sm:px-6",
-        scroll ? "sticky inset-0 bg-background shadow-md" : "",
+        "sticky inset-0 z-10 flex items-center justify-end gap-4 border-t px-4 py-2 transition duration-200 sm:px-6",
+        scroll ? "bg-background shadow-md" : "",
       )}
     >
       <div className="flex flex-col items-end text-xs md:text-sm">
