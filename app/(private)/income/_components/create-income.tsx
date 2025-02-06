@@ -217,9 +217,9 @@ export const CreateForm = ({
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Mô tả</FormLabel>
+              <FormLabel>Ghi chú</FormLabel>
               <FormControl>
-                <Input placeholder="Nhập mô tả" {...field} />
+                <Input placeholder="Nhập ghi chú" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

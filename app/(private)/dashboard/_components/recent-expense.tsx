@@ -79,7 +79,7 @@ const RecentExpense = () => {
       <CardContent>
         {isLoading ? (
           loading()
-        ) : isSuccess && !expenseData?.length ? (
+        ) : expenseData?.length === 0 ? (
           empty()
         ) : (
           <div className="relative">

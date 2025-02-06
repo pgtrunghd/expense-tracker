@@ -16,7 +16,6 @@ import { cn, formatter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { userSlice } from "@/features/user-slice";
 
 export default function Header() {
   const router = useRouter();
@@ -50,7 +49,7 @@ export default function Header() {
   return (
     <header
       className={cn(
-        "sticky inset-0 z-10 flex items-center justify-end gap-4 border-t px-4 py-2 transition duration-200 sm:px-6",
+        "sticky inset-0 z-10 flex items-center justify-end gap-4 px-4 py-2 transition duration-200 sm:px-6",
         scroll ? "bg-background shadow-md" : "",
       )}
     >

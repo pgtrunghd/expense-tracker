@@ -44,21 +44,21 @@ function DashboardPage() {
           <RecentExpense />
         </Card>
 
-        <Card className="order-3 col-span-1">
-          <CardHeader>
-            <CardTitle>Báo cáo tổng quan</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <ReportOverview />
-          </CardContent>
-        </Card>
-
-        <Card className="order-4 lg:col-span-2 2xl:col-span-3">
+        <Card className="order-3 lg:col-span-2 2xl:col-span-2">
           <CardHeader>
             <CardTitle>Chi tiêu trong tháng</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartExpenseWeek />
+          </CardContent>
+        </Card>
+
+        <Card className="order-4 col-span-2">
+          <CardHeader>
+            <CardTitle>Báo cáo tổng quan</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ReportOverview />
           </CardContent>
         </Card>
       </div>
