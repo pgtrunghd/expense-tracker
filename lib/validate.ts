@@ -24,9 +24,10 @@ export const formCreateExpenseSchema = z.object({
   amount: z.string().min(1, { message: "Amount is required" }),
   categoryId: z.string().min(1, { message: "Category is required" }),
 });
-export const formCreateCatogorySchema = z.object({
+export const formCreateCategorySchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
   color: z.string().min(1, { message: "Color is required" }),
+  icon: z.string().min(1, { message: "Icon is required" }),
 });
 export const formCreateIncomeSchema = z.object({
   description: z.string().min(1, { message: "Description is required" }),

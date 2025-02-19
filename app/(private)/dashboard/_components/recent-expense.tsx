@@ -2,27 +2,16 @@
 
 import { NoDataFound } from "@/components/no-data-found";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetRecentActivityQuery } from "@/features/expense.slice";
+import { formatDate } from "@/lib/constants";
 import { formatter } from "@/lib/utils";
 import { format } from "date-fns";
-import { Ellipsis, ListCollapse } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 const RecentExpense = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const { data: res, isLoading, isSuccess } = useGetRecentActivityQuery();
   const expenseData = res?.slice(0, 5);
-  const router = useRouter();
 
   const loading = () => {
     return (
@@ -49,31 +38,6 @@ const RecentExpense = () => {
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           Hoạt động gần đây
-          <DropdownMenu
-            modal={false}
-            open={dropdownOpen}
-            onOpenChange={setDropdownOpen}
-          >
-            <DropdownMenuTrigger asChild>
-              <Button size="iconSm" variant="ghost" aria-label="detail">
-                <Ellipsis className="size-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
-              align="end"
-              onCloseAutoFocus={(event) => event.preventDefault()}
-            >
-              <DropdownMenuItem onClick={() => router.push("/expense")}>
-                <ListCollapse className="mr-2 size-4" />
-                Chi tiết chi tiêu
-              </DropdownMenuItem>
-
-              <DropdownMenuItem onClick={() => router.push("/income")}>
-                <ListCollapse className="mr-2 size-4" />
-                Chi tiết thu nhập
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -110,7 +74,7 @@ const RecentExpense = () => {
                     </p>
                   )}
                   <p className="text-sm text-muted-foreground">
-                    {format(expense.createDate, "dd/MM/yyyy")}
+                    {format(expense.createDate, formatDate)}
                   </p>
                 </div>
               </div>

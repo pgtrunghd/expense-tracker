@@ -30,10 +30,11 @@ import {
   useCreateExpenseMutation,
   useUpdateExpenseMutation,
 } from "@/features/expense.slice";
-import { notification } from "@/lib/constants";
+import { formatDate, notification } from "@/lib/constants";
 import { cn, formatToNumber, formatWithDots } from "@/lib/utils";
 import { formCreateExpenseSchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import { memo, useEffect, useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
@@ -141,7 +142,7 @@ export const CreateForm = ({
                       )}
                     >
                       {field.value ? (
-                        new Date(field.value).toLocaleDateString()
+                        format(field.value, formatDate)
                       ) : (
                         <span>Chọn ngày</span>
                       )}

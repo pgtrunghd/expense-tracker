@@ -39,7 +39,7 @@ const TopExpenses = () => {
     },
   } satisfies ChartConfig;
 
-  if (isLoading) return <Skeleton className="h-[250px] w-full" />;
+  if (isLoading) return <Skeleton className="h-full w-full" />;
 
   return (
     <>

@@ -14,6 +14,7 @@ import {
   TrendingDown,
   Wallet,
 } from "lucide-react";
+import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 const CardList = () => {
@@ -21,9 +22,33 @@ const CardList = () => {
   const { date } = useSelector((state: RootState) => state.global);
   const { data: overviewData } = useGetOverviewQuery(date);
 
+  const cardList = useMemo(
+    () => [
+      {
+        title: "Chi tiêu",
+        icon: CircleDollarSign,
+        value: overviewData?.totalExpense ?? 0,
+        prevValue: overviewData?.totalExpensePrevMonth ?? 0,
+      },
+      {
+        title: "Thu nhập",
+        icon: HandCoins,
+        value: overviewData?.totalIncome ?? 0,
+        prevValue: overviewData?.totalIncomePrevMonth ?? 0,
+      },
+      {
+        title: "Tiết kiệm",
+        icon: Wallet,
+        value: overviewData?.totalSaving ?? 0,
+        prevValue: overviewData?.totalSavingPrevMonth ?? 0,
+      },
+    ],
+    [overviewData],
+  );
+
   const calculateDiff = (prev: number, current: number) => {
     return (
-      <div className="mt-1 flex items-center gap-1 text-xs sm:text-sm">
+      <div className="flex items-center gap-1 text-xs text-muted-foreground">
         <span
           className={cn(
             "flex items-center gap-1",
@@ -44,9 +69,24 @@ const CardList = () => {
 
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-      <Card>
+      {cardList.map((card) => (
+        <Card key={card.title}>
+          <CardHeader className="!pb-2">
+            <CardTitle className="flex items-center justify-between text-sm font-medium">
+              {card.title} <card.icon className="size-5 text-muted-foreground" />
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="truncate text-base font-bold md:text-2xl">
+              {formatter.format(card.value)}
+            </p>
+            {calculateDiff(card.prevValue, card.value)}
+          </CardContent>
+        </Card>
+      ))}
+      {/* <Card>
         <CardHeader className="!pb-2">
-          <CardTitle className="flex items-center justify-between">
+          <CardTitle className="flex items-center justify-between text-sm font-medium">
             Chi tiêu <CircleDollarSign className="size-5" />
           </CardTitle>
         </CardHeader>
@@ -63,7 +103,7 @@ const CardList = () => {
 
       <Card>
         <CardHeader className="!pb-2">
-          <CardTitle className="flex items-center justify-between">
+          <CardTitle className="flex items-center justify-between text-sm font-medium">
             Thu nhập <HandCoins className="size-5" />
           </CardTitle>
         </CardHeader>
@@ -80,21 +120,12 @@ const CardList = () => {
 
       <Card className="col-span-2 md:col-span-1">
         <CardHeader className="!pb-2">
-          <CardTitle className="flex items-center justify-between">
+          <CardTitle className="flex items-center justify-between text-sm font-medium">
             Tiết kiệm <Wallet className="size-5" />
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p
-            className={cn(
-              "truncate text-base font-semibold md:text-lg",
-              // !overviewData?.totalSaving
-              //   ? "text-muted-foreground"
-              //   : overviewData?.totalSaving < 0
-              //     ? "text-destructive"
-              //     : "text-green-500",
-            )}
-          >
+          <p className={cn("truncate text-base font-semibold md:text-lg")}>
             {formatter.format(overviewData?.totalSaving ?? 0)}
           </p>
           {calculateDiff(
@@ -102,7 +133,7 @@ const CardList = () => {
             overviewData?.totalSaving ?? 0,
           )}
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 };

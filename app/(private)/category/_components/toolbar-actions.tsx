@@ -12,7 +12,7 @@ const ToolbarActions = () => {
       <CreateCategory
         trigger={
           <Button size="xs">
-            <Plus className="mr-2 size-4" /> Tạo category
+            <Plus className="mr-2 size-4" /> Tạo danh mục
           </Button>
         }
       />

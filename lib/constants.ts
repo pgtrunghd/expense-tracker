@@ -21,3 +21,5 @@ export const notification = {
   UPDATE_SUCCESS: "Cập nhật thành công",
   DELETE_SUCCESS: "Xóa thành công",
 };
+
+export const formatDate = "dd/MM/yyyy";

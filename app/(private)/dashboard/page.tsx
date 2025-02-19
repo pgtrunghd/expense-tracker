@@ -30,8 +30,8 @@ function DashboardPage() {
         <RecentExpense />
       </Card>
 
-      <div className="hidden gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4">
-        <Card className="order-2 md:order-1 lg:col-span-2 2xl:col-span-3">
+      <div className="hidden gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-7">
+        <Card className="order-2 md:order-1 lg:col-span-2 2xl:col-span-4">
           <CardHeader>
             <CardTitle>Top chi tiêu</CardTitle>
           </CardHeader>
@@ -40,11 +40,11 @@ function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="order-1 md:order-2">
+        <Card className="order-1 md:order-2 2xl:col-span-3">
           <RecentExpense />
         </Card>
 
-        <Card className="order-3 lg:col-span-2 2xl:col-span-2">
+        <Card className="order-3 lg:col-span-2 2xl:col-span-5">
           <CardHeader>
             <CardTitle>Chi tiêu trong tháng</CardTitle>
           </CardHeader>
@@ -53,7 +53,7 @@ function DashboardPage() {
           </CardContent>
         </Card>
 
-        <Card className="order-4 col-span-2">
+        <Card className="order-4 col-span-2 2xl:col-span-2">
           <CardHeader>
             <CardTitle>Báo cáo tổng quan</CardTitle>
           </CardHeader>

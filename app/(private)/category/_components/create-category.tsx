@@ -26,13 +26,14 @@ import {
 import { colorList } from "@/lib/color-list";
 import { notification } from "@/lib/constants";
 import { cn } from "@/lib/utils";
-import { formCreateCatogorySchema } from "@/lib/validate";
+import { formCreateCategorySchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2 } from "lucide-react";
+import { Loader2, Tag } from "lucide-react";
 import { memo, useEffect, useState } from "react";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { useForm, UseFormReturn, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { IconList } from "./icon-list";
 
 interface IProps {
   category?: Category;
@@ -42,8 +43,12 @@ interface IProps {
 
 const CreateCategory = ({ category, trigger, callback }: IProps) => {
   const [open, setOpen] = useState(false);
-  const form = useForm<z.infer<typeof formCreateCatogorySchema>>({
-    resolver: zodResolver(formCreateCatogorySchema),
+  const form = useForm<z.infer<typeof formCreateCategorySchema>>({
+    resolver: zodResolver(formCreateCategorySchema),
+    defaultValues: {
+      name: "",
+      color: colorList[0].color,
+    },
   });
 
   useEffect(() => {
@@ -57,7 +62,7 @@ const CreateCategory = ({ category, trigger, callback }: IProps) => {
 
   return (
     <ResponsiveDialog
-      title={category ? "Sửa category" : "Tạo category"}
+      title={category ? "Sửa danh mục" : "Tạo danh mục"}
       trigger={trigger}
       open={open}
       setOpen={(open: boolean) => {
@@ -79,14 +84,16 @@ const CreateForm = ({
 }: {
   category?: Category;
   setOpen: (open: boolean) => void;
-  form: UseFormReturn<z.infer<typeof formCreateCatogorySchema>>;
+  form: UseFormReturn<z.infer<typeof formCreateCategorySchema>>;
 }) => {
   const [createCategory, { isLoading: isCreating }] =
     useCreateCategoryMutation();
   const [updateCategory, { isLoading: isUpdating }] =
     useUpdateCategoryMutation();
+  const color = useWatch({ control: form.control, name: "color" });
+  const [openSelectIcon, setOpenSelectIcon] = useState(false);
 
-  const onSubmit = async (data: z.infer<typeof formCreateCatogorySchema>) => {
+  const onSubmit = async (data: z.infer<typeof formCreateCategorySchema>) => {
     try {
       if (category) {
         await updateCategory({
@@ -108,69 +115,109 @@ const CreateForm = ({
   };
 
   return (
-    <Form {...form}>
-      <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
-        <FormField
-          name="name"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Tên category</FormLabel>
-              <FormControl>
-                <Input placeholder="Nhập tên category" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="color"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Chọn màu sắc</FormLabel>
-              <FormControl>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Chọn màu sắc" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {colorList?.map((item) => (
-                        <SelectItem key={item.color} value={item.color}>
-                          <div className="flex items-center gap-2">
-                            <span
-                              style={{ backgroundColor: item.color }}
-                              className={cn(`block size-4 rounded-sm`)}
-                            ></span>
-                            <p>{item.name}</p>
-                          </div>
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    <>
+      <span
+        className="mx-auto flex size-20 items-center justify-center rounded-lg"
+        style={{ backgroundColor: color }}
+      >
+        <Tag className="size-10 text-white" />
+      </span>
+      <Form {...form}>
+        <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+          <FormField
+            name="name"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Tên</FormLabel>
+                <FormControl>
+                  <Input placeholder="Nhập tên danh mục" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="color"
+            control={form.control}
+            defaultValue={colorList[0].color}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Màu</FormLabel>
+                <FormControl>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <SelectTrigger>
+                      <SelectValue placeholder="Chọn màu sắc" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {colorList?.map((item) => (
+                          <SelectItem key={item.color} value={item.color}>
+                            <div className="flex items-center gap-2">
+                              <span
+                                style={{ backgroundColor: item.color }}
+                                className={cn(`block size-4 rounded-sm`)}
+                              ></span>
+                              <p>{item.name}</p>
+                            </div>
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            name="icon"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Biểu tượng</FormLabel>
+                <FormControl>
+                  <div>
+                    <ResponsiveDialog
+                      title="Biểu tượng"
+                      trigger={
+                        <Button
+                          type="button"
+                          className="w-full"
+                          variant="outline"
+                        >
+                          Chọn biểu tượng
+                        </Button>
+                      }
+                      open={openSelectIcon}
+                      setOpen={(open: boolean) => {
+                        setOpenSelectIcon(open);
+                      }}
+                    >
+                      <IconList />
+                    </ResponsiveDialog>
+                  </div>
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-        <Button
-          size="sm"
-          type="submit"
-          disabled={isCreating || isUpdating}
-          className="w-full"
-        >
-          {isCreating || isUpdating ? (
-            <Loader2 className="mr-2 size-4 animate-spin" />
-          ) : null}
-          {category ? "Cập nhật" : "Tạo"}
-        </Button>
-      </form>
-    </Form>
+          <Button
+            size="sm"
+            type="submit"
+            disabled={isCreating || isUpdating}
+            className="w-full"
+          >
+            {isCreating || isUpdating ? (
+              <Loader2 className="mr-2 size-4 animate-spin" />
+            ) : null}
+            {category ? "Cập nhật" : "Tạo"}
+          </Button>
+        </form>
+      </Form>
+    </>
   );
 };

@@ -47,7 +47,7 @@ export const ResponsiveDialog = ({
 
         <DrawerContent>
           <div className="flex items-center justify-between">
-            <DrawerClose>Hủy</DrawerClose>
+            {/* <DrawerClose>Hủy</DrawerClose> */}
 
             {accept}
           </div>
@@ -79,7 +79,7 @@ export const ResponsiveDialog = ({
           {description && <DialogDescription>{description}</DialogDescription>}
         </DialogHeader>
 
-        {children}
+        <div className="max-h-[80vh] overflow-auto">{children}</div>
       </DialogContent>
     </Dialog>
   );

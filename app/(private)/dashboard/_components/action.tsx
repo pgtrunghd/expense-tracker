@@ -54,7 +54,7 @@ export default function Action() {
         setOpen={setOpen}
         open={open}
         trigger={
-          <Button className="rounded-lg" size="sm">
+          <Button className="rounded-lg" size="xs">
             <Plus className="mr-2 size-5" /> Tạo thu chi
           </Button>
         }

@@ -17,7 +17,7 @@ export const getColumns = (): ColumnDef<any>[] => {
   return [
     {
       accessorKey: "name",
-      header: "Category",
+      header: "Danh mục",
       cell: ({ row }) => {
         const name = row?.original?.name;
         return (
