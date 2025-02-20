@@ -91,6 +91,7 @@ export const CreateForm = ({
   setOpen: (open: boolean) => void;
   form: UseFormReturn<z.infer<typeof formCreateExpenseSchema>>;
 }) => {
+  const [openCalendar, setOpenCalendar] = useState(false);
   const { data } = useGetCategoriesQuery();
   const [createExpense, { isLoading: isCreating }] = useCreateExpenseMutation();
   const [updateExpense, { isLoading: isUpdating }] = useUpdateExpenseMutation();
@@ -131,7 +132,7 @@ export const CreateForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Ngày</FormLabel>
-              <Popover>
+              {/* <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
@@ -158,7 +159,40 @@ export const CreateForm = ({
                     disabled={(date) => date > new Date()}
                   />
                 </PopoverContent>
-              </Popover>
+              </Popover> */}
+              <ResponsiveDialog
+                title="Chọn ngày"
+                open={openCalendar}
+                setOpen={setOpenCalendar}
+                trigger={
+                  <FormControl>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full font-normal",
+                        !field.value && "text-muted-foreground",
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, formatDate)
+                      ) : (
+                        <span>Chọn ngày</span>
+                      )}
+                      <CalendarIcon className="ml-auto size-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                }
+              >
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={(date) => {
+                    field.onChange(date);
+                    setOpenCalendar(false);
+                  }}
+                  disabled={(date) => date > new Date()}
+                />
+              </ResponsiveDialog>
               <FormMessage />
             </FormItem>
           )}

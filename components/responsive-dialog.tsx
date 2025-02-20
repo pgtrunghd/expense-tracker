@@ -9,12 +9,11 @@ import {
 } from "./ui/dialog";
 import {
   Drawer,
-  DrawerClose,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-  DrawerTrigger,
+  DrawerTrigger
 } from "./ui/drawer";
 
 interface IProps {

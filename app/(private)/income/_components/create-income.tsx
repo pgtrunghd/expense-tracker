@@ -74,12 +74,14 @@ export const CreateForm = ({
   income?: Income;
   setOpen: (open: boolean) => void;
 }) => {
+  const [openCalendar, setOpenCalendar] = useState(false);
   const form = useForm<z.infer<typeof formCreateIncomeSchema>>({
     resolver: zodResolver(formCreateIncomeSchema),
   });
   const { data } = useGetCategoriesQuery();
   const [createIncome, { isLoading: isCreating }] = useCreateIncomeMutation();
   const [updateIncome, { isLoading: isUpdating }] = useUpdateIncomeMutation();
+
 
   const onSubmit = async (data: z.infer<typeof formCreateIncomeSchema>) => {
     try {
@@ -127,8 +129,11 @@ export const CreateForm = ({
           render={({ field }) => (
             <FormItem>
               <FormLabel>Ngày</FormLabel>
-              <Popover>
-                <PopoverTrigger asChild>
+              <ResponsiveDialog
+                title="Chọn ngày"
+                open={openCalendar}
+                setOpen={setOpenCalendar}
+                trigger={
                   <FormControl>
                     <Button
                       variant="outline"
@@ -145,16 +150,18 @@ export const CreateForm = ({
                       <CalendarIcon className="ml-auto size-4 opacity-50" />
                     </Button>
                   </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) => date > new Date()}
-                  />
-                </PopoverContent>
-              </Popover>
+                }
+              >
+                <Calendar
+                  mode="single"
+                  selected={field.value}
+                  onSelect={(date) => {
+                    field.onChange(date);
+                    setOpenCalendar(false);
+                  }}
+                  disabled={(date) => date > new Date()}
+                />
+              </ResponsiveDialog>
               <FormMessage />
             </FormItem>
           )}

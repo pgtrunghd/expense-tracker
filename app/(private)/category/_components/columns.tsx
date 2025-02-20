@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ColumnDef } from "@tanstack/react-table";
 import { Ellipsis, Eraser, FilePenLine } from "lucide-react";
+import * as LucideIcon from "lucide-react";
 import { useRef, useState } from "react";
 import CreateCategory from "./create-category";
 import DeleteCategory from "./delete-category";
@@ -20,28 +21,20 @@ export const getColumns = (): ColumnDef<any>[] => {
       header: "Danh mục",
       cell: ({ row }) => {
         const name = row?.original?.name;
-        return (
-          <>
-            <p>{name}</p>
-          </>
-        );
-      },
-    },
-    {
-      accessorKey: "color",
-      header: "Color",
-      cell: ({ row }) => {
         const color = row?.original?.color;
+        const Icon = LucideIcon[
+          row?.original?.icon as keyof typeof LucideIcon
+        ] as React.FC<React.SVGProps<SVGSVGElement>>;
         return (
-          <>
-            <div className="flex items-center gap-2">
-              <span
-                style={{ backgroundColor: color }}
-                className="block size-4 rounded-sm"
-              ></span>
-              <p>{color}</p>
-            </div>
-          </>
+          <div className="flex items-center gap-2">
+            <span
+              className="grid size-6 place-items-center rounded-md"
+              style={{ backgroundColor: color }}
+            >
+              <Icon className="size-4 text-white" />
+            </span>
+            <p>{name}</p>
+          </div>
         );
       },
     },

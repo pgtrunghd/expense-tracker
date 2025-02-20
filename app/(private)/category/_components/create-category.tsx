@@ -29,11 +29,12 @@ import { cn } from "@/lib/utils";
 import { formCreateCategorySchema } from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Tag } from "lucide-react";
-import { memo, useEffect, useState } from "react";
+import { createElement, memo, useEffect, useState } from "react";
 import { useForm, UseFormReturn, useWatch } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { IconList } from "./icon-list";
+import * as LucideIcon from "lucide-react";
 
 interface IProps {
   category?: Category;
@@ -56,6 +57,7 @@ const CreateCategory = ({ category, trigger, callback }: IProps) => {
       form.reset({
         name: category.name,
         color: category.color,
+        icon: category.icon,
       });
     }
   }, [category]);
@@ -86,12 +88,16 @@ const CreateForm = ({
   setOpen: (open: boolean) => void;
   form: UseFormReturn<z.infer<typeof formCreateCategorySchema>>;
 }) => {
+  const [openSelectIcon, setOpenSelectIcon] = useState(false);
   const [createCategory, { isLoading: isCreating }] =
     useCreateCategoryMutation();
   const [updateCategory, { isLoading: isUpdating }] =
     useUpdateCategoryMutation();
   const color = useWatch({ control: form.control, name: "color" });
-  const [openSelectIcon, setOpenSelectIcon] = useState(false);
+  const icon = useWatch({ control: form.control, name: "icon" });
+  const Icon = LucideIcon[
+    icon ? (icon as keyof typeof LucideIcon) : "Tag"
+  ] as React.FC<React.SVGProps<SVGSVGElement>>;
 
   const onSubmit = async (data: z.infer<typeof formCreateCategorySchema>) => {
     try {
@@ -117,10 +123,10 @@ const CreateForm = ({
   return (
     <>
       <span
-        className="mx-auto flex size-20 items-center justify-center rounded-lg"
+        className="mx-auto flex size-20 items-center justify-center rounded-xl"
         style={{ backgroundColor: color }}
       >
-        <Tag className="size-10 text-white" />
+        <Icon className="size-10 text-white" />
       </span>
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
@@ -175,6 +181,7 @@ const CreateForm = ({
           />
           <FormField
             name="icon"
+            defaultValue="Tag"
             control={form.control}
             render={({ field }) => (
               <FormItem>
@@ -186,10 +193,18 @@ const CreateForm = ({
                       trigger={
                         <Button
                           type="button"
-                          className="w-full"
+                          className="w-full justify-between"
                           variant="outline"
                         >
-                          Chọn biểu tượng
+                          <span className="flex items-center gap-2">
+                            <span className="grid size-6 place-items-center rounded-md bg-blue-700">
+                              <LucideIcon.Blocks className="size-4 text-white" />
+                            </span>
+                            Đã chọn
+                          </span>
+                          <span className="grid size-7 place-items-center rounded-full bg-primary">
+                            <Icon className="size-4 text-muted" />
+                          </span>
                         </Button>
                       }
                       open={openSelectIcon}
@@ -197,7 +212,13 @@ const CreateForm = ({
                         setOpenSelectIcon(open);
                       }}
                     >
-                      <IconList />
+                      <IconList
+                        selected={field.value}
+                        onSelect={(value) => {
+                          field.onChange(value);
+                          setOpenSelectIcon(false);
+                        }}
+                      />
                     </ResponsiveDialog>
                   </div>
                 </FormControl>
