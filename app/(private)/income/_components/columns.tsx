@@ -91,7 +91,7 @@ export const desktopColumns = (): ColumnDef<any>[] => {
                     <DropdownMenuItem
                       onSelect={(event) => event.preventDefault()}
                     >
-                      <FilePenLine className="mr-2 size-4" />
+                      <FilePenLine className="size-4" />
                       <span>Sửa</span>
                     </DropdownMenuItem>
                   }
@@ -104,7 +104,7 @@ export const desktopColumns = (): ColumnDef<any>[] => {
                     <DropdownMenuItem
                       onSelect={(event) => event.preventDefault()}
                     >
-                      <Eraser className="mr-2 size-4" />
+                      <Eraser className="size-4" />
                       <span>Xóa</span>
                     </DropdownMenuItem>
                   }

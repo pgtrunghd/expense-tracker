@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,37 +9,60 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Boxes, ClipboardList, Command, FileStack, LayoutDashboard } from "lucide-react";
+import {
+  Boxes,
+  ClipboardList,
+  Command,
+  FileStack,
+  LayoutDashboard,
+} from "lucide-react";
 import { NavMain } from "../nav-main";
-
-const data = {
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: LayoutDashboard,
-    },
-    {
-      title: "Chi tiêu",
-      url: "/expense",
-      icon: ClipboardList,
-    },
-    {
-      title: "Thu nhập",
-      url: "/income",
-      icon: Boxes,
-    },
-    {
-      title: "Danh mục",
-      url: "/category",
-      icon: FileStack,
-    },
-  ],
-};
+import { useGetCategoriesQuery } from "@/features/category.slice";
+import { NavCategories } from "../nav-categories";
+import * as LucideIcon from "lucide-react";
 
 export default function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const { data: categoryData, isLoading, isSuccess } = useGetCategoriesQuery();
+
+  const data = useMemo(
+    () => ({
+      navMain: [
+        {
+          title: "Dashboard",
+          url: "/dashboard",
+          icon: LayoutDashboard,
+        },
+        {
+          title: "Chi tiêu",
+          url: "/expense",
+          icon: ClipboardList,
+        },
+        {
+          title: "Thu nhập",
+          url: "/income",
+          icon: Boxes,
+        },
+        {
+          title: "Danh mục",
+          url: "/category",
+          icon: FileStack,
+        },
+      ],
+      category: categoryData?.map((item) => {
+        return {
+          title: item.name,
+          color: item.color,
+          icon: LucideIcon[item.icon as keyof typeof LucideIcon] as React.FC<
+            React.SVGProps<SVGSVGElement>
+          >,
+        };
+      }),
+    }),
+    [categoryData],
+  );
+
   return (
     <Sidebar collapsible="icon" variant="floating" {...props}>
       <SidebarHeader>
@@ -58,9 +81,10 @@ export default function AppSidebar({
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
+        <NavMain items={data.navMain} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={data.navMain} />
+        <NavCategories items={data.category} isLoading={isLoading} />
       </SidebarContent>
     </Sidebar>
   );

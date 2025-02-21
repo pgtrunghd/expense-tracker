@@ -35,6 +35,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { IconList } from "./icon-list";
 import * as LucideIcon from "lucide-react";
+import { PaletteList } from "./color-list";
 
 interface IProps {
   category?: Category;
@@ -89,6 +90,7 @@ const CreateForm = ({
   form: UseFormReturn<z.infer<typeof formCreateCategorySchema>>;
 }) => {
   const [openSelectIcon, setOpenSelectIcon] = useState(false);
+  const [openSelectColor, setOpenSelectColor] = useState(false);
   const [createCategory, { isLoading: isCreating }] =
     useCreateCategoryMutation();
   const [updateCategory, { isLoading: isUpdating }] =
@@ -126,7 +128,7 @@ const CreateForm = ({
         className="mx-auto flex size-20 items-center justify-center rounded-xl"
         style={{ backgroundColor: color }}
       >
-        <Icon className="size-10 text-white" />
+        <Icon className="size-14 text-white" />
       </span>
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
@@ -151,7 +153,7 @@ const CreateForm = ({
               <FormItem>
                 <FormLabel>Màu</FormLabel>
                 <FormControl>
-                  <Select
+                  {/* <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
                   >
@@ -173,7 +175,42 @@ const CreateForm = ({
                         ))}
                       </SelectGroup>
                     </SelectContent>
-                  </Select>
+                  </Select> */}
+                  <ResponsiveDialog
+                    title="Màu"
+                    trigger={
+                      <Button
+                        type="button"
+                        className="w-full justify-between"
+                        variant="outline"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="grid size-6 place-items-center rounded-md bg-yellow-700">
+                            <LucideIcon.Palette className="size-4 text-white" />
+                          </span>
+                          Đã chọn
+                        </span>
+                        <span className="grid size-7 place-items-center rounded-full bg-primary">
+                          <span
+                            style={{ backgroundColor: color }}
+                            className="size-7 rounded-full"
+                          />
+                        </span>
+                      </Button>
+                    }
+                    open={openSelectColor}
+                    setOpen={(open: boolean) => {
+                      setOpenSelectColor(open);
+                    }}
+                  >
+                    <PaletteList
+                      selected={field.value}
+                      onSelect={(value) => {
+                        field.onChange(value);
+                        setOpenSelectColor(false);
+                      }}
+                    />
+                  </ResponsiveDialog>
                 </FormControl>
                 <FormMessage />
               </FormItem>

@@ -12,7 +12,7 @@ export const IconList = ({ selected, onSelect }: IIconList) => {
   const categoryList = Object.entries(expenseIconCategories);
 
   return (
-    <section className="h-full space-y-4 overflow-auto">
+    <section className="space-y-4">
       {categoryList.map(([category, icons]) => (
         <div key={category} className="space-y-2">
           <p className="text-sm font-medium">{category}</p>
@@ -21,7 +21,7 @@ export const IconList = ({ selected, onSelect }: IIconList) => {
               <Button
                 key={name}
                 size="icon"
-                variant={selected === name ? "default" : "outline"}
+                variant={selected === name ? "secondary" : "outline"}
                 className={cn("rounded-full")}
                 onClick={() => {
                   onSelect(name);
