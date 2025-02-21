@@ -126,6 +126,26 @@ export const CreateForm = ({
         className="space-y-3 sm:space-y-4"
       >
         <FormField
+          name="amount"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Số tiền</FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  value={formatWithDots(field.value)}
+                  onChange={(e) => {
+                    field.onChange(formatWithDots(e.target.value));
+                  }}
+                  placeholder="Nhập số tiền"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
           name="createDate"
           control={form.control}
           defaultValue={new Date()}
@@ -226,26 +246,6 @@ export const CreateForm = ({
                     </SelectGroup>
                   </SelectContent>
                 </Select>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          name="amount"
-          control={form.control}
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Số tiền</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  value={formatWithDots(field.value)}
-                  onChange={(e) => {
-                    field.onChange(formatWithDots(e.target.value));
-                  }}
-                  placeholder="Nhập số tiền"
-                />
               </FormControl>
               <FormMessage />
             </FormItem>

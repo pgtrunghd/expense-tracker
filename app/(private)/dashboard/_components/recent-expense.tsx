@@ -2,15 +2,17 @@
 
 import { NoDataFound } from "@/components/no-data-found";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetRecentActivityQuery } from "@/features/expense.slice";
 import { formatDate } from "@/lib/constants";
 import { formatter } from "@/lib/utils";
 import { format } from "date-fns";
+import * as LucideIcon from "lucide-react";
 
 const RecentExpense = () => {
-  const { data: res, isLoading, isSuccess } = useGetRecentActivityQuery();
+  const { data: res, isLoading } = useGetRecentActivityQuery();
   const expenseData = res?.slice(0, 5);
 
   const loading = () => {
@@ -37,7 +39,7 @@ const RecentExpense = () => {
     <>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          Hoạt động gần đây
+          Giao dịch gần đây
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -46,39 +48,58 @@ const RecentExpense = () => {
         ) : expenseData?.length === 0 ? (
           empty()
         ) : (
-          <div className="relative">
-            {expenseData?.map((expense) => (
-              <div
-                className="relative mt-4 flex justify-between rounded-md bg-muted p-3 first:mt-0"
-                key={expense.id}
-              >
-                <div className="space-y-1">
-                  <p className="line-clamp-1 text-sm">{expense.description}</p>
-                  {expense?.category && (
-                    <Badge
-                      style={{ backgroundColor: expense?.category?.color }}
-                      className="text-[10px]"
-                    >
-                      {expense?.category?.name}
-                    </Badge>
-                  )}
-                </div>
-                <div className="space-y-1 text-right">
-                  {expense.type === "income" ? (
-                    <p className="text-sm font-medium text-green-500">
-                      +{formatter.format(expense.amount)}
+          <div className="relative space-y-4">
+            {expenseData?.map((expense) => {
+              const Icon = LucideIcon[
+                (expense?.category?.icon as keyof typeof LucideIcon) ?? "Tag"
+              ] as React.FC<React.SVGProps<SVGSVGElement>>;
+
+              return (
+                <div
+                  className="relative flex justify-between rounded-xl bg-muted px-4 py-2"
+                  key={expense.id}
+                >
+                  <div className="flex items-center gap-4">
+                    {expense?.category && (
+                      <span
+                        className="grid size-8 place-items-center rounded-lg"
+                        style={{ backgroundColor: expense?.category?.color }}
+                      >
+                        <Icon className="size-5 text-white" />
+                      </span>
+                    )}
+
+                    <div className="space-y-1">
+                      {expense?.category && (
+                        <p className="text-sm font-medium leading-none">
+                          {expense?.category?.name}
+                        </p>
+                      )}
+                      <p className="line-clamp-1 text-sm text-muted-foreground">
+                        {expense.description}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="space-y-1 text-right">
+                    {expense.type === "income" ? (
+                      <p className="rounded-lg bg-green-500/10 px-2 py-1 text-xs font-medium text-green-500">
+                        +{formatter.format(expense.amount)}
+                      </p>
+                    ) : (
+                      <p className="rounded-lg bg-destructive/10 px-2 py-1 text-xs font-medium text-destructive">
+                        -{formatter.format(expense.amount)}
+                      </p>
+                    )}
+                    <p className="text-xs text-muted-foreground">
+                      {format(expense.createDate, formatDate)}
                     </p>
-                  ) : (
-                    <p className="text-sm font-medium text-destructive">
-                      -{formatter.format(expense.amount)}
-                    </p>
-                  )}
-                  <p className="text-sm text-muted-foreground">
-                    {format(expense.createDate, formatDate)}
-                  </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
+            <Button size="sm" className="w-full">
+              Xem thêm
+            </Button>
           </div>
         )}
       </CardContent>
