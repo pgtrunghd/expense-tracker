@@ -23,3 +23,10 @@ export const notification = {
 };
 
 export const formatDate = "dd/MM/yyyy";
+
+export const titlePage = {
+  dashboard: "Trang chủ",
+  expense: "Chi tiêu",
+  income: "Thu nhập",
+  category: "Danh mục",
+};

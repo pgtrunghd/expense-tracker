@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useMemo } from "react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,6 +8,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { useGetCategoriesQuery } from "@/features/category.slice";
+import * as LucideIcon from "lucide-react";
 import {
   Boxes,
   ClipboardList,
@@ -16,15 +17,14 @@ import {
   FileStack,
   LayoutDashboard,
 } from "lucide-react";
-import { NavMain } from "../nav-main";
-import { useGetCategoriesQuery } from "@/features/category.slice";
+import React, { useMemo } from "react";
 import { NavCategories } from "../nav-categories";
-import * as LucideIcon from "lucide-react";
+import { NavMain } from "../nav-main";
 
 export default function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const { data: categoryData, isLoading, isSuccess } = useGetCategoriesQuery();
+  const { data: categoryData, isLoading } = useGetCategoriesQuery();
 
   const data = useMemo(
     () => ({
@@ -64,7 +64,7 @@ export default function AppSidebar({
   );
 
   return (
-    <Sidebar collapsible="icon" variant="floating" {...props}>
+    <Sidebar collapsible="icon" variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

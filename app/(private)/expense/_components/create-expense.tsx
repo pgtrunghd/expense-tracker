@@ -25,6 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useGetCategoriesQuery } from "@/features/category.slice";
 import {
   useCreateExpenseMutation,
@@ -258,7 +259,7 @@ export const CreateForm = ({
             <FormItem>
               <FormLabel>Ghi chú</FormLabel>
               <FormControl>
-                <Input placeholder="Nhập ghi chú" {...field} />
+                <Textarea placeholder="Nhập ghi chú" {...field} rows={3} />
               </FormControl>
               <FormMessage />
             </FormItem>

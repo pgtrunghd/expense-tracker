@@ -12,16 +12,15 @@ import {
 } from "../ui/dropdown-menu";
 
 import { balanceSlice, useGetBalanceQuery } from "@/features/balance.slice";
-import { cn, formatter } from "@/lib/utils";
+import { formatter } from "@/lib/utils";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { SidebarTrigger } from "../ui/sidebar";
 import { Separator } from "../ui/separator";
+import { SidebarTrigger } from "../ui/sidebar";
 
 export default function Header() {
   const router = useRouter();
-  const [scroll, setScroll] = useState(false);
+  // const [scroll, setScroll] = useState(false);
   const { data: overviewData } = useGetBalanceQuery();
 
   const dispatch = useDispatch();
@@ -32,21 +31,21 @@ export default function Header() {
     router.push("/login");
   };
 
-  useEffect(() => {
-    const onScroll = () => {
-      if (window.scrollY > 12) {
-        setScroll(true);
-      } else {
-        setScroll(false);
-      }
-    };
+  // useEffect(() => {
+  //   const onScroll = () => {
+  //     if (window.scrollY > 12) {
+  //       setScroll(true);
+  //     } else {
+  //       setScroll(false);
+  //     }
+  //   };
 
-    window.addEventListener("scroll", onScroll);
+  //   window.addEventListener("scroll", onScroll);
 
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("scroll", onScroll);
+  //   };
+  // }, []);
 
   return (
     // <header
@@ -85,8 +84,14 @@ export default function Header() {
     // </header>
     <header className="flex h-16 shrink-0 items-center justify-between gap-2 p-4">
       <div className="flex items-center gap-2">
-        <SidebarTrigger className="-ml-1" />
+        <SidebarTrigger variant="outline" className="-ml-1" />
         <Separator orientation="vertical" className="h-4" />
+        <div className="flex h-8 items-center gap-2 rounded-lg border px-3 text-xs shadow md:text-sm">
+          <p>Số dư:</p>
+          <p className="font-semibold">
+            {formatter.format(overviewData?.balance ?? 0)}
+          </p>
+        </div>
       </div>
       <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>

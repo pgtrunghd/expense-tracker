@@ -125,7 +125,7 @@ const CreateForm = ({
   return (
     <>
       <span
-        className="mx-auto flex size-20 items-center justify-center rounded-xl"
+        className="mx-auto flex size-28 items-center justify-center rounded-3xl"
         style={{ backgroundColor: color }}
       >
         <Icon className="size-14 text-white" />
@@ -153,29 +153,6 @@ const CreateForm = ({
               <FormItem>
                 <FormLabel>Màu</FormLabel>
                 <FormControl>
-                  {/* <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Chọn màu sắc" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectGroup>
-                        {colorList?.map((item) => (
-                          <SelectItem key={item.color} value={item.color}>
-                            <div className="flex items-center gap-2">
-                              <span
-                                style={{ backgroundColor: item.color }}
-                                className={cn(`block size-4 rounded-sm`)}
-                              ></span>
-                              <p>{item.name}</p>
-                            </div>
-                          </SelectItem>
-                        ))}
-                      </SelectGroup>
-                    </SelectContent>
-                  </Select> */}
                   <ResponsiveDialog
                     title="Màu"
                     trigger={

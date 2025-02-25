@@ -56,7 +56,7 @@ export default function RootLayout({
             >
               {children}
             </div>
-            <Toaster richColors />
+            <Toaster richColors position="top-center" />
           </GlobalProvider>
         </TooltipProvider>
       </body>

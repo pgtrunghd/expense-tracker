@@ -1,24 +1,22 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  useGetBalanceQuery,
-  useGetOverviewQuery,
-} from "@/features/balance.slice";
+import { useGetOverviewQuery } from "@/features/balance.slice";
 import { cn, formatter } from "@/lib/utils";
 import { RootState } from "@/store";
 import {
   CircleDollarSign,
+  CircleMinus,
+  CirclePlus,
   HandCoins,
-  TrendingUp,
   TrendingDown,
+  TrendingUp,
   Wallet,
 } from "lucide-react";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
 
 const CardList = () => {
-  // const { data: balanceData, isLoading } = useGetBalanceQuery();
   const { date } = useSelector((state: RootState) => state.global);
   const { data: overviewData } = useGetOverviewQuery(date);
 
@@ -26,13 +24,13 @@ const CardList = () => {
     () => [
       {
         title: "Chi tiêu",
-        icon: CircleDollarSign,
+        icon: CircleMinus,
         value: overviewData?.totalExpense ?? 0,
         prevValue: overviewData?.totalExpensePrevMonth ?? 0,
       },
       {
         title: "Thu nhập",
-        icon: HandCoins,
+        icon: CirclePlus,
         value: overviewData?.totalIncome ?? 0,
         prevValue: overviewData?.totalIncomePrevMonth ?? 0,
       },
@@ -70,10 +68,13 @@ const CardList = () => {
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
       {cardList.map((card) => (
-        <Card key={card.title}>
+        <Card key={card.title} className="last:col-span-2 md:last:col-span-1">
           <CardHeader className="!pb-2">
             <CardTitle className="flex items-center justify-between text-sm font-medium">
-              {card.title} <card.icon className="size-5 text-muted-foreground" />
+              {card.title}{" "}
+              <span>
+                <card.icon className="size-5 text-muted-foreground" />
+              </span>
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -84,56 +85,6 @@ const CardList = () => {
           </CardContent>
         </Card>
       ))}
-      {/* <Card>
-        <CardHeader className="!pb-2">
-          <CardTitle className="flex items-center justify-between text-sm font-medium">
-            Chi tiêu <CircleDollarSign className="size-5" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="truncate text-base font-semibold md:text-lg">
-            {formatter.format(overviewData?.totalExpense ?? 0)}
-          </p>
-          {calculateDiff(
-            overviewData?.totalExpensePrevMonth ?? 0,
-            overviewData?.totalExpense ?? 0,
-          )}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader className="!pb-2">
-          <CardTitle className="flex items-center justify-between text-sm font-medium">
-            Thu nhập <HandCoins className="size-5" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="truncate text-base font-semibold md:text-lg">
-            {formatter.format(overviewData?.totalIncome ?? 0)}
-          </p>
-          {calculateDiff(
-            overviewData?.totalIncomePrevMonth ?? 0,
-            overviewData?.totalIncome ?? 0,
-          )}
-        </CardContent>
-      </Card>
-
-      <Card className="col-span-2 md:col-span-1">
-        <CardHeader className="!pb-2">
-          <CardTitle className="flex items-center justify-between text-sm font-medium">
-            Tiết kiệm <Wallet className="size-5" />
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className={cn("truncate text-base font-semibold md:text-lg")}>
-            {formatter.format(overviewData?.totalSaving ?? 0)}
-          </p>
-          {calculateDiff(
-            overviewData?.totalSavingPrevMonth ?? 0,
-            overviewData?.totalSaving ?? 0,
-          )}
-        </CardContent>
-      </Card> */}
     </div>
   );
 };
