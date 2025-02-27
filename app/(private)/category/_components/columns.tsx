@@ -13,6 +13,7 @@ import * as LucideIcon from "lucide-react";
 import { useRef, useState } from "react";
 import CreateCategory from "./create-category";
 import DeleteCategory from "./delete-category";
+import CategoryIcon from "@/components/category-icon";
 
 export const getColumns = (): ColumnDef<any>[] => {
   return [
@@ -22,17 +23,16 @@ export const getColumns = (): ColumnDef<any>[] => {
       cell: ({ row }) => {
         const name = row?.original?.name;
         const color = row?.original?.color;
-        const Icon = LucideIcon[
-          row?.original?.icon as keyof typeof LucideIcon
-        ] as React.FC<React.SVGProps<SVGSVGElement>>;
+        const icon = row?.original?.icon;
+
         return (
           <div className="flex items-center gap-2">
-            <span
-              className="grid size-6 place-items-center rounded-md"
-              style={{ backgroundColor: color }}
-            >
-              <Icon className="size-4 text-white" />
-            </span>
+            <CategoryIcon
+              color={color}
+              icon={icon}
+              containerClass="size-7"
+              iconClass="size-4"
+            />
             <p>{name}</p>
           </div>
         );

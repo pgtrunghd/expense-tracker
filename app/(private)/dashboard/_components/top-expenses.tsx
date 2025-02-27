@@ -10,7 +10,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetCategoriesQuery } from "@/features/category.slice";
 import { useMemo } from "react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 const TopExpenses = () => {
   const { data, isLoading } = useGetCategoriesQuery();
@@ -41,6 +41,8 @@ const TopExpenses = () => {
 
   if (isLoading) return <Skeleton className="h-full w-full" />;
 
+  console.log(topExpensesData);
+
   return (
     <>
       {topExpensesData.length > 0 ? (
@@ -56,8 +58,11 @@ const TopExpenses = () => {
               tickMargin={10}
               axisLine={false}
             />
-            <Bar dataKey="expense" radius={4} barSize={`${100 / 5}%`} />
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+            <Bar dataKey="expense" radius={8} barSize={`${100 / 5}%`} />
+            <ChartTooltip
+              cursor={false}
+              content={<ChartTooltipContent indicator="line" />}
+            />
           </BarChart>
         </ChartContainer>
       ) : (

@@ -20,7 +20,7 @@ export const ExpenseTable = () => {
   const columns = useMemo(desktopColumns, []);
 
   return (
-    <div>
+    <div className="overflow-hidden">
       <ToolbarActions />
       <DataTable
         data={expenseData?.data}

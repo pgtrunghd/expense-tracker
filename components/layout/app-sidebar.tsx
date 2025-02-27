@@ -16,6 +16,7 @@ import {
   Command,
   FileStack,
   LayoutDashboard,
+  List,
 } from "lucide-react";
 import React, { useMemo } from "react";
 import { NavCategories } from "../nav-categories";
@@ -35,15 +36,20 @@ export default function AppSidebar({
           icon: LayoutDashboard,
         },
         {
-          title: "Chi tiêu",
-          url: "/expense",
-          icon: ClipboardList,
+          title: "Giao dịch",
+          url: "/transaction",
+          icon: List,
         },
-        {
-          title: "Thu nhập",
-          url: "/income",
-          icon: Boxes,
-        },
+        // {
+        //   title: "Chi tiêu",
+        //   url: "/expense",
+        //   icon: ClipboardList,
+        // },
+        // {
+        //   title: "Thu nhập",
+        //   url: "/income",
+        //   icon: Boxes,
+        // },
         {
           title: "Danh mục",
           url: "/category",
@@ -64,7 +70,7 @@ export default function AppSidebar({
   );
 
   return (
-    <Sidebar collapsible="icon" variant="inset" {...props}>
+    <Sidebar collapsible="icon" variant="sidebar" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>

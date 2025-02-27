@@ -1,5 +1,6 @@
 "use client";
 
+import CategoryIcon from "@/components/category-icon";
 import { NoDataFound } from "@/components/no-data-found";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -61,12 +62,18 @@ const RecentExpense = () => {
                 >
                   <div className="flex items-center gap-4">
                     {expense?.category && (
-                      <span
-                        className="grid size-8 place-items-center rounded-lg"
-                        style={{ backgroundColor: expense?.category?.color }}
-                      >
-                        <Icon className="size-5 text-white" />
-                      </span>
+                      <CategoryIcon
+                        color={expense?.category?.color}
+                        icon={expense?.category?.icon}
+                        containerClass="size-7"
+                        iconClass="size-4"
+                      />
+                      // <span
+                      //   className="grid size-8 place-items-center rounded-lg"
+                      //   style={{ backgroundColor: expense?.category?.color }}
+                      // >
+                      //   <Icon className="size-5 text-white" />
+                      // </span>
                     )}
 
                     <div className="space-y-1">

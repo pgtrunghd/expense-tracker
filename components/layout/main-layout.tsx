@@ -14,7 +14,9 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
       <Header />
 
       <section className="flex-1 px-4 pb-4">
-        <h1 className="mb-2 text-2xl tracking-tight font-bold leading-[44px]">{titlePage[title]}</h1>
+        <h1 className="mb-2 text-2xl font-bold leading-[44px] tracking-tight">
+          {titlePage[title]}
+        </h1>
         {children}
       </section>
     </main>

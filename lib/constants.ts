@@ -25,7 +25,8 @@ export const notification = {
 export const formatDate = "dd/MM/yyyy";
 
 export const titlePage = {
-  dashboard: "Trang chủ",
+  dashboard: "Tổng quan",
+  transaction: "Giao dịch",
   expense: "Chi tiêu",
   income: "Thu nhập",
   category: "Danh mục",
