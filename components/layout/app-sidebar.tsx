@@ -3,6 +3,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -20,7 +21,8 @@ import {
 } from "lucide-react";
 import React, { useMemo } from "react";
 import { NavCategories } from "../nav-categories";
-import { NavMain } from "../nav-main";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 
 export default function AppSidebar({
   ...props
@@ -92,6 +94,9 @@ export default function AppSidebar({
       <SidebarContent>
         <NavCategories items={data.category} isLoading={isLoading} />
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser />
+      </SidebarFooter>
     </Sidebar>
   );
 }

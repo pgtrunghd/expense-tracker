@@ -23,7 +23,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 
-export default function Action() {
+export default function AddTransaction() {
   const dispatch = useDispatch();
   const { date } = useSelector((state: RootState) => state.global);
   const [open, setOpen] = useState(false);
@@ -32,30 +32,13 @@ export default function Action() {
   });
 
   return (
-    <section className="flex items-center justify-between">
-      {/* <Popover>
-        <PopoverTrigger asChild>
-          <Button variant="outline" size="sm" className={cn()}>
-            <CalendarIcon className="mr-2 size-4" />
-            {date ? formatDate(date, "MMMM yyyy") : <span>Pick a month</span>}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="w-auto p-0">
-          <MonthPicker
-            onMonthSelect={(value) => {
-              dispatch(changeDate(value.toISOString()));
-            }}
-            selectedMonth={new Date(date)}
-          />
-        </PopoverContent>
-      </Popover> */}
-
+    <div className="fixed bottom-4 right-4 z-50">
       <ResponsiveDialog
         setOpen={setOpen}
         open={open}
         trigger={
-          <Button className="rounded-lg" size="xs">
-            <Plus className="mr-2 size-5" /> Tạo thu chi
+          <Button className="rounded-full" size="icon">
+            <Plus className="size-5" />
           </Button>
         }
       >
@@ -76,6 +59,6 @@ export default function Action() {
           </TabsContent>
         </Tabs>
       </ResponsiveDialog>
-    </section>
+    </div>
   );
 }

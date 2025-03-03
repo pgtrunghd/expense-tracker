@@ -1,7 +1,10 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useGetOverviewQuery } from "@/features/balance.slice";
+import {
+  useGetBalanceQuery,
+  useGetOverviewQuery,
+} from "@/features/balance.slice";
 import { cn, formatter } from "@/lib/utils";
 import { RootState } from "@/store";
 import {
@@ -9,6 +12,7 @@ import {
   CircleMinus,
   CirclePlus,
   HandCoins,
+  Landmark,
   TrendingDown,
   TrendingUp,
   Wallet,
@@ -19,9 +23,16 @@ import { useSelector } from "react-redux";
 const CardList = () => {
   const { date } = useSelector((state: RootState) => state.global);
   const { data: overviewData } = useGetOverviewQuery(date);
+  const { data: balanceData } = useGetBalanceQuery();
 
   const cardList = useMemo(
     () => [
+      {
+        title: "Số dư",
+        icon: Landmark,
+        value: balanceData?.balance ?? 0,
+        prevValue: 0,
+      },
       {
         title: "Chi tiêu",
         icon: CircleMinus,
@@ -66,7 +77,7 @@ const CardList = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
       {cardList.map((card) => (
         <Card key={card.title} className="last:col-span-2 md:last:col-span-1">
           <CardHeader className="!pb-2">
@@ -81,7 +92,8 @@ const CardList = () => {
             <p className="truncate text-base font-bold md:text-2xl">
               {formatter.format(card.value)}
             </p>
-            {calculateDiff(card.prevValue, card.value)}
+            {card.title !== "Số dư" &&
+              calculateDiff(card.prevValue, card.value)}
           </CardContent>
         </Card>
       ))}

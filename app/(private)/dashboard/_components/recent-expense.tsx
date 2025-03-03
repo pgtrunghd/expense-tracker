@@ -9,11 +9,16 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useGetRecentActivityQuery } from "@/features/expense.slice";
 import { formatDate } from "@/lib/constants";
 import { formatter } from "@/lib/utils";
+import { RootState } from "@/store";
 import { format } from "date-fns";
 import * as LucideIcon from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 const RecentExpense = () => {
-  const { data: res, isLoading } = useGetRecentActivityQuery();
+  const { date } = useSelector((state: RootState) => state.global);
+  const { data: res, isLoading } = useGetRecentActivityQuery(date);
+  const router = useRouter();
   const expenseData = res?.slice(0, 5);
 
   const loading = () => {
@@ -68,12 +73,6 @@ const RecentExpense = () => {
                         containerClass="size-7"
                         iconClass="size-4"
                       />
-                      // <span
-                      //   className="grid size-8 place-items-center rounded-lg"
-                      //   style={{ backgroundColor: expense?.category?.color }}
-                      // >
-                      //   <Icon className="size-5 text-white" />
-                      // </span>
                     )}
 
                     <div className="space-y-1">
@@ -104,7 +103,12 @@ const RecentExpense = () => {
                 </div>
               );
             })}
-            <Button size="sm" className="w-full">
+            <Button
+              size="sm"
+              variant="outline"
+              className="w-full"
+              onClick={() => router.push("/transaction")}
+            >
               Xem thêm
             </Button>
           </div>

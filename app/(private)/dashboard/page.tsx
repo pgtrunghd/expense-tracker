@@ -17,10 +17,12 @@ const CarouselSection = dynamic(() => import("./_components/carousel-section"));
 
 const Action = dynamic(() => import("./_components/action"));
 
+const AddTransaction = dynamic(() => import("@/components/add-transaction"));
+
 function DashboardPage() {
   return (
-    <section className="space-y-4">
-      <Action />
+    <section className="flex flex-col gap-4">
+      {/* <Action /> */}
 
       <CarouselSection />
 
@@ -62,6 +64,8 @@ function DashboardPage() {
           </CardContent>
         </Card>
       </div>
+
+      <AddTransaction />
     </section>
   );
 }

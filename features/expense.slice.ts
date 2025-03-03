@@ -60,8 +60,9 @@ export const expenseSlice = createApi({
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Expense"],
     }),
-    getRecentActivity: builder.query<RecentActivity[], void>({
-      query: () => `${apiRoutes.RECENT_ACTIVITY}`,
+    getRecentActivity: builder.query<RecentActivity[], string>({
+      query: (date: string) => `${apiRoutes.RECENT_ACTIVITY}?date=${date}`,
+      onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Expense"],
     }),
   }),

@@ -46,6 +46,12 @@ export const categorySlice = createApi({
       onQueryStarted: onQueryStartedErrorToast,
       invalidatesTags: ["Category"],
     }),
+    getTopExpenseByCategory: builder.query<Category[], string | void>({
+      query: (date: string) =>
+        `${apiRoutes.CATEGORY}/top-expenses?date=${date}`,
+      onQueryStarted: onQueryStartedErrorToast,
+      providesTags: ["Category"],
+    }),
   }),
 });
 
@@ -55,4 +61,5 @@ export const {
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
   useGetDailyCategoryQuery,
+  useGetTopExpenseByCategoryQuery,
 } = categorySlice;

@@ -1,5 +1,5 @@
-import { Overview } from "./components/overview";
-import { TransactionList } from "./components/transaction-list";
+import { Overview } from "./_components/overview";
+import { TransactionList } from "./_components/transaction-list";
 
 export default function TransactionPage() {
   return (

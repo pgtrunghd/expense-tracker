@@ -8,12 +8,18 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useGetCategoriesQuery } from "@/features/category.slice";
+import {
+  useGetCategoriesQuery,
+  useGetTopExpenseByCategoryQuery,
+} from "@/features/category.slice";
+import { RootState } from "@/store";
 import { useMemo } from "react";
+import { useSelector } from "react-redux";
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 const TopExpenses = () => {
-  const { data, isLoading } = useGetCategoriesQuery();
+  const { date } = useSelector((state: RootState) => state.global);
+  const { data, isLoading } = useGetTopExpenseByCategoryQuery(date);
 
   const topExpensesData = useMemo(() => {
     if (!data) return [];
@@ -40,8 +46,6 @@ const TopExpenses = () => {
   } satisfies ChartConfig;
 
   if (isLoading) return <Skeleton className="h-full w-full" />;
-
-  console.log(topExpensesData);
 
   return (
     <>

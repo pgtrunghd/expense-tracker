@@ -1,16 +1,23 @@
 "use client";
 
-import { useGetRecentActivityQuery } from "@/features/expense.slice";
-import { format } from "date-fns";
-import { useCallback, useMemo } from "react";
-import { vi } from "date-fns/locale";
 import CategoryIcon from "@/components/category-icon";
-import * as LucideIcon from "lucide-react";
-import { ChevronRight } from "lucide-react";
+import { NoDataFound } from "@/components/no-data-found";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useGetRecentActivityQuery } from "@/features/expense.slice";
 import { cn, formatter } from "@/lib/utils";
+import { RootState } from "@/store";
+import { format } from "date-fns";
+import { vi } from "date-fns/locale";
+import * as LucideIcon from "lucide-react";
+import dynamic from "next/dynamic";
+import { useCallback, useMemo } from "react";
+import { useSelector } from "react-redux";
+
+const AddTransaction = dynamic(() => import("@/components/add-transaction"));
 
 export const TransactionList = () => {
-  const { data: res, isLoading, isSuccess } = useGetRecentActivityQuery();
+  const { date } = useSelector((state: RootState) => state.global);
+  const { data: res, isLoading } = useGetRecentActivityQuery(date);
 
   const dataList = useMemo(() => {
     const result = res?.reduce(
@@ -31,7 +38,7 @@ export const TransactionList = () => {
     if (!result) return;
 
     return Object.entries(result);
-  }, [isSuccess]);
+  }, [res]);
 
   const sum = useCallback((transaction: RecentActivity[]) => {
     const result = formatter.format(
@@ -54,14 +61,26 @@ export const TransactionList = () => {
     );
   }, []);
 
-  if (!dataList) return null;
+  if (isLoading) {
+    return (
+      <div className="mt-6 space-y-6">
+        {Array.from({ length: 5 }).map((item) => (
+          <div className="space-y-2">
+            <Skeleton className="h-7 w-60" />
+            <Skeleton className="h-12 w-full" />
+            <Skeleton className="h-5 w-60" />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
-    <section className="mt-6 space-y-4">
-      {dataList.length &&
+    <section className="mt-6 space-y-6">
+      {dataList && dataList.length > 0 ? (
         dataList?.map((item, index) => (
           <div key={index} className="space-y-2">
-            <h3 className="text-lg font-semibold">{item[0]}</h3>
+            <h3 className="pl-3 text-lg font-semibold">{item[0]}</h3>
             <div className="rounded-xl border bg-background shadow">
               {item[1].map((activity) => {
                 return (
@@ -100,7 +119,11 @@ export const TransactionList = () => {
               Tổng: {sum(item[1])}
             </p>
           </div>
-        ))}
+        ))
+      ) : (
+        <NoDataFound />
+      )}
+      <AddTransaction />
     </section>
   );
 };
