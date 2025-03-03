@@ -13,7 +13,7 @@ export const NoDataFound = ({ ...props }: TProps) => {
     >
       {/* <Inbox className="size-12" /> */}
       <p className="text-sm font-semibold">Không có giao dịch</p>
-      <p className="text-sm">Nhấp vào nút "+" để thêm giao dịch mới.</p>
+      <p className="text-sm">Nhấp vào nút &quot;+&quot; để thêm giao dịch mới.</p>
     </div>
   );
 };

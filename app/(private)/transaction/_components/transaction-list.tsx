@@ -64,8 +64,8 @@ export const TransactionList = () => {
   if (isLoading) {
     return (
       <div className="mt-6 space-y-6">
-        {Array.from({ length: 5 }).map((item) => (
-          <div className="space-y-2">
+        {Array.from({ length: 5 }).map((item, index) => (
+          <div className="space-y-2" key={index}>
             <Skeleton className="h-7 w-60" />
             <Skeleton className="h-12 w-full" />
             <Skeleton className="h-5 w-60" />
