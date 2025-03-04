@@ -1,13 +1,13 @@
 import { baseQueryWithAuth } from "@/lib/api";
 import { apiRoutes } from "@/lib/constants";
-import { requestWithToken } from "@/lib/utils";
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import { balanceSlice } from "./balance.slice";
+import { expenseSlice } from "./expense.slice";
 
 export const incomeSlice = createApi({
   reducerPath: "income",
   baseQuery: baseQueryWithAuth,
-  tagTypes: ["Income"],
+  tagTypes: ["Income", "RecentActivity"],
   endpoints: (builder) => ({
     createIncome: builder.mutation<void, CreateIncome>({
       query: (data) => ({
@@ -18,6 +18,7 @@ export const incomeSlice = createApi({
       onQueryStarted(arg, api) {
         api.queryFulfilled.then(() => {
           api.dispatch(balanceSlice.util.invalidateTags(["Balance"]));
+          api.dispatch(expenseSlice.util.invalidateTags(["RecentActivity"]));
         });
       },
       invalidatesTags: ["Income"],
@@ -31,6 +32,7 @@ export const incomeSlice = createApi({
       onQueryStarted(arg, api) {
         api.queryFulfilled.then(() => {
           api.dispatch(balanceSlice.util.invalidateTags(["Balance"]));
+          api.dispatch(expenseSlice.util.invalidateTags(["RecentActivity"]));
         });
       },
       invalidatesTags: ["Income"],
@@ -51,6 +53,7 @@ export const incomeSlice = createApi({
       onQueryStarted(arg, api) {
         api.queryFulfilled.then(() => {
           api.dispatch(balanceSlice.util.invalidateTags(["Balance"]));
+          api.dispatch(expenseSlice.util.invalidateTags(["RecentActivity"]));
         });
       },
       invalidatesTags: ["Income"],

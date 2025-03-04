@@ -7,7 +7,7 @@ import { balanceSlice } from "./balance.slice";
 export const expenseSlice = createApi({
   reducerPath: "expense",
   baseQuery: baseQueryWithAuth,
-  tagTypes: ["Expense", "Balance"],
+  tagTypes: ["Expense", "Balance", "RecentActivity"],
   endpoints: (builder) => ({
     getExpenses: builder.query<any, number | void | Filter>({
       query: (params: Filter) => ({
@@ -27,7 +27,7 @@ export const expenseSlice = createApi({
           api.dispatch(balanceSlice.util.invalidateTags(["Balance"]));
         });
       },
-      invalidatesTags: ["Expense"],
+      invalidatesTags: ["Expense", "RecentActivity"],
     }),
     updateExpense: builder.mutation({
       query: ({ id, ...data }) => ({
@@ -40,7 +40,7 @@ export const expenseSlice = createApi({
           api.dispatch(balanceSlice.util.invalidateTags(["Balance"]));
         });
       },
-      invalidatesTags: ["Expense"],
+      invalidatesTags: ["Expense", "RecentActivity"],
     }),
     deleteExpense: builder.mutation({
       query: (id) => ({
@@ -52,7 +52,7 @@ export const expenseSlice = createApi({
           api.dispatch(balanceSlice.util.invalidateTags(["Balance"]));
         });
       },
-      invalidatesTags: ["Expense"],
+      invalidatesTags: ["Expense", "RecentActivity"],
     }),
 
     getMonthlyExpense: builder.query<any, string | void>({
@@ -63,7 +63,7 @@ export const expenseSlice = createApi({
     getRecentActivity: builder.query<RecentActivity[], string>({
       query: (date: string) => `${apiRoutes.RECENT_ACTIVITY}?date=${date}`,
       onQueryStarted: onQueryStartedErrorToast,
-      providesTags: ["Expense"],
+      providesTags: ["RecentActivity"],
     }),
   }),
 });

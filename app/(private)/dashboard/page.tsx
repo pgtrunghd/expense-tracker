@@ -15,15 +15,11 @@ const RecentExpense = dynamic(() => import("./_components/recent-expense"));
 
 const CarouselSection = dynamic(() => import("./_components/carousel-section"));
 
-const Action = dynamic(() => import("./_components/action"));
-
 const AddTransaction = dynamic(() => import("@/components/add-transaction"));
 
 function DashboardPage() {
   return (
     <section className="flex flex-col gap-4">
-      {/* <Action /> */}
-
       <CarouselSection />
 
       <CardList />

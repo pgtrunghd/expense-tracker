@@ -17,6 +17,7 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
+import { useRouter } from "next/navigation";
 
 interface INavCategoriesProps {
   items:
@@ -31,6 +32,7 @@ interface INavCategoriesProps {
 
 export function NavCategories({ items, isLoading }: INavCategoriesProps) {
   const { isMobile } = useSidebar();
+  const router = useRouter();
 
   if (!isLoading && !items) return null;
 
@@ -78,7 +80,10 @@ export function NavCategories({ items, isLoading }: INavCategoriesProps) {
               </SidebarMenuItem>
             ))}
         <SidebarMenuItem>
-          <SidebarMenuButton className="text-sidebar-foreground/70">
+          <SidebarMenuButton
+            className="text-sidebar-foreground/70"
+            onClick={() => router.push("/category")}
+          >
             <MoreHorizontal className="text-sidebar-foreground/70" />
             <span>More</span>
           </SidebarMenuButton>

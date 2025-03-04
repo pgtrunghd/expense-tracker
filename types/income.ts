@@ -2,6 +2,7 @@ type Income = {
   id: string;
   description: string;
   amount: number;
+  category: Category;
   createDate: Date;
 };
 

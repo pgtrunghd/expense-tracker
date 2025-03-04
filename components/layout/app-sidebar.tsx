@@ -42,16 +42,6 @@ export default function AppSidebar({
           url: "/transaction",
           icon: List,
         },
-        // {
-        //   title: "Chi tiêu",
-        //   url: "/expense",
-        //   icon: ClipboardList,
-        // },
-        // {
-        //   title: "Thu nhập",
-        //   url: "/income",
-        //   icon: Boxes,
-        // },
         {
           title: "Danh mục",
           url: "/category",

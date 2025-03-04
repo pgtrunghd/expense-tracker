@@ -9,7 +9,7 @@ import React, { memo, useState } from "react";
 import { toast } from "sonner";
 
 interface IProps {
-  income: Income;
+  income: Income | RecentActivity;
   trigger: React.ReactNode;
   callback?: (open: boolean) => void;
 }
@@ -53,4 +53,4 @@ const DeleteIncome = ({ income, callback, trigger }: IProps) => {
   );
 };
 
-export default memo(DeleteIncome);
+export const DeleteIncomeMemo = memo(DeleteIncome);

@@ -9,7 +9,7 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 export function NavMain({
@@ -19,29 +19,35 @@ export function NavMain({
 }) {
   const pathname = usePathname();
 
-  const [activeItem, setActiveItem] = useState(
-    items.find((item) => item.url === pathname),
-  );
+  const [activeItem, setActiveItem] = useState<{
+    title: string;
+    url: string;
+    icon: LucideIcon;
+  }>();
+
+  useEffect(() => {
+    setActiveItem(items.find((item) => item.url === pathname));
+  }, [pathname]);
 
   return (
     // <SidebarGroup>
-      // <SidebarGroupLabel>Menu</SidebarGroupLabel>
-      <SidebarMenu>
-        {items.map((item) => (
-          <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton
-              asChild
-              isActive={activeItem?.title === item.title}
-              onClick={() => setActiveItem(item)}
-            >
-              <Link href={item.url}>
-                <item.icon />
-                <span>{item.title}</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        ))}
-      </SidebarMenu>
+    // <SidebarGroupLabel>Menu</SidebarGroupLabel>
+    <SidebarMenu>
+      {items.map((item) => (
+        <SidebarMenuItem key={item.title}>
+          <SidebarMenuButton
+            asChild
+            isActive={activeItem?.title === item.title}
+            onClick={() => setActiveItem(item)}
+          >
+            <Link href={item.url}>
+              <item.icon />
+              <span>{item.title}</span>
+            </Link>
+          </SidebarMenuButton>
+        </SidebarMenuItem>
+      ))}
+    </SidebarMenu>
     // </SidebarGroup>
   );
 }

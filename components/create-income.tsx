@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useGetCategoriesQuery } from "@/features/category.slice";
+import { useGetRecentActivityQuery } from "@/features/expense.slice";
 import {
   useCreateIncomeMutation,
   useUpdateIncomeMutation,
@@ -34,22 +35,38 @@ import {
 import { formatDate, notification } from "@/lib/constants";
 import { cn, formatToNumber, formatWithDots } from "@/lib/utils";
 import { formCreateIncomeSchema } from "@/lib/validate";
+import { RootState } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
 import { CalendarIcon, Loader2 } from "lucide-react";
 import React, { memo, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import { z } from "zod";
 
 interface IProps {
-  income?: Income;
+  income?: Income | RecentActivity;
   callback?: (open: boolean) => void;
   trigger: React.ReactNode;
 }
 
 const CreateIncome = ({ income, callback, trigger }: IProps) => {
   const [open, setOpen] = useState(false);
+  const form = useForm<z.infer<typeof formCreateIncomeSchema>>({
+    resolver: zodResolver(formCreateIncomeSchema),
+  });
+
+  useEffect(() => {
+    if (income) {
+      form.reset({
+        description: income?.description,
+        amount: income?.amount.toString(),
+        createDate: new Date(income?.createDate),
+        categoryId: income?.category?.id,
+      });
+    }
+  }, [income]);
 
   return (
     <ResponsiveDialog
@@ -61,7 +78,7 @@ const CreateIncome = ({ income, callback, trigger }: IProps) => {
         callback && callback(open);
       }}
     >
-      <CreateForm income={income} setOpen={setOpen} />
+      <CreateForm income={income} setOpen={setOpen} form={form} />
     </ResponsiveDialog>
   );
 };
@@ -71,17 +88,19 @@ export const CreateIncomeMemo = memo(CreateIncome);
 export const CreateForm = ({
   income,
   setOpen,
+  form,
 }: {
-  income?: Income;
+  income?: Income | RecentActivity;
   setOpen: (open: boolean) => void;
+  form: UseFormReturn<z.infer<typeof formCreateIncomeSchema>>;
 }) => {
   const [openCalendar, setOpenCalendar] = useState(false);
-  const form = useForm<z.infer<typeof formCreateIncomeSchema>>({
-    resolver: zodResolver(formCreateIncomeSchema),
-  });
+  const { date } = useSelector((state: RootState) => state.global);
+
   const { data } = useGetCategoriesQuery();
   const [createIncome, { isLoading: isCreating }] = useCreateIncomeMutation();
   const [updateIncome, { isLoading: isUpdating }] = useUpdateIncomeMutation();
+  // const { refetch } = useGetRecentActivityQuery(date);
 
   const onSubmit = async (data: z.infer<typeof formCreateIncomeSchema>) => {
     try {
@@ -101,20 +120,11 @@ export const CreateForm = ({
       }
       setOpen(false);
       form.reset();
+      // refetch();
     } catch (error: any) {
       toast.error(error?.data.message);
     }
   };
-
-  useEffect(() => {
-    if (income) {
-      form.reset({
-        description: income?.description,
-        amount: income?.amount.toString(),
-        createDate: new Date(income?.createDate),
-      });
-    }
-  }, [income]);
 
   return (
     <Form {...form}>

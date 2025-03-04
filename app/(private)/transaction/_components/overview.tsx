@@ -15,15 +15,15 @@ export const Overview = () => {
   const cardList = useMemo(
     () => [
       {
-        title: "Chi tiêu",
-        icon: CircleMinus,
-        value: overviewData?.totalExpense ?? 0,
-        type: "income",
-      },
-      {
         title: "Thu nhập",
         icon: CirclePlus,
         value: overviewData?.totalIncome ?? 0,
+        type: "income",
+      },
+      {
+        title: "Chi tiêu",
+        icon: CircleMinus,
+        value: overviewData?.totalExpense ?? 0,
         type: "expense",
       },
     ],

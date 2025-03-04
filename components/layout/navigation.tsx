@@ -1,8 +1,6 @@
 "use client";
 
-import CreateExpense, {
-  CreateForm as CreateExpenseForm,
-} from "@/app/(private)/expense/_components/create-expense";
+import { CreateForm as CreateExpenseForm } from "@/components/create-expense";
 import { navListMobile } from "@/lib/nav-list";
 import { cn } from "@/lib/utils";
 import { Plus } from "lucide-react";
@@ -12,17 +10,23 @@ import { Button } from "../ui/button";
 import { ResponsiveDialog } from "../responsive-dialog";
 import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
-import { CreateForm as CreateIncomeForm } from "@/app/(private)/income/_components/create-income";
+import { CreateForm as CreateIncomeForm } from "@/components/create-income";
 import { useForm } from "react-hook-form";
-import { formCreateExpenseSchema } from "@/lib/validate";
+import {
+  formCreateExpenseSchema,
+  formCreateIncomeSchema,
+} from "@/lib/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 export const Navigation = () => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const form = useForm<z.infer<typeof formCreateExpenseSchema>>({
+  const formExpense = useForm<z.infer<typeof formCreateExpenseSchema>>({
     resolver: zodResolver(formCreateExpenseSchema),
+  });
+  const formIncome = useForm<z.infer<typeof formCreateIncomeSchema>>({
+    resolver: zodResolver(formCreateIncomeSchema),
   });
 
   return (
@@ -51,11 +55,13 @@ export const Navigation = () => {
                   <Button size="iconSm" className="mb-1 rounded-lg">
                     <Plus className="size-5" />
                   </Button>
-                  <p className="text-[10px] sm:text-xs font-medium">Tạo thu chi</p>
+                  <p className="text-[10px] font-medium sm:text-xs">
+                    Tạo thu chi
+                  </p>
                 </div>
               }
             >
-              <Tabs defaultValue="expense" className="flex flex-col mt-4">
+              <Tabs defaultValue="expense" className="mt-4 flex flex-col">
                 <TabsList>
                   <TabsTrigger value="expense" className="flex-1">
                     Chi tiêu
@@ -65,10 +71,10 @@ export const Navigation = () => {
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="expense">
-                  <CreateExpenseForm setOpen={setOpen} form={form} />
+                  <CreateExpenseForm setOpen={setOpen} form={formExpense} />
                 </TabsContent>
                 <TabsContent value="income">
-                  <CreateIncomeForm setOpen={setOpen} />
+                  <CreateIncomeForm setOpen={setOpen} form={formIncome} />
                 </TabsContent>
               </Tabs>
             </ResponsiveDialog>

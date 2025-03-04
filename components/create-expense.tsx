@@ -43,7 +43,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 interface IProps {
-  expense?: Expense;
+  expense?: Expense | RecentActivity;
   trigger?: React.ReactNode;
   callback?: (open: boolean) => void;
 }
@@ -81,14 +81,14 @@ const CreateExpense = ({ expense, trigger, callback }: IProps) => {
   );
 };
 
-export default memo(CreateExpense);
+export const CreateExpenseMemo = memo(CreateExpense);
 
 export const CreateForm = ({
   expense,
   setOpen,
   form,
 }: {
-  expense?: Expense;
+  expense?: Expense | RecentActivity;
   setOpen: (open: boolean) => void;
   form: UseFormReturn<z.infer<typeof formCreateExpenseSchema>>;
 }) => {

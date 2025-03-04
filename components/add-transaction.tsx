@@ -1,7 +1,7 @@
 "use client";
 
-import { CreateForm as CreateExpenseForm } from "@/app/(private)/expense/_components/create-expense";
-import { CreateForm as CreateIncomeForm } from "@/app/(private)/income/_components/create-income";
+import { CreateForm as CreateExpenseForm } from "@/components/create-expense";
+import { CreateForm as CreateIncomeForm } from "@/components/create-income";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
 import { MonthPicker } from "@/components/ui/month-picker";
@@ -13,7 +13,10 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { changeDate } from "@/features/global.slice";
 import { cn } from "@/lib/utils";
-import { formCreateExpenseSchema } from "@/lib/validate";
+import {
+  formCreateExpenseSchema,
+  formCreateIncomeSchema,
+} from "@/lib/validate";
 import { RootState } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formatDate } from "date-fns";
@@ -27,8 +30,11 @@ export default function AddTransaction() {
   const dispatch = useDispatch();
   const { date } = useSelector((state: RootState) => state.global);
   const [open, setOpen] = useState(false);
-  const form = useForm<z.infer<typeof formCreateExpenseSchema>>({
+  const formExpense = useForm<z.infer<typeof formCreateExpenseSchema>>({
     resolver: zodResolver(formCreateExpenseSchema),
+  });
+  const formIncome = useForm<z.infer<typeof formCreateIncomeSchema>>({
+    resolver: zodResolver(formCreateIncomeSchema),
   });
 
   return (
@@ -52,10 +58,10 @@ export default function AddTransaction() {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="expense">
-            <CreateExpenseForm setOpen={setOpen} form={form} />
+            <CreateExpenseForm setOpen={setOpen} form={formExpense} />
           </TabsContent>
           <TabsContent value="income">
-            <CreateIncomeForm setOpen={setOpen} />
+            <CreateIncomeForm setOpen={setOpen} form={formIncome} />
           </TabsContent>
         </Tabs>
       </ResponsiveDialog>
