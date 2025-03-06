@@ -44,6 +44,8 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { toast } from "sonner";
 import { z } from "zod";
+import CategoryIcon from "./category-icon";
+import { CategoryList } from "@/app/(private)/category/_components/category-list";
 
 interface IProps {
   income?: Income | RecentActivity;
@@ -63,7 +65,10 @@ const CreateIncome = ({ income, callback, trigger }: IProps) => {
         description: income?.description,
         amount: income?.amount.toString(),
         createDate: new Date(income?.createDate),
-        categoryId: income?.category?.id,
+        categoryId: {
+          id: income?.category?.id,
+          name: income?.category?.name,
+        },
       });
     }
   }, [income]);
@@ -95,12 +100,11 @@ export const CreateForm = ({
   form: UseFormReturn<z.infer<typeof formCreateIncomeSchema>>;
 }) => {
   const [openCalendar, setOpenCalendar] = useState(false);
-  const { date } = useSelector((state: RootState) => state.global);
+  const [openCategory, setOpenCategory] = useState(false);
 
   const { data } = useGetCategoriesQuery();
   const [createIncome, { isLoading: isCreating }] = useCreateIncomeMutation();
   const [updateIncome, { isLoading: isUpdating }] = useUpdateIncomeMutation();
-  // const { refetch } = useGetRecentActivityQuery(date);
 
   const onSubmit = async (data: z.infer<typeof formCreateIncomeSchema>) => {
     try {
@@ -120,7 +124,6 @@ export const CreateForm = ({
       }
       setOpen(false);
       form.reset();
-      // refetch();
     } catch (error: any) {
       toast.error(error?.data.message);
     }
@@ -158,7 +161,7 @@ export const CreateForm = ({
           defaultValue={new Date()}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Ngày</FormLabel>
+              {/* <FormLabel>Ngày</FormLabel> */}
               <ResponsiveDialog
                 title="Chọn ngày"
                 open={openCalendar}
@@ -168,16 +171,20 @@ export const CreateForm = ({
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full font-normal",
+                        "w-full justify-between font-normal",
                         !field.value && "text-muted-foreground",
                       )}
                     >
+                      <span className="flex items-center gap-2">
+                        <CategoryIcon icon="CalendarDays" color="red" />
+                        Ngày
+                      </span>
+                      {/* <CalendarIcon className="size-4 opacity-50" /> */}
                       {field.value ? (
                         format(field.value, formatDate)
                       ) : (
                         <span>Chọn ngày</span>
                       )}
-                      <CalendarIcon className="ml-auto size-4 opacity-50" />
                     </Button>
                   </FormControl>
                 }
@@ -201,9 +208,9 @@ export const CreateForm = ({
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category</FormLabel>
+              {/* <FormLabel>Danh mục</FormLabel> */}
               <FormControl>
-                <Select
+                {/* <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   disabled={data?.length === 0}
@@ -224,7 +231,35 @@ export const CreateForm = ({
                       ))}
                     </SelectGroup>
                   </SelectContent>
-                </Select>
+                </Select> */}
+                <ResponsiveDialog
+                  title="Danh mục"
+                  trigger={
+                    <Button
+                      variant="outline"
+                      className={cn("w-full justify-between font-normal")}
+                    >
+                      <span className="flex items-center gap-2">
+                        <CategoryIcon icon="Tag" color="red" />
+                        Danh mục
+                      </span>
+                      {field.value ? field.value.name : "Không có"}
+                    </Button>
+                  }
+                  open={openCategory}
+                  setOpen={(open: boolean) => {
+                    setOpenCategory(open);
+                  }}
+                >
+                  <CategoryList
+                    selected={field.value}
+                    inTransaction
+                    onSelect={(value) => {
+                      field.onChange(value);
+                      setOpenCategory(false);
+                    }}
+                  />
+                </ResponsiveDialog>
               </FormControl>
               <FormMessage />
             </FormItem>

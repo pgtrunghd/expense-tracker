@@ -4,4 +4,5 @@ interface Category {
   color: string;
   icon: string;
   expenses: Expense[];
+  incomes: Income[];
 }

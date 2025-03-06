@@ -19,7 +19,7 @@ const AddTransaction = dynamic(() => import("@/components/add-transaction"));
 
 function DashboardPage() {
   return (
-    <section className="flex flex-col gap-4">
+    <section className="flex flex-col gap-2">
       <CarouselSection />
 
       <CardList />
@@ -28,7 +28,7 @@ function DashboardPage() {
         <RecentExpense />
       </Card>
 
-      <div className="hidden gap-4 md:grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-7">
+      <div className="hidden gap-2 md:grid md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-7">
         <Card className="order-2 md:order-1 lg:col-span-2 2xl:col-span-4">
           <CardHeader>
             <CardTitle>Top chi tiêu</CardTitle>

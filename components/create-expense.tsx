@@ -41,6 +41,8 @@ import { memo, useEffect, useState } from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
+import CategoryIcon from "./category-icon";
+import { CategoryList } from "@/app/(private)/category/_components/category-list";
 
 interface IProps {
   expense?: Expense | RecentActivity;
@@ -59,7 +61,10 @@ const CreateExpense = ({ expense, trigger, callback }: IProps) => {
       form.reset({
         description: expense?.description,
         amount: expense?.amount?.toString(),
-        categoryId: expense?.category?.id,
+        categoryId: {
+          id: expense?.category?.id,
+          name: expense?.category?.name,
+        },
         createDate: new Date(expense?.createDate),
       });
     }
@@ -93,7 +98,7 @@ export const CreateForm = ({
   form: UseFormReturn<z.infer<typeof formCreateExpenseSchema>>;
 }) => {
   const [openCalendar, setOpenCalendar] = useState(false);
-  const { data } = useGetCategoriesQuery();
+  const [openCategory, setOpenCategory] = useState(false);
   const [createExpense, { isLoading: isCreating }] = useCreateExpenseMutation();
   const [updateExpense, { isLoading: isUpdating }] = useUpdateExpenseMutation();
 
@@ -104,12 +109,14 @@ export const CreateForm = ({
           ...data,
           amount: formatToNumber(data.amount),
           id: expense.id,
+          categoryId: data.categoryId.id,
         }).unwrap();
         toast.success(notification.UPDATE_SUCCESS);
       } else {
         await createExpense({
           ...data,
           amount: formatToNumber(data.amount),
+          categoryId: data.categoryId.id,
         }).unwrap();
         toast.success(notification.CREATE_SUCCESS);
       }
@@ -152,35 +159,6 @@ export const CreateForm = ({
           defaultValue={new Date()}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Ngày</FormLabel>
-              {/* <Popover>
-                <PopoverTrigger asChild>
-                  <FormControl>
-                    <Button
-                      variant="outline"
-                      className={cn(
-                        "w-full font-normal",
-                        !field.value && "text-muted-foreground",
-                      )}
-                    >
-                      {field.value ? (
-                        format(field.value, formatDate)
-                      ) : (
-                        <span>Chọn ngày</span>
-                      )}
-                      <CalendarIcon className="ml-auto size-4 opacity-50" />
-                    </Button>
-                  </FormControl>
-                </PopoverTrigger>
-                <PopoverContent className="w-full p-0">
-                  <Calendar
-                    mode="single"
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    disabled={(date) => date > new Date()}
-                  />
-                </PopoverContent>
-              </Popover> */}
               <ResponsiveDialog
                 title="Chọn ngày"
                 open={openCalendar}
@@ -190,16 +168,20 @@ export const CreateForm = ({
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full font-normal",
+                        "w-full justify-between font-normal",
                         !field.value && "text-muted-foreground",
                       )}
                     >
+                      <span className="flex items-center gap-2">
+                        <CategoryIcon icon="CalendarDays" color="red" />
+                        Ngày
+                      </span>
+                      {/* <CalendarIcon className="size-4 opacity-50" /> */}
                       {field.value ? (
                         format(field.value, formatDate)
                       ) : (
                         <span>Chọn ngày</span>
                       )}
-                      <CalendarIcon className="ml-auto size-4 opacity-50" />
                     </Button>
                   </FormControl>
                 }
@@ -223,9 +205,8 @@ export const CreateForm = ({
           control={form.control}
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Category</FormLabel>
               <FormControl>
-                <Select
+                {/* <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
                   disabled={data?.length === 0}
@@ -246,7 +227,35 @@ export const CreateForm = ({
                       ))}
                     </SelectGroup>
                   </SelectContent>
-                </Select>
+                </Select> */}
+                <ResponsiveDialog
+                  title="Danh mục"
+                  trigger={
+                    <Button
+                      variant="outline"
+                      className={cn("w-full justify-between font-normal")}
+                    >
+                      <span className="flex items-center gap-2">
+                        <CategoryIcon icon="Tag" color="red" />
+                        Danh mục
+                      </span>
+                      {field.value ? field.value.name : "Không có"}
+                    </Button>
+                  }
+                  open={openCategory}
+                  setOpen={(open: boolean) => {
+                    setOpenCategory(open);
+                  }}
+                >
+                  <CategoryList
+                    selected={field.value}
+                    inTransaction
+                    onSelect={(value) => {
+                      field.onChange(value);
+                      setOpenCategory(false);
+                    }}
+                  />
+                </ResponsiveDialog>
               </FormControl>
               <FormMessage />
             </FormItem>

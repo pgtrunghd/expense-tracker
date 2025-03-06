@@ -1,7 +1,9 @@
 import {
   CreditCard,
+  FileStack,
   HandCoins,
   LayoutDashboard,
+  List,
   Plus,
   Tags,
 } from "lucide-react";
@@ -34,30 +36,15 @@ export const navListMobile = [
     name: "Tổng quan",
     path: "/dashboard",
     icon: LayoutDashboard,
-    type: "link",
   },
   {
-    name: "Chi tiêu",
-    path: "/expense",
-    icon: CreditCard,
-    type: "link",
+    name: "Giao dịch",
+    path: "/transaction",
+    icon: List,
   },
   {
-    name: "",
-    path: "",
-    icon: Plus,
-    type: "button",
-  },
-  {
-    name: "Thu nhập",
-    path: "/income",
-    icon: HandCoins,
-    type: "link",
-  },
-  {
-    name: "Category",
+    name: "Danh mục",
     path: "/category",
-    icon: Tags,
-    type: "link",
+    icon: FileStack,
   },
 ];

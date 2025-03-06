@@ -22,7 +22,10 @@ export const formCreateExpenseSchema = z.object({
   }),
   description: z.string().min(1, { message: "Description is required" }),
   amount: z.string().min(1, { message: "Amount is required" }),
-  categoryId: z.string().min(1, { message: "Category is required" }),
+  categoryId: z.object({
+    id: z.string().min(1, { message: "Category is required" }),
+    name: z.string().min(1, { message: "Category is required" }),
+  }),
 });
 export const formCreateCategorySchema = z.object({
   name: z.string().min(1, { message: "Name is required" }),
@@ -35,5 +38,8 @@ export const formCreateIncomeSchema = z.object({
   createDate: z.date({
     required_error: "Date is required",
   }),
-  categoryId: z.string().min(1, { message: "Category is required" }),
+  categoryId: z.object({
+    id: z.string().min(1, { message: "Category is required" }),
+    name: z.string().min(1, { message: "Category is required" }),
+  }),
 });

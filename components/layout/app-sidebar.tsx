@@ -1,5 +1,7 @@
 "use client";
 
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -12,17 +14,13 @@ import {
 import { useGetCategoriesQuery } from "@/features/category.slice";
 import * as LucideIcon from "lucide-react";
 import {
-  Boxes,
-  ClipboardList,
   Command,
   FileStack,
   LayoutDashboard,
-  List,
+  List
 } from "lucide-react";
 import React, { useMemo } from "react";
 import { NavCategories } from "../nav-categories";
-import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
 
 export default function AppSidebar({
   ...props
@@ -33,7 +31,7 @@ export default function AppSidebar({
     () => ({
       navMain: [
         {
-          title: "Dashboard",
+          title: "Tổng quan",
           url: "/dashboard",
           icon: LayoutDashboard,
         },
@@ -55,6 +53,7 @@ export default function AppSidebar({
           icon: LucideIcon[item.icon as keyof typeof LucideIcon] as React.FC<
             React.SVGProps<SVGSVGElement>
           >,
+          data: item,
         };
       }),
     }),
@@ -72,7 +71,7 @@ export default function AppSidebar({
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Acme Inc</span>
+                  <span className="truncate font-semibold">Expense Tracker</span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
               </a>

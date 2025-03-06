@@ -8,14 +8,12 @@ import {
 import { cn, formatter } from "@/lib/utils";
 import { RootState } from "@/store";
 import {
-  CircleDollarSign,
+  ArrowDown,
+  ArrowUp,
   CircleMinus,
   CirclePlus,
-  HandCoins,
   Landmark,
-  TrendingDown,
-  TrendingUp,
-  Wallet,
+  Wallet
 } from "lucide-react";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -60,14 +58,16 @@ const CardList = () => {
       <div className="flex items-center gap-1 text-xs text-muted-foreground">
         <span
           className={cn(
-            "flex items-center gap-1",
-            prev > current ? "text-destructive" : "text-green-500",
+            "flex items-center gap-1 rounded-md px-2 py-1",
+            prev > current
+              ? "bg-destructive/20 text-destructive"
+              : "bg-green-500/20 text-green-500",
           )}
         >
           {prev > current ? (
-            <TrendingDown className="size-4" />
+            <ArrowDown className="size-4" />
           ) : (
-            <TrendingUp className="size-4" />
+            <ArrowUp className="size-4" />
           )}
           {formatter.format(current - prev)}
         </span>
@@ -77,9 +77,12 @@ const CardList = () => {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4">
       {cardList.map((card) => (
-        <Card key={card.title} className="last:col-span-2 md:last:col-span-1">
+        <Card
+          key={card.title}
+          className="first:col-span-2 last:col-span-2 md:first:col-span-1 md:last:col-span-1"
+        >
           <CardHeader className="!pb-2">
             <CardTitle className="flex items-center justify-between text-sm font-medium">
               {card.title}{" "}

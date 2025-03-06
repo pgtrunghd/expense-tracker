@@ -10,7 +10,7 @@ import {
   SidebarMenuSkeleton,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { MoreHorizontal, Trash2 } from "lucide-react";
+import { Edit, MoreHorizontal, Trash2 } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,20 +18,22 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import { useRouter } from "next/navigation";
+import CreateCategory from "@/app/(private)/category/_components/create-category";
+import { useState } from "react";
+
+interface INavCategoryItemsProps {
+  title: string;
+  icon: React.FC<React.SVGProps<SVGSVGElement>>;
+  color: string;
+  data: Category;
+}
 
 interface INavCategoriesProps {
-  items:
-    | {
-        title: string;
-        icon: React.FC<React.SVGProps<SVGSVGElement>>;
-        color: string;
-      }[]
-    | undefined;
+  items: INavCategoryItemsProps[] | undefined;
   isLoading: boolean;
 }
 
 export function NavCategories({ items, isLoading }: INavCategoriesProps) {
-  const { isMobile } = useSidebar();
   const router = useRouter();
 
   if (!isLoading && !items) return null;
@@ -46,39 +48,7 @@ export function NavCategories({ items, isLoading }: INavCategoriesProps) {
                 <SidebarMenuSkeleton showIcon />
               </SidebarMenuItem>
             ))
-          : items?.map((item) => (
-              <SidebarMenuItem key={item.title}>
-                <SidebarMenuButton asChild>
-                  <span className="cursor-pointer">
-                    <span
-                      className="grid size-5 place-items-center rounded-md"
-                      style={{ backgroundColor: item.color }}
-                    >
-                      <item.icon className="size-3 text-white" />
-                    </span>
-                    <span>{item.title}</span>
-                  </span>
-                </SidebarMenuButton>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <SidebarMenuAction showOnHover>
-                      <MoreHorizontal />
-                    </SidebarMenuAction>
-                  </DropdownMenuTrigger>
-
-                  <DropdownMenuContent
-                    className="w-56 rounded-lg"
-                    side={isMobile ? "bottom" : "right"}
-                    align={isMobile ? "end" : "start"}
-                  >
-                    <DropdownMenuItem>
-                      <Trash2 className="text-muted-foreground" />
-                      <span>Delete</span>
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </SidebarMenuItem>
-            ))}
+          : items?.map((item) => <NavCategoryItem key={item.title} {...item} />)}
         <SidebarMenuItem>
           <SidebarMenuButton
             className="text-sidebar-foreground/70"
@@ -92,3 +62,68 @@ export function NavCategories({ items, isLoading }: INavCategoriesProps) {
     </SidebarGroup>
   );
 }
+
+const NavCategoryItem = ({
+  title,
+  icon,
+  color,
+  data,
+}: INavCategoryItemsProps) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const { isMobile } = useSidebar();
+  const Icon = icon;
+
+  const handleDialogOpenChange = (open: boolean) => {
+    if (!open) {
+      setDropdownOpen(false);
+    }
+  };
+
+  return (
+    <SidebarMenuItem key={title}>
+      <SidebarMenuButton asChild>
+        <span className="cursor-pointer">
+          <span
+            className="grid size-5 place-items-center rounded-md"
+            style={{ backgroundColor: color }}
+          >
+            <Icon className="size-3 text-white" />
+          </span>
+          <span>{title}</span>
+        </span>
+      </SidebarMenuButton>
+      <DropdownMenu open={dropdownOpen} onOpenChange={setDropdownOpen}>
+        <DropdownMenuTrigger asChild>
+          <SidebarMenuAction showOnHover>
+            <MoreHorizontal />
+          </SidebarMenuAction>
+        </DropdownMenuTrigger>
+
+        <DropdownMenuContent
+          className="w-fit rounded-lg"
+          side={isMobile ? "bottom" : "right"}
+          align={isMobile ? "end" : "start"}
+        >
+          <CreateCategory
+            callback={handleDialogOpenChange}
+            category={data}
+            trigger={
+              <DropdownMenuItem
+                onSelect={(event) => {
+                  event.preventDefault();
+                }}
+              >
+                <Edit className="text-muted-foreground" />
+                Sửa
+              </DropdownMenuItem>
+            }
+          />
+          <DropdownMenuItem>
+            <Trash2 className="text-muted-foreground" />
+            Xóa
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </SidebarMenuItem>
+  );
+};

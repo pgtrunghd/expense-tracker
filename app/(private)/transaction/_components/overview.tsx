@@ -31,7 +31,7 @@ export const Overview = () => {
   );
 
   return (
-    <section className="grid grid-cols-2 gap-4">
+    <section className="grid grid-cols-2 gap-2">
       {cardList?.map((card) => (
         <Card key={card.title}>
           <CardHeader className="!px-4 !pb-2 !pt-4">

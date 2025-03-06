@@ -4,6 +4,7 @@ import React from "react";
 import Header from "./header";
 import { usePathname } from "next/navigation";
 import { titlePage } from "@/lib/constants";
+import { Navigation } from "./navigation";
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -19,6 +20,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         </h1>
         {children}
       </section>
+
+      <Navigation />
     </main>
   );
 };

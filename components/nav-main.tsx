@@ -26,6 +26,7 @@ export function NavMain({
   }>();
 
   useEffect(() => {
+    if (!pathname) return;
     setActiveItem(items.find((item) => item.url === pathname));
   }, [pathname]);
 

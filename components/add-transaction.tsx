@@ -4,31 +4,18 @@ import { CreateForm as CreateExpenseForm } from "@/components/create-expense";
 import { CreateForm as CreateIncomeForm } from "@/components/create-income";
 import { ResponsiveDialog } from "@/components/responsive-dialog";
 import { Button } from "@/components/ui/button";
-import { MonthPicker } from "@/components/ui/month-picker";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { changeDate } from "@/features/global.slice";
-import { cn } from "@/lib/utils";
 import {
   formCreateExpenseSchema,
   formCreateIncomeSchema,
 } from "@/lib/validate";
-import { RootState } from "@/store";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { formatDate } from "date-fns";
-import { CalendarIcon, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 
 export default function AddTransaction() {
-  const dispatch = useDispatch();
-  const { date } = useSelector((state: RootState) => state.global);
   const [open, setOpen] = useState(false);
   const formExpense = useForm<z.infer<typeof formCreateExpenseSchema>>({
     resolver: zodResolver(formCreateExpenseSchema),
@@ -38,7 +25,7 @@ export default function AddTransaction() {
   });
 
   return (
-    <div className="fixed bottom-4 right-4 z-50">
+    <div className="fixed bottom-20 right-4 z-50 md:bottom-4">
       <ResponsiveDialog
         setOpen={setOpen}
         open={open}

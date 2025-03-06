@@ -33,7 +33,7 @@ export const Navigation = () => {
     <section className="sticky inset-x-0 bottom-0 z-20 block border-t bg-background/60 shadow-md backdrop-blur md:hidden">
       <ul className="relative flex h-full items-center justify-evenly pb-6 pt-2">
         {navListMobile.map((item) =>
-          item.type === "link" ? (
+          // item.type === "link" ? (
             <Link
               href={item.path}
               key={item.path}
@@ -45,48 +45,40 @@ export const Navigation = () => {
               <item.icon className="mb-1 size-5" />
               <p className="text-[10px] sm:text-xs">{item.name}</p>
             </Link>
-          ) : (
-            <ResponsiveDialog
-              key={item.path}
-              setOpen={setOpen}
-              open={open}
-              trigger={
-                <div className="flex flex-col items-center">
-                  <Button size="iconSm" className="mb-1 rounded-lg">
-                    <Plus className="size-5" />
-                  </Button>
-                  <p className="text-[10px] font-medium sm:text-xs">
-                    Tạo thu chi
-                  </p>
-                </div>
-              }
-            >
-              <Tabs defaultValue="expense" className="mt-4 flex flex-col">
-                <TabsList>
-                  <TabsTrigger value="expense" className="flex-1">
-                    Chi tiêu
-                  </TabsTrigger>
-                  <TabsTrigger value="income" className="flex-1">
-                    Thu nhập
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value="expense">
-                  <CreateExpenseForm setOpen={setOpen} form={formExpense} />
-                </TabsContent>
-                <TabsContent value="income">
-                  <CreateIncomeForm setOpen={setOpen} form={formIncome} />
-                </TabsContent>
-              </Tabs>
-            </ResponsiveDialog>
-            // <CreateExpense
-            //   key={item.path}
-            //   trigger={
-            //     <Button size="icon" className="rounded-lg">
-            //       <Plus className="size-5" />
-            //     </Button>
-            //   }
-            // />
-          ),
+          // ) : (
+          //   <ResponsiveDialog
+          //     key={item.path}
+          //     setOpen={setOpen}
+          //     open={open}
+          //     trigger={
+          //       <div className="flex flex-col items-center">
+          //         <Button size="iconSm" className="mb-1 rounded-lg">
+          //           <Plus className="size-5" />
+          //         </Button>
+          //         <p className="text-[10px] font-medium sm:text-xs">
+          //           Tạo thu chi
+          //         </p>
+          //       </div>
+          //     }
+          //   >
+          //     <Tabs defaultValue="expense" className="mt-4 flex flex-col">
+          //       <TabsList>
+          //         <TabsTrigger value="expense" className="flex-1">
+          //           Chi tiêu
+          //         </TabsTrigger>
+          //         <TabsTrigger value="income" className="flex-1">
+          //           Thu nhập
+          //         </TabsTrigger>
+          //       </TabsList>
+          //       <TabsContent value="expense">
+          //         <CreateExpenseForm setOpen={setOpen} form={formExpense} />
+          //       </TabsContent>
+          //       <TabsContent value="income">
+          //         <CreateIncomeForm setOpen={setOpen} form={formIncome} />
+          //       </TabsContent>
+          //     </Tabs>
+          //   </ResponsiveDialog>
+          // ),
         )}
       </ul>
     </section>

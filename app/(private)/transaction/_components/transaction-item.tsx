@@ -63,7 +63,7 @@ export const TransactionItem = ({ activity }: ITransactionItem) => {
             <DropdownMenuTrigger>
               <EllipsisVertical className="size-4 text-muted-foreground" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent align="end">
               <DropdownMenuGroup>
                 <CreateTransaction
                   callback={handleDialogItemOpenChange}
