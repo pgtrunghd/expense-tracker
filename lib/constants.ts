@@ -14,6 +14,7 @@ export const apiRoutes = {
     OVERVIEW: "/balance/overview",
     INDEX: "/balance",
   },
+  BUDGET: "/budget",
 };
 
 export const notification = {
@@ -30,4 +31,12 @@ export const titlePage = {
   expense: "Chi tiêu",
   income: "Thu nhập",
   category: "Danh mục",
+  budget: "Ngân sách",
 };
+
+export enum BudgetCycle {
+  DAILY = "daily",
+  WEEKLY = "weekly",
+  MONTHLY = "monthly",
+  YEARLY = "yearly",
+}

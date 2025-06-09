@@ -19,7 +19,7 @@ const RecentExpense = () => {
   const { date } = useSelector((state: RootState) => state.global);
   const { data: res, isLoading } = useGetRecentActivityQuery(date);
   const router = useRouter();
-  const expenseData = res?.slice(0, 5);
+  const expenseData = res?.data?.slice(0, 5);
 
   const loading = () => {
     return (

@@ -6,3 +6,8 @@ interface Category {
   expenses: Expense[];
   incomes: Income[];
 }
+
+interface AllCategory {
+  data: Category[];
+  meta: Meta;
+}

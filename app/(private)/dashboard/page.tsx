@@ -1,3 +1,4 @@
+import AddTransaction from "@/components/add-transaction";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import dynamic from "next/dynamic";
 
@@ -14,8 +15,6 @@ const CardList = dynamic(() => import("./_components/card-list"));
 const RecentExpense = dynamic(() => import("./_components/recent-expense"));
 
 const CarouselSection = dynamic(() => import("./_components/carousel-section"));
-
-const AddTransaction = dynamic(() => import("@/components/add-transaction"));
 
 function DashboardPage() {
   return (

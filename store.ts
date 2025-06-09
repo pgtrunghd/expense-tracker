@@ -5,6 +5,7 @@ import globalSlice from "./features/global.slice";
 import { categorySlice } from "./features/category.slice";
 import { incomeSlice } from "./features/income.slice";
 import { balanceSlice } from "./features/balance.slice";
+import { budgetSlice } from "./features/budget.slice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [categorySlice.reducerPath]: categorySlice.reducer,
     [incomeSlice.reducerPath]: incomeSlice.reducer,
     [balanceSlice.reducerPath]: balanceSlice.reducer,
+    [budgetSlice.reducerPath]: budgetSlice.reducer,
 
     global: globalSlice,
   },
@@ -23,6 +25,7 @@ export const store = configureStore({
       categorySlice.middleware,
       incomeSlice.middleware,
       balanceSlice.middleware,
+      budgetSlice.middleware,
     ),
 });
 

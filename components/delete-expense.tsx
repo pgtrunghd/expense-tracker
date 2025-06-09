@@ -9,7 +9,7 @@ import React, { memo, useState } from "react";
 import { toast } from "sonner";
 
 interface IProps {
-  expense: Expense | RecentActivity;
+  expense: Expense | RecentActivityData;
   trigger: React.ReactNode;
   callback?: (open: boolean) => void;
 }

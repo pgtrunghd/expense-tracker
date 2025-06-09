@@ -45,7 +45,7 @@ import CategoryIcon from "./category-icon";
 import { CategoryList } from "@/app/(private)/category/_components/category-list";
 
 interface IProps {
-  expense?: Expense | RecentActivity;
+  expense?: Expense | RecentActivityData;
   trigger?: React.ReactNode;
   callback?: (open: boolean) => void;
 }
@@ -93,7 +93,7 @@ export const CreateForm = ({
   setOpen,
   form,
 }: {
-  expense?: Expense | RecentActivity;
+  expense?: Expense | RecentActivityData;
   setOpen: (open: boolean) => void;
   form: UseFormReturn<z.infer<typeof formCreateExpenseSchema>>;
 }) => {

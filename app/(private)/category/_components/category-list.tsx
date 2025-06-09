@@ -34,7 +34,7 @@ export const CategoryList = ({
   return (
     <section>
       <div className="rounded-xl border bg-background shadow">
-        {categoryData?.map((category) => (
+        {categoryData?.data?.map((category) => (
           <CategoryItem
             key={category.id}
             category={category}

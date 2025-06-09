@@ -8,7 +8,7 @@ export const categorySlice = createApi({
   baseQuery: baseQueryWithAuth,
   tagTypes: ["Category"],
   endpoints: (builder) => ({
-    getCategories: builder.query<Category[], boolean | void>({
+    getCategories: builder.query<AllCategory, boolean | void>({
       query: () => apiRoutes.CATEGORY,
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Category"],

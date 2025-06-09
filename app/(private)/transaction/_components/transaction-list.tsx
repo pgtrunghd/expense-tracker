@@ -1,5 +1,6 @@
 "use client";
 
+import AddTransaction from "@/components/add-transaction";
 import { NoDataFound } from "@/components/no-data-found";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetRecentActivityQuery } from "@/features/expense.slice";
@@ -7,20 +8,17 @@ import { cn, formatter } from "@/lib/utils";
 import { RootState } from "@/store";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-import dynamic from "next/dynamic";
 import { useCallback, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { TransactionItem } from "./transaction-item";
-
-const AddTransaction = dynamic(() => import("@/components/add-transaction"));
 
 export const TransactionList = () => {
   const { date } = useSelector((state: RootState) => state.global);
   const { data: res, isLoading } = useGetRecentActivityQuery(date);
 
   const dataList = useMemo(() => {
-    const result = res?.reduce(
-      (acc: { [key: string]: RecentActivity[] }, item) => {
+    const result = res?.data?.reduce(
+      (acc: { [key: string]: typeof res.data }, item) => {
         const date = format(new Date(item.createDate), "iiiiii, dd MMM,yyyy", {
           locale: vi,
         });
@@ -39,7 +37,7 @@ export const TransactionList = () => {
     return Object.entries(result);
   }, [res]);
 
-  const sum = useCallback((transaction: RecentActivity[]) => {
+  const sum = useCallback((transaction: RecentActivityData[]) => {
     const result = transaction.reduce(
       (acc, item) =>
         acc + (item.type === "income" ? item.amount : -item.amount),

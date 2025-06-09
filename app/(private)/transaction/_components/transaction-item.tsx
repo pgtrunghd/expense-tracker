@@ -15,7 +15,7 @@ import { ChevronRight, Edit, EllipsisVertical, Trash2 } from "lucide-react";
 import { useState } from "react";
 
 interface ITransactionItem {
-  activity: RecentActivity;
+  activity: RecentActivityData;
 }
 
 export const TransactionItem = ({ activity }: ITransactionItem) => {

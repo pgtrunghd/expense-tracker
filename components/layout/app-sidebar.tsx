@@ -14,10 +14,11 @@ import {
 import { useGetCategoriesQuery } from "@/features/category.slice";
 import * as LucideIcon from "lucide-react";
 import {
+  ChartColumn,
   Command,
   FileStack,
   LayoutDashboard,
-  List
+  List,
 } from "lucide-react";
 import React, { useMemo } from "react";
 import { NavCategories } from "../nav-categories";
@@ -41,12 +42,17 @@ export default function AppSidebar({
           icon: List,
         },
         {
+          title: "Ngân sách",
+          url: "/budget",
+          icon: ChartColumn,
+        },
+        {
           title: "Danh mục",
           url: "/category",
           icon: FileStack,
         },
       ],
-      category: categoryData?.map((item) => {
+      category: categoryData?.data?.map((item) => {
         return {
           title: item.name,
           color: item.color,
@@ -71,7 +77,9 @@ export default function AppSidebar({
                   <Command className="size-4" />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-semibold">Expense Tracker</span>
+                  <span className="truncate font-semibold">
+                    Expense Tracker
+                  </span>
                   <span className="truncate text-xs">Enterprise</span>
                 </div>
               </a>

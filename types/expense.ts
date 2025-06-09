@@ -6,11 +6,16 @@ interface Expense {
   createDate: Date;
 }
 
-interface RecentActivity {
+interface RecentActivityData {
   id: string;
   description: string;
   amount: number;
   createDate: string;
   type: string;
   category?: Category;
+}
+
+interface RecentActivity {
+  data: RecentActivityData[];
+  meta: Meta;
 }

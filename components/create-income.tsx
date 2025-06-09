@@ -48,7 +48,7 @@ import CategoryIcon from "./category-icon";
 import { CategoryList } from "@/app/(private)/category/_components/category-list";
 
 interface IProps {
-  income?: Income | RecentActivity;
+  income?: Income | RecentActivityData;
   callback?: (open: boolean) => void;
   trigger: React.ReactNode;
 }
@@ -95,7 +95,7 @@ export const CreateForm = ({
   setOpen,
   form,
 }: {
-  income?: Income | RecentActivity;
+  income?: Income | RecentActivityData;
   setOpen: (open: boolean) => void;
   form: UseFormReturn<z.infer<typeof formCreateIncomeSchema>>;
 }) => {

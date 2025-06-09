@@ -62,6 +62,7 @@ export default function Header() {
                 dispatch(changeDate(value.toISOString()));
               }}
               selectedMonth={new Date(date)}
+              maxDate={new Date()}
             />
           </PopoverContent>
         </Popover>
