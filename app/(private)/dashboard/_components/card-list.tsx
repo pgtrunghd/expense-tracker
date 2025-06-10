@@ -13,7 +13,7 @@ import {
   CircleMinus,
   CirclePlus,
   Landmark,
-  Wallet
+  Wallet,
 } from "lucide-react";
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
@@ -50,7 +50,7 @@ const CardList = () => {
         prevValue: overviewData?.totalSavingPrevMonth ?? 0,
       },
     ],
-    [overviewData],
+    [overviewData, balanceData],
   );
 
   const calculateDiff = (prev: number, current: number) => {

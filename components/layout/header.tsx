@@ -1,15 +1,6 @@
 "use client";
 
-import { CalendarIcon, LogOut } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+import { CalendarIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { MonthPicker } from "@/components/ui/month-picker";
@@ -37,6 +28,8 @@ export default function Header() {
     dispatch(balanceSlice.util.resetApiState());
     router.push("/login");
   };
+
+  console.log(formatDate(date, "MMMM yyyy"));
 
   return (
     <header className="flex h-16 shrink-0 items-center justify-between gap-2 p-4">
@@ -67,26 +60,6 @@ export default function Header() {
           </PopoverContent>
         </Popover>
       </div>
-      {/* <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild>
-          <Avatar
-            className="size-8 cursor-pointer duration-200 hover:opacity-75"
-            aria-expanded="true"
-          >
-            <AvatarImage loading="lazy" src="avatar.jpg" alt="avatar" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>My Account</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={signOut}>
-            <LogOut className="mr-2 size-4" />
-            Đăng xuất
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu> */}
     </header>
   );
 }
