@@ -56,11 +56,11 @@ export const BudgetItem = ({ budget }: IBudgetItem) => {
         )} */}
         <span className="flex flex-col items-end gap-y-1">
           <span className="text-xs">
-            {format(startOfMonth(new Date()), "dd MMM", {
+            {format(new Date(budget.startDate), "dd MMM", {
               locale: vi,
             })}{" "}
             -{" "}
-            {format(endOfMonth(new Date()), "dd MMM", {
+            {format(new Date(budget.endDate), "dd MMM", {
               locale: vi,
             })}
           </span>

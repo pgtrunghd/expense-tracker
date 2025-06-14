@@ -7,9 +7,12 @@ import { useCallback, useMemo } from "react";
 import { BudgetItem } from "./budget-item";
 import { cn, formatter } from "@/lib/utils";
 import AddBudget from "@/components/add-budget";
+import { RootState } from "@/store";
+import { useSelector } from "react-redux";
 
 export const BudgetList = () => {
-  const { data: budgetData, isLoading } = useGetBudgetQuery();
+  const { date } = useSelector((state: RootState) => state.global);
+  const { data: budgetData, isLoading } = useGetBudgetQuery(date);
 
   const budgetList = useMemo(() => {
     const list = budgetData?.data?.reduce(

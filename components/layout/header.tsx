@@ -29,8 +29,6 @@ export default function Header() {
     router.push("/login");
   };
 
-  console.log(formatDate(date, "MMMM yyyy"));
-
   return (
     <header className="flex h-16 shrink-0 items-center justify-between gap-2 p-4">
       <div className="flex items-center gap-2">

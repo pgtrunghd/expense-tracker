@@ -8,8 +8,8 @@ export const budgetSlice = createApi({
   baseQuery: baseQueryWithAuth,
   tagTypes: ["Budget"],
   endpoints: (builder) => ({
-    getBudget: builder.query<AllBudget, void>({
-      query: () => apiRoutes.BUDGET,
+    getBudget: builder.query<AllBudget, string>({
+      query: (date: string) => `${apiRoutes.BUDGET}?date=${date}`,
       onQueryStarted: onQueryStartedErrorToast,
       providesTags: ["Budget"],
     }),
